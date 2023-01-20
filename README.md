@@ -33,6 +33,7 @@ After installing anaconda or miniconda, open a terminal or cmd prompt and run th
     conda install notebook # or
     conda install -c conda-forge retrolab # uses notebook
     conda install mypy
+    python -m pip install hypothesis
 ```
 
 ### Manually create evn and install packages
