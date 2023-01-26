@@ -1,14 +1,16 @@
 # Python-Object-Oriented-Programming
-Class Notes for Object Oriented Programming - Python
+
+Class Notes for Object Oriented Programming and Design Patterns
 
 ## Text: Python Object Oriented Programming
+
 - Fourth Edition by Steven F. Lott and Dusty Phillips
 
 ## How to use the notebooks
 
 ### Important
 
-In order to learn coding, it's very important to actually type code on your own from scratch and NOT copy paste! You can run provided cells to see the output, follow along and learn from it. However, it's very important that you either start a new notebook or add cells and write your own code from scratch to practice the concepts covered with many similar examples and solve the exercises provided.
+In order to learn coding, it's very important to actually type code on your own from scratch and NOT copy paste! You can run provided cells to see the output, follow along and learn from it. However, it's very important that you either start a new notebook or add cells and write your own code from scratch to practice the concepts covered with many similar examples and solve the exercises provided for self assessment.
 
 ### Online services
 
@@ -29,30 +31,21 @@ After installing anaconda or miniconda, open a terminal or cmd prompt and run th
     conda update conda
     conda env list # list current environments
     conda env remove -n <environment_name> # remove existing environment
-    conda create -n py python=3.10 # create a new virtual environment named py
+    conda create -n oop python=3.10 # create a new virtual environment named py
+    conda activate oop
     conda install notebook # or
     conda install -c conda-forge retrolab # uses notebook
-    conda install mypy
-    python -m pip install hypothesis
-```
-
-### Manually create evn and install packages
-
-```bash
-    conda create -n ml python=3.10 # create new ml environment
-    conda env list # list all the avialable virtual environments
-    conda activate ml #activate ml environment
-    conda install <SomePackage> #install packages
-    conda deactivate # exit out the current environment
+    conda install mypy # type checker
+    python -m pip install hypothesis # test data generator
 ```
 
 #### Running the notebooks in VS Code
 
-- Python notebooks can be run natively in VS Code. Simply open the notebook file with extension ipynb in VS Code and run each cell; add new cell, etc. right from VS Code.
+- Python notebooks can be run natively in VS Code. Simply open the notebook file with extension .ipynb in VS Code and run each cell; add new cell, etc. right from VS Code.
 
 #### Running the notebooks using jupyter notebook server
 
-Once Python 3 and Jupyter Notebook are installed, open a terminal change working directory using cd command to go into the folder where this repo is cloned and run the notebook from there:
+Once Python 3 and Jupyter Notebook are installed, open a terminal change working directory using cd command to go into the folder where this repo is cloned and run the notebook from there. Use notebook or retro.
 
 ```bash
     cd <directory where this repo is cloned>
@@ -64,5 +57,4 @@ This will start a Jupyter session in your browser. Open any chapter and start co
 
 ## Contributing
 
-Contributions are accepted via pull requests. You can also open issues on bugs, typos or any corrections and suggest improvements on the notebooks.
-- 
+Contributions are accepted via pull requests. You can also open issues on bugs, typos or any corrections and suggest improvements on the notebooks. 
