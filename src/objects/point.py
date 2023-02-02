@@ -6,7 +6,6 @@ Chapter 2, Objects in Python.
 
 import math
 
-
 class Point:
     """
     Represents a point in two-dimensional geometric coordinates
