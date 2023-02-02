@@ -9,7 +9,7 @@ NOTE. Remove the ``# type: ignore`` comments to reproduce examples in the text.
 def odd(n): # dynamic typing
     return n % 2 != 0
 
-def add(arg1: int, arg2: int): # static typing
+def add(arg1, arg2): # static typing
     return arg1+arg2
 
 def main():
