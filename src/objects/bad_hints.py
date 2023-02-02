@@ -9,7 +9,7 @@ NOTE. Remove the ``# type: ignore`` comments to reproduce examples in the text.
 def odd(n): # dynamic typing
     return n % 2 != 0
 
-def add(arg1, arg2): # static typing
+def add(arg1, arg2):
     return arg1+arg2
 
 def main():
@@ -18,6 +18,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-    print(add(1, 2)) # no issue
-    print(add("Hello", "World")) # issue here...
+    print(add(1, 2))
+    print(add("Hello", 1))
 
