@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 class Warehouse:
 	def __init__(self, stock:dict[str, int]):
 		self.stock = stock
