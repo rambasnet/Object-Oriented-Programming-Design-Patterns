@@ -4,6 +4,7 @@ from warehouse import Warehouse
 
 class TestWarehouse(unittest.TestCase):
 	def test_warehouse(self):
+		# Create a warehouse with 10 shoes, 2 hats, and 0 umbrellas
 		wh = Warehouse({'shoes': 10, 'hats': 2, 'umbrellas': 0})
 		self.assertTrue(wh.in_stock('shoes'))
 		self.assertFalse(wh.in_stock('umbrellas'))
