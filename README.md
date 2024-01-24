@@ -19,7 +19,22 @@ You can launch an interactive session of this project using online Binder servic
 
 ### On a local system
 
-To run these notebooks interactively and save your work locally, you need [Python 3][https://www.python.org/] and [Jupyter Notebook](http://jupyter.org/) -- an interactive web-based editor that allows you to create and share documents that contain live code and data. [Anaconda or Miniconda](https://www.anaconda.com/products/distribution) is the recommended way to install Python and other packages on all modern platforms.
+To run these notebooks interactively and save your work locally, you need [Python 3](https://www.python.org/) and [Jupyter Notebook](http://jupyter.org/) -- an interactive web-based editor that allows you to create and share documents that contain live code and data. [Anaconda or Miniconda](https://www.anaconda.com/products/distribution) is the recommended way to install Python and other packages on all modern platforms.
+
+#### Using Docker
+
+- Install Docker on your system: [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+- Clone this repo and run the following command from the root of the repo
+- Use git-bash Terminal on Windows to run bash scripts
+
+```bash
+    git clone https://github.com/rambasnet/Python-Object-Oriented-Programming.git
+    curl -o setup.sh https://raw.githubusercontent.com/rambasnet/course-container/main/setup.sh
+    bash setup.sh
+    bash run.sh # run interactive Debian Shell in the container
+    bash run-jupyter.sh # run jupyter notebook server in the container
+```
 
 #### Installing via Anaconda or Miniconda
 
