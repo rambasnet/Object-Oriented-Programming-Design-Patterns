@@ -1,6 +1,6 @@
-# Python-Object-Oriented-Programming
+# Object Oriented Programming & Design Patterns
 
-Class Notes for Object Oriented Programming and Design Patterns
+Notes for Object Oriented Programming and Design Patterns using Python
 
 ## Text: Python Object Oriented Programming
 
