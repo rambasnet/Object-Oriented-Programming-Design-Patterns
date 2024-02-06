@@ -36,6 +36,9 @@ To run these notebooks interactively and save your work locally, you need [Pytho
     bash run-jupyter.sh # run jupyter notebook server in the container
 ```
 
+- jupyter notebooks are inside the notebooks folder
+- start from the OO-Table-of-Contents.ipynb
+
 #### Installing via Anaconda or Miniconda
 
 Anaconda or Miniconda has Python 3 and many other packages that you can easily install on any platform (Windows, Linux, and Mac). First, install Anaconda: [http://docs.continuum.io/anaconda/install/](http://docs.continuum.io/anaconda/install/) or Miniconda [https://conda.io/docs/user-guide/install/index.html](https://conda.io/docs/user-guide/install/index.html) for Python 3.
@@ -69,7 +72,3 @@ Once Python 3 and Jupyter Notebook are installed, open a terminal change working
 ```
 
 This will start a Jupyter session in your browser. Open any chapter and start coding...
-
-## Contributing
-
-Contributions are accepted via pull requests. You can also open issues on bugs, typos or any corrections and suggest improvements on the notebooks. 
