@@ -1,6 +1,12 @@
 # Object Oriented Programming & Design Patterns
 
-Notes for Object Oriented Programming and Design Patterns using Python
+![Test](https://github.com/rambasnet/Python-Object-Oriented-Programming/actions/workflows/ci-test.yml/badge.svg)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rambasnet/Python-Object-Oriented-Programming/HEAD)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rambasnet/Python-Object-Oriented-Programming)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+
+- Jupyter notebooks for Object Oriented Programming and Design Patterns using Python
 
 ## Text: Python Object Oriented Programming
 
@@ -24,6 +30,8 @@ To run these notebooks interactively and save your work locally, you need [Pytho
 #### Using Docker
 
 - Install Docker on your system: [https://docs.docker.com/get-docker/](https://docs.docker.com/get-docker/)
+
+- Dockerfile is provided to build a container image with all the necessary packages and dependencies to run the notebooks. You can build the image and run the container using the provided bash scripts.
 
 - Clone this repo and run the following command from the root of the repo
 - Use git-bash Terminal on Windows to run bash scripts
