@@ -16,11 +16,11 @@
 
 ### Important
 
-In order to learn coding, it's very important to actually type code on your own from scratch and NOT copy paste! You can run provided cells to see the output, follow along and learn from it. However, it's very important that you either start a new notebook or add cells and write your own code from scratch to practice the concepts covered with many similar examples and solve the exercises provided for self assessment.
+To learn to code, it's very important to type code on your own from scratch and NOT copy-paste! You can run provided cells to see the output, follow along, and learn from it. However, it's very important that you either start a new notebook or add cells and write your code from scratch to practice the concepts covered with many similar examples and solve the exercises provided for self-assessment.
 
 ### Online services
 
-You can launch an interactive session of this project using online Binder service:
+You can launch an interactive session of this project using the online Binder service:
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/badge_logo.svg) or Google Colab. Each chapter, where applicable, provides [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com) to simply click and run the notebook in Google's Colab environment.
 
 ### On a local system
@@ -38,14 +38,12 @@ To run these notebooks interactively and save your work locally, you need [Pytho
 
 ```bash
     git clone https://github.com/rambasnet/Python-Object-Oriented-Programming.git
-    curl -o setup.sh https://raw.githubusercontent.com/rambasnet/course-container/main/setup.sh
-    bash setup.sh
     bash run.sh # run interactive Debian Shell in the container
     bash run-jupyter.sh # run jupyter notebook server in the container
 ```
 
 - jupyter notebooks are inside the notebooks folder
-- start from the OO-Table-of-Contents.ipynb
+- start from the `notebbooks/OO-Table-of-Contents.ipynb`
 
 #### Installing via Anaconda or Miniconda
 
@@ -71,7 +69,7 @@ After installing anaconda or miniconda, open a terminal or cmd prompt and run th
 
 #### Running the notebooks using jupyter notebook server
 
-Once Python 3 and Jupyter Notebook are installed, open a terminal change working directory using cd command to go into the folder where this repo is cloned and run the notebook from there. Use notebook or retro.
+Once Python 3 and Jupyter Notebook are installed, open a terminal change the working directory using `cd` command to go into the folder where this repo is cloned and run the notebook from there. Use notebook or retro.
 
 ```bash
     cd <directory where this repo is cloned>
@@ -79,4 +77,4 @@ Once Python 3 and Jupyter Notebook are installed, open a terminal change working
     jupyter retro
 ```
 
-This will start a Jupyter session in your browser. Open any chapter and start coding...
+This will start a Jupyter session in your browser. Start from the `notebbooks/OO-Table-of-Contents.ipynb`
