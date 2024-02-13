@@ -6,7 +6,8 @@
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-- Jupyter notebooks for Object Oriented Programming and Design Patterns using Python
+- Jupyter Notebooks for learning Object-Oriented Programming and Design Patterns using Python
+- notebooks are provided in the `notebooks` folder
 
 ## Text: Python Object Oriented Programming
 
@@ -38,11 +39,10 @@ To run these notebooks interactively and save your work locally, you need [Pytho
 
 ```bash
     git clone https://github.com/rambasnet/Python-Object-Oriented-Programming.git
-    bash run.sh # run interactive Debian Shell in the container
     bash run-jupyter.sh # run jupyter notebook server in the container
 ```
 
-- jupyter notebooks are inside the notebooks folder
+- Jupiter Notebooks are inside the `notebooks` folder
 - start from the `notebbooks/OO-Table-of-Contents.ipynb`
 
 #### Installing via Anaconda or Miniconda
