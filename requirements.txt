@@ -1,6 +1,6 @@
 pytest
 pytest-cov
-jupyter
+Jupiter
 pymongo[srv]
 mypy
 hypothesis
@@ -10,3 +10,4 @@ lxml
 requests
 pdoc
 kattis-cli
+pickleshare
