@@ -125,7 +125,7 @@ fi
 
 if [ ${#args[@]} -eq 0 ]
 then
-    args=("bash" "-c" "cd $GUEST_DIR; jupyter notebook --ip 0.0.0.0 --port 9999 --no-browser --allow-root")
+    args=("bash" "-c" "cd $GUEST_DIR; sudo bash script.sh; jupyter notebook --ip 0.0.0.0 --port 9999 --no-browser --allow-root")
 fi
 
 echo "$container run '$CONTAINER_TAG' (mounting host '$HOST_DIR' as '$GUEST_DIR'):" \
