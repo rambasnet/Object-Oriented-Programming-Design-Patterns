@@ -1,9 +1,8 @@
 """
-Python 3 Object-Oriented Programming
-
-Chapter 13.  Testing Object-Oriented Programs.
+Unittesting demo
 """
-from __future__ import annotations
+
+from __future__ import annotations # for Python < 3.7
 import unittest
 from typing import Optional
 
