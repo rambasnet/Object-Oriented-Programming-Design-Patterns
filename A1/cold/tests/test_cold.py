@@ -35,7 +35,8 @@ def test_answer1_1() -> None:
     assert answer1('0 453445 -1 -100 -45454 -44445') == 4
 
 
-@mock.patch('builtins.input', return_value='6\n0 453445 -1 -100 -45454 -44445\n')
+@mock.patch('builtins.input',
+            return_value='6\n0 453445 -1 -100 -45454 -44445\n')
 @mock.patch('sys.stdout', new_callable=StringIO)
 def test_solve_1(mock_print: StringIO, _: StringIO) -> None:
     """Test cold.py solve1 function.
@@ -45,7 +46,8 @@ def test_solve_1(mock_print: StringIO, _: StringIO) -> None:
 
 
 @mock.patch('sys.stdin.readline',
-            return_value='9\n100 3343 0 453445 -134 -10054 -454543 -4444534 -345435\n')
+            return_value='9\n100 3343 0 453445 -134 \
+                -10054 -454543 -4444534 -345435\n')
 @mock.patch('sys.stdout', new_callable=StringIO)
 def test_solve_2(mock_print: StringIO, _: StringIO) -> None:
     """Test cold.py solve function.
