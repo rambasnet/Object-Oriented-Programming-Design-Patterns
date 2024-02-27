@@ -2,7 +2,8 @@
 Unittesting demo
 """
 
-from __future__ import annotations # for Python < 3.7
+
+from __future__ import annotations  # for Python < 3.7
 import unittest
 from typing import Optional
 
@@ -17,12 +18,16 @@ def average(seq: list[Optional[float]]) -> float:
 
 
 class TestAverage(unittest.TestCase):
+    """Test the average function.
+    """
+
     def test_zero(self) -> None:
+        """Test average of an empty list.
+        """
         self.assertRaises(ZeroDivisionError, average, [])
 
     def test_with_zero(self) -> None:
+        """Test average of a list containing a zero.
+        """
         with self.assertRaises(ZeroDivisionError):
             average([])
-
-if __name__ == "__main__":
-    unittest.main()
