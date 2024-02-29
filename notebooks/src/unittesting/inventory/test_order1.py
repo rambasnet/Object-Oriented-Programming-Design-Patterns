@@ -23,8 +23,8 @@ class TestOrder(unittest.TestCase):
         self.wh = Warehouse({'shoes': 10, 'hats': 3, 'umbrellas': 0})
 
     @given(
-            item=st.sampled_from(['shoes', 'hats']),
-            quantity=st.integers(min_value=1, max_value=4)
+        item=st.sampled_from(['shoes', 'hats']),
+        quantity=st.integers(min_value=1, max_value=4)
     )
     def test_stock_level_plus_quantity_equals_initial_stock_level(
             self,
@@ -45,3 +45,7 @@ class TestOrder(unittest.TestCase):
             self.assertEqual(
                 self.wh.stock_count(item) + quantity,
                 initial_stock_level)
+
+
+if __name__ == '__main__':
+    unittest.main()
