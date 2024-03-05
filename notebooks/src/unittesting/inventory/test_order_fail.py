@@ -10,6 +10,7 @@ import unittest
 from order import Order
 from warehouse import Warehouse
 from hypothesis import given
+from hypothesis import settings
 import hypothesis.strategies as st
 
 
@@ -26,6 +27,7 @@ class TestOrder(unittest.TestCase):
         item=st.sampled_from(['shoes', 'hats']),
         quantity=st.integers(min_value=1, max_value=4)
     )
+    @settings(max_examples=100, derandomize=True)
     def test_stock_level_plus_quantity_equals_initial_stock_level(
             self,
             item: str,
