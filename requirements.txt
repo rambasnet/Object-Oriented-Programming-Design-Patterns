@@ -13,3 +13,4 @@ requests
 pdoc
 kattis-cli
 pickleshare
+beautifulsoup4
