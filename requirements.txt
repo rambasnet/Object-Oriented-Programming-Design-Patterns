@@ -14,3 +14,4 @@ pdoc
 kattis-cli
 pickleshare
 beautifulsoup4
+pillow
