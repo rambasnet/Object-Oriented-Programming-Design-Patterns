@@ -35,7 +35,7 @@ run-test:
 run-test-coverage:
 	$(COVERAGE) -v --cov-report=html:$(ASSIGNMENT)/A0/hello/htmlcov --cov-report=term --cov=$(ASSIGNMENT)/A0/hello $(ASSIGNMENT)/A0/hello/tests
 	$(COVERAGE) -v --cov-report=html:$(ASSIGNMENT)/A0-OOP/hello/htmlcov --cov-report=term --cov=$(ASSIGNMENT)/A0-OOP/hello $(ASSIGNMENT)/A0-OOP/hello/tests
-	$(COVERAGE) -v --cov-report=html:$(ASSIGNMENT)/A1/cold/htmlcov --cov-report=term --cov=$(ASSIGNMENT)/A1/cold A1/cold/tests
+	$(COVERAGE) -v --cov-report=html:$(ASSIGNMENT)/A1/cold/htmlcov --cov-report=term --cov=$(ASSIGNMENT)/A1/cold $(ASSIGNMENT)/A1/cold/tests
 	$(COVERAGE) -v --cov-report=html:$(ASSIGNMENT)/A1-OOP/cold/htmlcov --cov-report=term --cov=$(ASSIGNMENT)/A1-OOP/cold $(ASSIGNMENT)/A1-OOP/cold/tests
 
 .PHONY: clean
