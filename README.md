@@ -78,3 +78,11 @@ Once Python 3 and Jupyter Notebook are installed, open a terminal change the wor
 ```
 
 This will start a Jupyter session in your browser. Start from the `notebbooks/OO-Table-of-Contents.ipynb`
+
+#### Generating PDFs of notebooks on Linux system
+
+- Open a terminal and run the following command. The corresponding pdf files of all the notebooks (*.ipynb) will be generated and stored in .pdfs folder.
+
+```bash
+bash generatepdfs.sh
+```
