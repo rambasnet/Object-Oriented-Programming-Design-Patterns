@@ -127,4 +127,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .DS_Store
-A1-OOP/cold/htmlcov/
+demo-assignments/
