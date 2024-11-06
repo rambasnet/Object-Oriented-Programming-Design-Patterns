@@ -42,7 +42,7 @@ class Main(object):
         """Create or return exsiting instance
 
         Returns:
-                        Main: class instance
+            Main: class instance
         """
         if not cls._instance:
             cls._instance = Main()
