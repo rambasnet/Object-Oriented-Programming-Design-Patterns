@@ -34,7 +34,7 @@ jobs:
           flake8 --count --show-source --statistics demo-assignments/A0-OOP/hello
           flake8 --count --show-source --statistics demo-assignments/A1/cold
           flake8 --count --show-source --statistics demo-assignments/A1-OOP/cold
-          flask8 --count --show-source --statistics demo-assignments/A2-ABC/egypt
+          flake8 --count --show-source --statistics demo-assignments/A2-ABC/egypt
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           # flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Check types with mypy
