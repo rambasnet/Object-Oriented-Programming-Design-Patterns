@@ -19,7 +19,8 @@ class Solution(Kattis):
         """
         if Solution._instance:
             raise NameError(
-                "Cannot create multiple instances of a singleton class Solution")
+                "Cannot create multiple instances of \
+                a singleton class Solution")
 
         super().__init__(input_source)
         self._instance = self

@@ -9,6 +9,8 @@ __version__ = "2.0.0"
 __maintainer__ = "Ram Basnet"
 
 
+from os import path
+import sys
 import unittest
 from unittest.mock import patch
 from io import StringIO
@@ -25,11 +27,14 @@ class TestSolution(unittest.TestCase):
         """Tests solve method
         """
         # source = '6 8 10\n25 52 60\n5 12 13\n0 0 0\n'
-        with open('./data/1.in', 'r', encoding='utf-8') as source:
+        dir_path = path.join(path.dirname(__file__), '../data')
+        input_file = path.join(dir_path, '1.in')
+        with open(input_file, 'r', encoding='utf-8') as source:
             sol = Solution(source)
             sol.solve()
             sol.print_answer()
-            with open('./data/1.ans', 'r', encoding='utf-8') as expected:
+            output_file = path.join(dir_path, '1.ans')
+            with open(output_file, 'r', encoding='utf-8') as expected:
                 self.assertEqual(mock_stdout.getvalue(), expected.read())
 
     @patch('sys.stdout', new_callable=StringIO)

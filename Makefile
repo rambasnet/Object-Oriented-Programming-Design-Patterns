@@ -1,4 +1,4 @@
-TEST = python -m pytest
+TEST = pytest
 TEST_ARGS = -s --verbose --color=yes
 TYPE_CHECK = mypy --strict --allow-untyped-decorators --ignore-missing-imports
 STYLE_CHECK = flake8
