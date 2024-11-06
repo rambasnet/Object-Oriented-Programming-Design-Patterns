@@ -21,7 +21,8 @@ class Solution():
     """ Solution class to solve the problem"""
 
     def __init__(self) -> None:
-        """ Constructor"""
+        """ Constructor
+        """
         self._n: int = 0  # number of temperatures
         self._data: str = ''  # data
         self._temps: List[Temperature] = []  # list of temperatures
