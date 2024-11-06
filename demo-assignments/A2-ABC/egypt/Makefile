@@ -1,4 +1,4 @@
-all: check_types unittest localtest
+all: check-style check_types unittest localtest
 
 
 .PHONY: check-style
