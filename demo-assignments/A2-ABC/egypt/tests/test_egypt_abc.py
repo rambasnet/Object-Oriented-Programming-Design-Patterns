@@ -14,7 +14,7 @@ import sys
 import unittest
 from unittest.mock import patch
 from io import StringIO
-from egypt import Solution
+from egypt_abc import Solution
 
 
 class TestSolution(unittest.TestCase):
@@ -83,8 +83,7 @@ class TestSolution(unittest.TestCase):
             self.assertEqual(mock_stdout.getvalue(), expected)
 
     def test_data(self) -> None:
-        """
-        Tests data property
+        """Tests data property
         """
         data = '2 3 4\n20 50 62\n3 4 7\n0 0 0\n'
         with patch('sys.stdin', StringIO(data)):

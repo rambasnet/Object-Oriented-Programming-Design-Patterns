@@ -12,7 +12,7 @@ class Solution(Kattis):
     """Solution class to solve the problem
        Uses Singleton pattern and Kattis ABC class
     """
-    _instance = None
+    _instance: "Solution" | None = None
 
     def __init__(self, input_source: Any = sys.stdin) -> None:
         """Constructor
@@ -23,7 +23,7 @@ class Solution(Kattis):
                 a singleton class Solution")
 
         super().__init__(input_source)
-        self._instance = self
+        Solution._instance = self
         # self._input_source: Any = input_source
         self._data: List[List[int]] = []
         self._triangles: List[Triangle] = []
@@ -31,14 +31,12 @@ class Solution(Kattis):
         self.read_input()
 
     @classmethod
-    def get_instance(cls) -> Solution:
+    def get_instance(cls) -> Solution | None:
         """Returns the instance of the class
 
         Returns:
             Solution: class instance
         """
-        if cls._instance is None:
-            cls._instance = Solution()
         return cls._instance
 
     def read_input(self) -> None:
@@ -87,6 +85,12 @@ class Solution(Kattis):
         Prints the answer
         """
         sys.stdout.write(self.answer)
+
+    @classmethod
+    def reset_instance(cls) -> None:
+        """Resets the instance
+        """
+        cls._instance = None
 
     @staticmethod
     def main() -> None:
