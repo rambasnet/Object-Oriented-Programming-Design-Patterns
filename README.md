@@ -40,6 +40,7 @@ To run these notebooks interactively and save your work locally, you need [Pytho
 ```bash
     git clone https://github.com/rambasnet/Python-Object-Oriented-Programming.git
     bash run-jupyter.sh # run jupyter notebook server in the container
+    bash run-docker.sh # run the container in interactive mode to run bash or python commands
 ```
 
 - Jupiter Notebooks are inside the `notebooks` folder
