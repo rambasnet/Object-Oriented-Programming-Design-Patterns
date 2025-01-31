@@ -30,9 +30,6 @@ class Solution():
     def find_answer(self) -> int:
         """Counts the number of temperatures below zero
 
-        Args:
-            temps (List[int]): List of temperatures
-
         Returns:
             int: number of temperatures below zero
         """
@@ -43,10 +40,10 @@ class Solution():
         return count
 
     def read_data(self, source: Any) -> None:
-        """ Reads data from stdin.
+        """ Reads data from provided source.
 
         Args:
-            source (Any): stdin typically
+            source (Any): stdin typically for kattis problem
         """
         # ignore the first line
         data = source.readlines()
@@ -55,10 +52,10 @@ class Solution():
         self._temps = [Temperature(int(i)) for i in self._data.split()]
 
     def get_n(self) -> int:
-        """Returns the number of temperatures
+        """Returns the number of temperature readings
 
         Returns:
-            int: number of temperatures
+            int: number of temperature readings
         """
         return self._n
 
@@ -71,9 +68,7 @@ class Solution():
         return self._data
 
     def solve(self, source: Any) -> None:
-        """
-        Solves the problem
-        :return: None
+        """ Solves the problem.
         """
         self.read_data(source)
         print(self.find_answer())
@@ -81,7 +76,7 @@ class Solution():
 
     @staticmethod
     def main() -> None:
-        """main static method
+        """Entry static method
         """
         sol = Solution()
         sol.solve(sys.stdin)
