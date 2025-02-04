@@ -11,6 +11,7 @@ Algorithm:
     4. Iterate through the list and count the number of -ve temperatures
     5. Print the count
 """
+
 __author__ = "Ram Basnet"
 __date__ = "Oct 1, 2021"
 __license__ = "MIT"
