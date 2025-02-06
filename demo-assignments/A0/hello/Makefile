@@ -1,10 +1,8 @@
-# provide path to where plantuml.jar is downloaded
-PLANTUML = java -jar ~/plantuml.jar
 DOCS = docs
 PYTHON = python3
 
 .PHONY: all
-all: check-style fix-style check-types run-test run-test-coverage create-docs create-uml clean
+all: check-style fix-style check-types run-test run-test-coverage create-docs clean
 	@echo "All done!"
 
 .PHONY: check-style
@@ -29,7 +27,6 @@ run-test-coverage: create-doc-folder
 	pytest --verbose --color=yes --cov --cov-report term-missing --cov-report=html:$(DOCS)/test-cov tests/
 	@echo "All unittests passed!"
 
-
 .PHONY: check-types
 check-types:
 # use shell command which to check if mypy is installed and is in $PATH
@@ -46,25 +43,8 @@ create-doc-folder:
 
 .PHONY: create-docs
 create-docs: create-doc-folder
-	pdoc --output-dir $(DOCS)/code-docs hello.py main.py # creates html docs
+	pdoc --output-dir $(DOCS)/code-docs hello.py # creates html docs
 	@echo "html docs created and saved in $(DOCS)/code-docs"
-
-.PHONY: create-uml
-create-uml: create-doc-folder
-# use shell command which to check if java is installed and is in the $PATH
-ifeq ($(shell which java), )
-	$(error "No java found in $(PATH). Install java to run plantuml")
-endif
-# use wildcard function to check if file exists
-ifeq ($(wildcard ~/plantuml.jar), )
-	@echo "Downloading plantuml.jar in home folder..."
-	curl -L -o ~/plantuml.jar https://sourceforge.net/projects/plantuml/files/plantuml.jar/download
-endif
-	$(PLANTUML) ./uml/HelloWorld.plantuml
-	$(PLANTUML) ./uml/Main.plantuml
-	$(PLANTUML) ./uml/solution.plantuml
-	@echo "UML diagrams created and saved in uml folder"
-
 
 .PHONY: clean
 clean:

@@ -7,7 +7,7 @@ DEMO = './demo-assignments'
 
 .PHONY: all
 all: check-style check-type run-test-coverage clean
-	@echo "All checks passed"
+	@echo "All checks passed!"
 
 .PHONY: check-type
 check-type:
