@@ -1,0 +1,4 @@
+@startuml ClassInteraction
+title "UML Class Interaction"
+Solution "1" - Temperature: manages > *
+@enduml
