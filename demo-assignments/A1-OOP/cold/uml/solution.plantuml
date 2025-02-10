@@ -1,0 +1,22 @@
+@startuml Solution
+scale 2
+title "UML Class Diagram"
+class Solution {
+    .. Class Variables ..
+	_instance: Solution
+    .. Instance Variables ..
+    - _n: int
+    - _data: str
+    - _temps: List[Temperature]
+    + n: int {get; }
+    .. Overloaded Methods ..
+    + __init__(): None
+    .. Instance Methods ..
+	+ read_data(source: Any): None
+    + find_answer(): int
+    + get_data(): str
+    + solve(source: Any): None
+    .. Static Methods ..
+    + main(): None
+}
+@enduml
