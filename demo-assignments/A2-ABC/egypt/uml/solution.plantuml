@@ -1,4 +1,4 @@
-@startuml
+@startuml Solution
 scale 2
 title "UML Class Diagram"
 class Solution {
