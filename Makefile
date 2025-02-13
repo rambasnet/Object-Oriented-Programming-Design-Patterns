@@ -36,11 +36,11 @@ run-test:
 
 .PHONY: run-test-coverage
 run-test-coverage:
-	$(COVERAGE) -v --cov-report=html:$(DEMO)/A0/hello/htmlcov --cov-report=term-missing --cov=$(DEMO)/A0/hello $(DEMO)/A0/hello/tests
-	$(COVERAGE) -v --cov-report=html:$(DEMO)/A0-OOP/hello/htmlcov --cov-report=term-missing --cov=$(DEMO)/A0-OOP/hello $(DEMO)/A0-OOP/hello/tests
-	$(COVERAGE) -v --cov-report=html:$(DEMO)/A1/cold/htmlcov --cov-report=term-missing --cov=$(DEMO)/A1/cold $(DEMO)/A1/cold/tests
-	$(COVERAGE) -v --cov-report=html:$(DEMO)/A1-OOP/cold/htmlcov --cov-report=term-missing --cov=$(DEMO)/A1-OOP/cold $(DEMO)/A1-OOP/cold/tests
-	$(COVERAGE) -v --cov-report=html:$(DEMO)/A2-ABC/egypt/htmlcov --cov-report=term-missing --cov=$(DEMO)/A2-ABC/egypt $(DEMO)/A2-ABC/egypt/tests
+	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A0/hello $(DEMO)/A0/hello/tests
+	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A0-OOP/hello $(DEMO)/A0-OOP/hello/tests
+	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A1/cold $(DEMO)/A1/cold/tests
+	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A1-OOP/cold $(DEMO)/A1-OOP/cold/tests
+	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A2-ABC/egypt $(DEMO)/A2-ABC/egypt/tests
 
 .PHONY: clean
 clean:
