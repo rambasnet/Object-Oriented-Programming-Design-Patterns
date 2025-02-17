@@ -29,7 +29,6 @@ run-test-coverage: create-doc-folder
 	pytest --verbose --color=yes --cov --cov-report term-missing --cov-report=html:$(DOCS)/test-cov tests/
 	@echo "All unittests passed!"
 
-
 .PHONY: check-types
 check-types:
 # use shell command which to check if mypy is installed and is in $PATH
@@ -46,6 +45,7 @@ create-doc-folder:
 
 .PHONY: create-docs
 create-docs: create-doc-folder
+	# provide each module name; current path . not working!
 	pdoc --output-dir $(DOCS)/code-docs hello.py main.py # creates html docs
 	@echo "html docs created and saved in $(DOCS)/code-docs"
 
