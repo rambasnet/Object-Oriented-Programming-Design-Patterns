@@ -14,15 +14,12 @@ import sys
 import unittest
 from unittest.mock import patch
 from io import StringIO
-from egypt_singleton import Solution
+from egypt import Solution
 
 
 class TestSolution(unittest.TestCase):
     """Unittesting Solution class
     """
-
-    def tearDown(self) -> None:
-        return super().tearDown()
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_solve1(self, mock_stdout: StringIO) -> None:
@@ -38,7 +35,6 @@ class TestSolution(unittest.TestCase):
             output_file = path.join(dir_path, '1.ans')
             with open(output_file, 'r', encoding='utf-8') as expected:
                 self.assertEqual(mock_stdout.getvalue(), expected.read())
-            # Solution.reset_instance()
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_solve2(self, mock_stdout: StringIO) -> None:
@@ -52,7 +48,6 @@ class TestSolution(unittest.TestCase):
             sol.print_answer()
             expected: str = 'right\nwrong\nright\n'
             self.assertEqual(mock_stdout.getvalue(), expected)
-            # Solution.reset_instance()
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_solve3(self, mock_stdout: StringIO) -> None:
@@ -66,7 +61,6 @@ class TestSolution(unittest.TestCase):
             sol.print_answer()
             expected: str = 'wrong\nwrong\nwrong\nright\n'
             self.assertEqual(mock_stdout.getvalue(), expected)
-            # Solution.reset_instance()
 
     def test_solve4(self) -> None:
         """Tests solve method
@@ -77,7 +71,6 @@ class TestSolution(unittest.TestCase):
             sol.solve()
             expected: str = 'wrong\nwrong\nwrong\nright\n'
             self.assertEqual(sol.answer, expected)
-            # Solution.reset_instance()
 
     @patch('sys.stdout', new_callable=StringIO)
     def test_main(self, mock_stdout: StringIO) -> None:
@@ -99,7 +92,7 @@ class TestSolution(unittest.TestCase):
                 sol.data, [[2, 3, 4], [20, 50, 62], [3, 4, 7]])
 
     def test_singleton(self) -> None:
-        """Tests get_instance method
+        """Singleton pattern test
         """
         data1 = '2 3 4\n20 50 62\n3 4 7\n0 0 0\n'
         data2 = '20 30 40\n200 500 620\n30 40 70\n0 0 0\n'

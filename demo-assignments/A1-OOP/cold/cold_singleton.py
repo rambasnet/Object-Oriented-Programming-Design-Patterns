@@ -25,6 +25,13 @@ class Solution():
     _instance: "Solution" | None = None
 
     def __new__(cls) -> "Solution":
+        """Creates a new instance of the class if not already created.
+
+        Enforces Singleton pattern.
+
+        Returns:
+            Solution: class instance
+        """
         if cls._instance is None:
             cls._instance = super().__new__(cls)
         return cls._instance

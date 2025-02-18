@@ -6,6 +6,7 @@ class Temperature {
     .. Instance Variables ..
     - _temp: int
     - _unit: str
+    - attribute: float
     + temp: int {get; set;}
     + unit: str {get; set;}
     .. Overloaded Methods ..

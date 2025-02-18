@@ -19,7 +19,7 @@ check-types:
 
 .PHONY: unittest
 unittest:
-	pytest --verbose  --color=yes --cov --cov-report term --cov-report html tests/
+	pytest --verbose  --color=yes --cov --cov-report term-missing --cov-report html tests/
 	@echo "Unittest done."
 
 .PHONY: create-uml
@@ -41,8 +41,7 @@ endif
 
 .PHONY: cleanall
 localtest:
-	kattis test -m egypt_abc.py
-	kattis test -m egypt_singleton.py
+	kattis test -m egypt.py
 	@echo "Local kattis sample data test done."
 
 

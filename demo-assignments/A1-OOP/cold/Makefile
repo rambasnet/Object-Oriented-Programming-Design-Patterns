@@ -25,7 +25,7 @@ endif
 
 .PHONY: run-test-coverage
 run-test-coverage: create-doc-folder
-	pytest --verbose --color=yes --cov --cov-report term-missing --cov-report=html:$(DOCS)/test-cov tests/
+	pytest --verbose --color=yes --cov --cov-report term-missing --cov-report=html:$(DOCS)/htmlcov tests/
 	@echo "All unittests passed!"
 
 .PHONY: check-types
@@ -57,6 +57,7 @@ endif
 ifeq ($(wildcard ~/plantuml.jar), )
 	@echo "Downloading plantuml.jar in home folder..."
 	curl -L -o ~/plantuml.jar https://sourceforge.net/projects/plantuml/files/plantuml.jar/download
+	sudo apt install graphviz
 endif
 	$(PLANTUML) ./uml/temperature.plantuml
 	$(PLANTUML) ./uml/solution.plantuml
