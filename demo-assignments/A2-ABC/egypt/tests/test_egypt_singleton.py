@@ -22,7 +22,6 @@ class TestSolution(unittest.TestCase):
     """
 
     def tearDown(self) -> None:
-        Solution.reset_instance()
         return super().tearDown()
 
     @patch('sys.stdout', new_callable=StringIO)
@@ -89,7 +88,6 @@ class TestSolution(unittest.TestCase):
             Solution.main()
             expected: str = 'wrong\nwrong\nwrong\nright\n'
             self.assertEqual(mock_stdout.getvalue(), expected)
-            # Solution.reset_instance()
 
     def test_data(self) -> None:
         """Tests data property
@@ -99,35 +97,14 @@ class TestSolution(unittest.TestCase):
             sol = Solution(sys.stdin)
             self.assertEqual(
                 sol.data, [[2, 3, 4], [20, 50, 62], [3, 4, 7]])
-            # Solution.reset_instance()
 
     def test_singleton(self) -> None:
-        """Tests singleton property
-        """
-        data = '2 3 4\n20 50 62\n3 4 7\n0 0 0\n'
-        with patch('sys.stdin', StringIO(data)):
-            _ = Solution(sys.stdin)
-            with self.assertRaises(NameError):
-                _ = Solution(sys.stdin)
-            # self.assertIs(instance1, instance2)
-            # Solution.reset_instance()
-
-    def test_get_instance(self) -> None:
         """Tests get_instance method
         """
-        data = '2 3 4\n20 50 62\n3 4 7\n0 0 0\n'
-        with patch('sys.stdin', StringIO(data)):
+        data1 = '2 3 4\n20 50 62\n3 4 7\n0 0 0\n'
+        data2 = '20 30 40\n200 500 620\n30 40 70\n0 0 0\n'
+        with patch('sys.stdin', StringIO(data1)):
             instance1 = Solution(sys.stdin)
-            instance2 = Solution.get_instance()
-            self.assertIs(instance1, instance2)
-
-    def test_set_instance(self) -> None:
-        """Tests set_instance method
-        """
-        data = '2 3 4\n20 50 62\n3 4 7\n0 0 0\n'
-        with patch('sys.stdin', StringIO(data)):
-            instance1 = Solution(sys.stdin)
-            instance2 = Solution.get_instance()
-            self.assertIs(instance1, instance2)
-            Solution.reset_instance()
-            self.assertIsNone(Solution._instance)
+            with patch('sys.stdin', StringIO(data2)):
+                instance2 = Solution(sys.stdin)
+                self.assertIs(instance1, instance2)
