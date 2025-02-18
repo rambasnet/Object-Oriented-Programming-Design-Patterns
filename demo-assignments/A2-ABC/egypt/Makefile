@@ -1,7 +1,7 @@
 PLANTUML = java -jar ~/plantuml.jar
 
-all: check-style check_types unittest create-uml localtest
-
+all: check-style check_types run-test run-test-coverage create-docs create-uml localtest clean
+DOCS = docs
 
 .PHONY: check-style
 check-style:
@@ -17,10 +17,28 @@ check-types:
 	mypy --disallow-untyped-defs --strict .
 	@echo "Static type check done."
 
-.PHONY: unittest
-unittest:
-	pytest --verbose  --color=yes --cov --cov-report term-missing --cov-report html tests/
-	@echo "Unittest done."
+.PHONY: create-doc-folder
+create-doc-folder:
+	@mkdir -p $(DOCS) # creates all folder(s) if not exists
+
+.PHONY: run-test
+run-test:
+ifeq ($(shell which pytest), ) # if pytest not found
+	@echo "pytest not found. Installing..."
+	pip install pytest
+endif
+	pytest --verbose --color=yes tests/
+	@echo "All unittests passed!"
+
+.PHONY: run-test-coverage
+run-test-coverage: create-doc-folder
+	pytest --verbose --color=yes --cov --cov-report term-missing --cov-report=html:$(DOCS)/htmlcov tests/
+	@echo "All unittests passed!"
+
+.PHONY: create-docs
+create-docs: create-doc-folder
+	pdoc --output-dir $(DOCS)/code-docs egypt.py kattis.py triangle.py # creates html docs
+	@echo "html docs created and saved in $(DOCS)/code-docs"
 
 .PHONY: create-uml
 create-uml:
