@@ -14,17 +14,23 @@ class Solution(Kattis):
     """
     _instance: "Solution" | None = None
 
+    def __new__(cls, input_source: Any = sys.stdin) -> Solution:
+        """Creates a new instance of the class
+
+        Args:
+            input_source (Any): input source
+
+        Returns:
+            Solution: class instance
+        """
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def __init__(self, input_source: Any = sys.stdin) -> None:
         """Constructor
         """
-        if Solution._instance:
-            raise NameError(
-                "Cannot create multiple instances of \
-                a singleton class Solution")
-
-        super().__init__(input_source)
-        Solution._instance = self
-        # self._input_source: Any = input_source
+        Kattis.__init__(self, input_source)
         self._data: List[List[int]] = []
         self._triangles: List[Triangle] = []
         self._answer: List[str] = []
@@ -85,12 +91,6 @@ class Solution(Kattis):
         Prints the answer
         """
         sys.stdout.write(self.answer)
-
-    @classmethod
-    def reset_instance(cls) -> None:
-        """Resets the instance
-        """
-        cls._instance = None
 
     @staticmethod
     def main() -> None:
