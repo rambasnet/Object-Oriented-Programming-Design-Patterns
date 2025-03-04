@@ -39,3 +39,29 @@ class TestValues(unittest.TestCase):
     def test_float_float1(self) -> None:
         """ Test float and float1."""
         self.assertAlmostEqual(2.0, 1.000001, 3)
+
+    def test_assert_true(self) -> None:
+        """Test assert true."""
+        self.assertTrue(True)
+
+    def test_assert_false(self) -> None:
+        """Test assert false."""
+        self.assertFalse(False)
+
+    def test_assert_none(self) -> None:
+        """Test assert none."""
+        self.assertIsNone(None)
+
+    def test_assert_is(self) -> None:
+        """Test assert is."""
+        self.assertIs(True, True)
+
+    def test_assert_raises(self) -> None:
+        """Test assert raises."""
+        with self.assertRaises(ZeroDivisionError):
+            _ = 1 / 0
+
+    def test_assert_raises1(self) -> None:
+        """Test assert raises1."""
+        with self.assertRaises(TypeError):
+            _ = 1 + "5"
