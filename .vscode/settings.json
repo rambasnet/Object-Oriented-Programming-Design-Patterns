@@ -3,5 +3,6 @@
 
     ],
     "plantuml.render": "PlantUMLServer",
-    "plantuml.server": "https://www.plantuml.com/plantuml"
+    "plantuml.server": "https://www.plantuml.com/plantuml",
+    "remote.autoForwardPortsFallback": 0
 }
