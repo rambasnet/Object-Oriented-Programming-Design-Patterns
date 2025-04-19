@@ -1,0 +1,4 @@
+@startuml RelationshipsDiagram
+title "UML Class Relationships"
+Solution "1" - Temperature: manages > *
+@enduml

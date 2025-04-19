@@ -2,6 +2,10 @@
 PLANTUML = java -jar ~/plantuml.jar
 DOCS = docs
 PYTHON = python3
+UMLEXT = plantuml
+UMLDIR = ./uml
+UMLFILES = $(wildcard $(UMLDIR)/*.$(UMLEXT))
+
 
 .PHONY: all
 all: check-style fix-style check-types run-test run-test-coverage create-docs create-uml clean
@@ -60,11 +64,12 @@ ifeq ($(wildcard ~/plantuml.jar), )
 	@echo "Downloading plantuml.jar in home folder..."
 	curl -L -o ~/plantuml.jar https://sourceforge.net/projects/plantuml/files/plantuml.jar/download
 endif
-	$(PLANTUML) ./uml/HelloWorld.plantuml
-	$(PLANTUML) ./uml/Main.plantuml
-	$(PLANTUML) ./uml/solution.plantuml
-	@echo "UML diagrams created and saved in uml folder"
-
+	@echo "Processing plantuml files:"
+	@for file in $(UMLFILES); do \
+		echo processing $$file; \
+		$(PLANTUML) $$file; \
+	done
+	@echo "UML diagrams created and saved in $(UMLDIR) folder"
 
 .PHONY: clean
 clean:

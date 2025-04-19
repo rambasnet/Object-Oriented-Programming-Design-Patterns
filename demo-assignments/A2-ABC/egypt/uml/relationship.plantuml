@@ -1,0 +1,7 @@
+@startuml RelationshipDiagram
+scale 2
+title "UML Class Relationship"
+abstract Kattis
+Kattis <-- Solution
+Solution "1" - Triangle : manages > *
+@enduml

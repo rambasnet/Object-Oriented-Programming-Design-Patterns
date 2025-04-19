@@ -1,0 +1,4 @@
+@startuml Relationships
+title "UML Class Relationships"
+Solution "1" - HelloWorld: manages > 1
+@enduml

@@ -1,0 +1,13 @@
+@startuml SequenceDiagram
+scale 2
+title "UML Sequence Diagram"
+actor User
+
+User -> Solution: call static main to create singleton
+Solution -> User: prompts data from stdin
+User -> Solution: types data in correct format
+Solution -> Triangle : creates list of triangles
+Solution -> Triangle: gets individual answer
+Triangle -> Solution: returns individual answer
+Solution -> User: prints formatted final solution
+@enduml

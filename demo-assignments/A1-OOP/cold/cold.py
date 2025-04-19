@@ -1,9 +1,11 @@
 #! /usr/bin/env python3
 
 """
-Kattis problem - cold
+Solving Kattis problem - cold using Singleton pattern
 https://open.kattis.com/problems/cold
 """
+
+from __future__ import annotations
 
 __author__ = "Ram Basnet"
 __date__ = "2022/1/1"
@@ -18,7 +20,21 @@ from temperature import Temperature
 
 
 class Solution():
-    """ Solution class to solve the problem"""
+    """ Solution class to solve the problem using Singleton pattern"""
+
+    _instance: "Solution" | None = None
+
+    def __new__(cls) -> "Solution":
+        """Creates a new instance of the class if not already created.
+
+        Enforces Singleton pattern.
+
+        Returns:
+            Solution: class instance
+        """
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
     def __init__(self) -> None:
         """ Constructor
@@ -60,7 +76,8 @@ class Solution():
         """
         return self._n
 
-    def get_data(self) -> str:
+    @property
+    def data(self) -> str:
         """ Returns the data
 
         Returns:

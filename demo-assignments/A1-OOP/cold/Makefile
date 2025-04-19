@@ -1,6 +1,7 @@
 DOCS = docs
 PYTHON = python3
 PLANTUML = java -jar ~/plantuml.jar
+UMLFILES = $(wildcard ./uml/*.plantuml)
 
 .PHONY: all
 all: check-style fix-style check-types run-test run-test-coverage create-docs create-uml clean
@@ -59,9 +60,11 @@ ifeq ($(wildcard ~/plantuml.jar), )
 	curl -L -o ~/plantuml.jar https://sourceforge.net/projects/plantuml/files/plantuml.jar/download
 	sudo apt install graphviz
 endif
-	$(PLANTUML) ./uml/temperature.plantuml
-	$(PLANTUML) ./uml/solution.plantuml
-	$(PLANTUML) ./uml/interaction.plantuml
+	@echo "Creating UML diagrams..."
+	@for umlfile in $(UMLFILES); do \
+		echo "Processing $$umlfile..."; \
+		$(PLANTUML) $$umlfile; \
+	done
 	@echo "UML diagrams created and saved in uml folder"
 
 

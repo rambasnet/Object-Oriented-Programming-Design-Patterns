@@ -1,8 +1,10 @@
+#! /usr/bin/env python3
 """
-Hello World Program using OOP
+Main manager class that manages HelloWorld
+Uses Single Pattern - https://refactoring.guru/design-patterns/singleton
 """
-
 from __future__ import annotations
+
 
 __author__ = "Ram Basnet"
 __date__ = "2023/1/1"
@@ -10,39 +12,49 @@ __license__ = "MIT"
 __version__ = "0.1.0"
 __maintainer__ = "Ram Basnet"
 
+from helloworld import HelloWorld
 
-class HelloWorld(object):
+
+class Solution(object):
     """
-    Hello World Class
+    Singleton class Main
     """
+    _instance = None
 
     def __init__(self) -> None:
-        """
-        Constructor
-        """
-        self._message = 'Hello World!'
+        """ Constructor - uses single pattern"""
+        if Solution._instance:
+            raise NameError(
+                "Cannot create multiple instances of a singleton class Main")
+        self._solution: 'HelloWorld' = HelloWorld()
+        Solution._instance = self
 
-    def print_message(self) -> None:
+    def solve(self) -> None:
         """
-        Prints the message
-        """
-        print(self._message)
+        Solves the problem
 
-    def get_message(self) -> str:
+        :return: None
         """
-        Returns the message - using getter method
+        self._solution.print_message()
 
-        Returns:
-                self._message (str): Message stored in the object
-        """
-        return self._message
-
-    @property
-    def message(self) -> str:
-        """
-        Returns the message - using getter property
+    @classmethod
+    def get_instance(cls) -> 'Solution':
+        """Create or return exsiting instance
 
         Returns:
-                self._message (str): Message stored in the object
+            Main: class instance
         """
-        return self._message
+        if not cls._instance:
+            cls._instance = Solution()
+        return cls._instance
+
+    @staticmethod
+    def main() -> None:
+        """main static method
+        """
+        sol = Solution.get_instance()
+        sol.solve()
+
+
+if __name__ == '__main__':
+    Solution.main()

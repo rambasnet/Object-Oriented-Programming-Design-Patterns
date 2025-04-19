@@ -39,7 +39,7 @@ class TestSolution(unittest.TestCase):
         """Tests readData method"""
         self.sol.read_data(self.input1)
         self.assertEqual(self.sol.n, 3)
-        self.assertEqual(self.sol.get_data(), '5 -10 15')
+        self.assertEqual(self.sol.data, '5 -10 15')
 
     def test_read_data2(self) -> None:
         """
@@ -47,7 +47,7 @@ class TestSolution(unittest.TestCase):
         """
         self.sol.read_data(self.input2)
         self.assertEqual(self.sol.n, 5)
-        self.assertEqual(self.sol.get_data(), '-14 -5 -39 -5 -7')
+        self.assertEqual(self.sol.data, '-14 -5 -39 -5 -7')
 
     def test_find_answer1(self) -> None:
         """Tests findAnswer method"""

@@ -1,4 +1,16 @@
-@startuml
-title "UML Class Interaction"
-Main "1" - HelloWorld: manages >
+@startuml SolutionClass
+scale 2
+title  "UML Class Diagram"
+class Solution {
+	.. Class Variables ..
+	_instance: Solution
+	.. Instance Variables ..
+	- _solution: HelloWorld
+	.. Instance Methods ..
+	+ solve(): None
+	.. Class Methods ..
+	+ get_instance(): Solution
+	.. Static Methods ..
+	+ main(): None
+}
 @enduml

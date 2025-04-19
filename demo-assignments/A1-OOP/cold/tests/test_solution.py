@@ -39,7 +39,7 @@ class TestSolution(unittest.TestCase):
         """Tests readData method"""
         self.sol.read_data(self.input1)
         self.assertEqual(self.sol.n, 3)
-        self.assertEqual(self.sol.get_data(), '5 -10 15')
+        self.assertEqual(self.sol.data, '5 -10 15')
 
     def test_read_data2(self) -> None:
         """
@@ -48,7 +48,7 @@ class TestSolution(unittest.TestCase):
         """
         self.sol.read_data(self.input2)
         self.assertEqual(self.sol.n, 5)
-        self.assertEqual(self.sol.get_data(), '-14 -5 -39 -5 -7')
+        self.assertEqual(self.sol.data, '-14 -5 -39 -5 -7')
 
     def test_find_answer1(self) -> None:
         """Tests findAnswer method"""
@@ -80,3 +80,40 @@ class TestSolution(unittest.TestCase):
         """
         self.sol.solve(self.input2)
         self.assertEqual(mock_stdout.getvalue(), '5\n')
+
+    def test_singleton(self) -> None:
+        """Tests singleton pattern"""
+        a = Solution()
+        b = Solution()
+        self.assertIs(a, b)
+
+    def test_read_data(self) -> None:
+        """Test read_data method using StrionIO input
+        """
+        a = Solution()
+        a.read_data(StringIO("3\n5 -10 15\n"))
+        self.assertEqual(a.n, 3)
+
+    def test_find_answer(self) -> None:
+        """Test find_answer method
+        """
+        a = Solution()
+        a.read_data(StringIO("3\n5 -10 15\n"))
+        expected = a.find_answer()
+        assert expected == 1
+
+    def test_get_data3(self) -> None:
+        """Test data property
+        """
+        a = Solution()
+        a.read_data(StringIO("3\n5 -10 15\n"))
+        assert a.data == "5 -10 15"
+
+    def test_solve(self) -> None:
+        """Test solve method
+        """
+        a = Solution()
+        a.solve(StringIO("3\n5 -10 15\n"))
+        # we'll learn how to patch the stdout later
+        # for now we'll just check the answer
+        assert a.find_answer() == 1

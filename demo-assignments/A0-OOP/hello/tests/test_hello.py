@@ -1,5 +1,5 @@
 """
-Unittesting HelloWorld class
+Testing Solution class
 """
 
 __author__ = "Ram Basnet"
@@ -12,36 +12,42 @@ __maintainer__ = "Ram Basnet"
 import unittest
 from unittest.mock import patch
 from io import StringIO
-from hello import HelloWorld
+from hello import Solution
 
 
-class TestHelloWorld(unittest.TestCase):
+class TestSolution(unittest.TestCase):
     """
-    Unittesting HelloWorld class
+    Testing Singleton Solution class
     """
-
-    def setUp(self) -> None:
-        """
-        Setup method
-        :return: None
-        """
-        self.hello = HelloWorld()
 
     @patch('sys.stdout', new_callable=StringIO)
-    def test_print_message(self, mock_stdout: StringIO) -> None:
+    def test_solve(self, mock_stdout: StringIO) -> None:
         """
-        Tests printMessage method
-        :return: None
+        Tests solve method
         """
-        self.hello.print_message()
+        my_main: 'Solution' = Solution.get_instance()
+        my_main.solve()
         self.assertEqual(mock_stdout.getvalue(), 'Hello World!\n')
 
-    def test_getMessage(self) -> None:
+    def test_get_instance(self) -> None:
         """
-        Tests getMessage method
-        :return: None
+        Tests get_instance method
         """
-        self.assertEqual(self.hello.get_message(), 'Hello World!')
+        my_main: 'Solution' = Solution.get_instance()
+        self.assertIs(my_main.get_instance(), my_main)
 
-    def test_message(self) -> None:
-        self.assertEqual(self.hello.message, 'Hello World!')
+    def test_exeception(self) -> None:
+        """
+        Tests exception with multiple instances
+        """
+        _ = Solution.get_instance()
+        self.assertRaises(NameError, Solution)
+
+    def test_main_static(self) -> None:
+        """
+        Tests main staticmethod
+        """
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            # call the static method
+            Solution.main()
+            self.assertEqual(mock_stdout.getvalue(), 'Hello World!\n')

@@ -1,15 +1,15 @@
-__author__ = "Ram Basnet"
-__date__ = "2023/1/1"
-__license__ = "MIT"
-__version__ = "0.1.0"
-__maintainer__ = "Ram Basnet"
-
 """
 Unittesting Temperature class
 """
 
 import unittest
 from temperature import Temperature
+
+__author__ = "Ram Basnet"
+__date__ = "2023/1/1"
+__license__ = "MIT"
+__version__ = "0.1.0"
+__maintainer__ = "Ram Basnet"
 
 
 class TestTemperature(unittest.TestCase):

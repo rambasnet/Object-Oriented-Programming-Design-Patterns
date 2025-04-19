@@ -1,7 +1,11 @@
 PLANTUML = java -jar ~/plantuml.jar
-
-all: check-style check_types run-test run-test-coverage create-docs create-uml localtest clean
+UMLEXT = plantuml
+UMLDIR = ./uml
+UMLFILES = $(wildcard $(UMLDIR)/*.$(UMLEXT))
 DOCS = docs
+
+all: check-style check_types run-test run-test-coverage create-docs create-uml clean
+	@echo "Make all done...!"
 
 .PHONY: check-style
 check-style:
@@ -51,11 +55,12 @@ ifeq ($(wildcard ~/plantuml.jar), )
 	@echo "Downloading plantuml.jar in home folder..."
 	curl -L -o ~/plantuml.jar https://sourceforge.net/projects/plantuml/files/plantuml.jar/download
 endif
-	$(PLANTUML) uml/abc.plantuml
-	$(PLANTUML) uml/interaction.plantuml
-	$(PLANTUML) uml/solution.plantuml
-	$(PLANTUML) uml/triangle.plantuml
-	@echo "UML diagrams created and saved in uml folder"
+	@echo "Creating UML diagrams..."
+	@for file in $(UMLFILES); do \
+		echo Processing $$file; \
+		$(PLANTUML) $$file; \
+	done
+	@echo "UML diagrams created and saved in $(UMLDIR) folder"
 
 .PHONY: cleanall
 localtest:

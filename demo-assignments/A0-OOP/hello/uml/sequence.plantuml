@@ -1,0 +1,8 @@
+@startuml SequenceDiagram
+actor User
+User -> Solution: call static main to create singleton
+Solution -> HelloWorld: creates HelloWorld instance
+Solution -> HelloWorld: solve problem
+HelloWorld -> Solution: returns answer
+Solution -> User: prints formatted answer
+@enduml
