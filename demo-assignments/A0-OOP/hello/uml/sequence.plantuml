@@ -1,4 +1,5 @@
 @startuml SequenceDiagram
+title Sequence Diagram for hello problem
 actor User
 User -> Solution: call static main to create singleton
 Solution -> HelloWorld: creates HelloWorld instance
