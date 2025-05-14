@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.12
 
 RUN apt update \
   && apt install -y \
@@ -39,3 +39,5 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -p https://github.com/zsh-users/zsh-completions
 
 USER user
+ENV PATH="${HOME}/.local/bin:$PATH"
+CMD ["/bin/bash"]
