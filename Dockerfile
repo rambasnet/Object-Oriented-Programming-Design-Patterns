@@ -1,4 +1,4 @@
-FROM python:3.12
+FROM python:3.12-slim
 
 RUN apt update \
   && apt install -y \
@@ -14,8 +14,8 @@ ARG UID=1000
 ARG GID=1000
 
 # Set environment variables
-ENV USER                ${USER}
-ENV HOME                /home/${USER}
+ENV USER=${USER}
+ENV HOME=/home/${USER}
 
 # Create user and setup permissions on /etc/sudoers
 RUN useradd -m -s /bin/bash -N -u $UID $USER && \
@@ -39,5 +39,3 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -p https://github.com/zsh-users/zsh-completions
 
 USER user
-
-CMD zsh
