@@ -5,6 +5,7 @@ Solving Kattis problem - cold using Singleton pattern
 https://open.kattis.com/problems/cold
 """
 
+# for Python 3.7 - 3.9 compatibility for type hinting of class methods
 from __future__ import annotations
 
 __author__ = "Ram Basnet"
@@ -20,7 +21,7 @@ from temperature import Temperature
 
 
 class Solution():
-    """ Solution class to solve the problem using Singleton pattern"""
+    """ Solution class to solve the problem using Singleton pattern. """
 
     _instance: "Solution" | None = None
 
@@ -37,7 +38,7 @@ class Solution():
         return cls._instance
 
     def __init__(self) -> None:
-        """ Constructor
+        """ Constructor.
         """
         self._n: int = 0  # number of temperatures
         self._data: str = ''  # data
@@ -61,7 +62,6 @@ class Solution():
         Args:
             source (Any): stdin typically for kattis problem
         """
-        # ignore the first line
         data = source.readlines()
         self._n = int(data[0])
         self._data = data[1].strip()
@@ -69,7 +69,7 @@ class Solution():
 
     @property
     def n(self) -> int:
-        """Returns the number of temperature readings
+        """ Returns the number of temperature readings.
 
         Returns:
             int: number of temperature readings
@@ -78,7 +78,7 @@ class Solution():
 
     @property
     def data(self) -> str:
-        """ Returns the data
+        """ Returns the data.
 
         Returns:
             str: data
@@ -90,7 +90,6 @@ class Solution():
         """
         self.read_data(source)
         print(self.find_answer())
-        # sys.stdout.write('1')
 
     @staticmethod
     def main() -> None:
