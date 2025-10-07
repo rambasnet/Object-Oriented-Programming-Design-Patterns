@@ -21,11 +21,11 @@ class TestOrder(unittest.TestCase):
         """ Create a warehouse with some initial stock
         """
 
-        self.wh = Warehouse({'shoes': 10, 'hats': 3, 'umbrellas': 0})
+        self.wh = Warehouse({'shoes': 10, 'hats': 5, 'umbrellas': 0})
 
     @given(
         item=st.sampled_from(['shoes', 'hats']),
-        quantity=st.integers(min_value=1, max_value=4)
+        quantity=st.integers(min_value=1, max_value=10)
     )
     @settings(max_examples=100, derandomize=True)
     def test_stock_level_plus_quantity_equals_initial_stock_level(
@@ -43,6 +43,7 @@ class TestOrder(unittest.TestCase):
         initial_stock_level = self.wh.stock_count(item)
         print(f'{item=} = {initial_stock_level=}')
         status, item, quantity = Order.create_order(self.wh, item, quantity)
+        print(f'{quantity=}')
         if status == 'ok':
             self.assertEqual(
                 self.wh.stock_count(item) + quantity,
