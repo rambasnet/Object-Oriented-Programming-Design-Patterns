@@ -1,5 +1,6 @@
 DOCS = docs
 PYTHON = python3
+SRC = src
 
 .PHONY: all
 all: check-style fix-style check-types run-test run-test-coverage create-docs clean
@@ -43,7 +44,7 @@ create-doc-folder:
 
 .PHONY: create-docs
 create-docs: create-doc-folder
-	pdoc --output-dir $(DOCS)/code-docs hello.py # creates html docs
+	pdoc --output-dir $(DOCS)/code-docs $(SRC)/hello.py # creates html docs
 	@echo "html docs created and saved in $(DOCS)/code-docs"
 
 .PHONY: clean

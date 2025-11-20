@@ -2,6 +2,7 @@ DOCS = docs
 PYTHON = python3
 PLANTUML = java -jar ~/plantuml.jar
 UMLFILES = $(wildcard ./uml/*.plantuml)
+SRC_FILES = $(wildcard src/*.py)
 
 .PHONY: all
 all: check-style fix-style check-types run-test run-test-coverage create-docs create-uml clean
@@ -45,7 +46,7 @@ create-doc-folder:
 
 .PHONY: create-docs
 create-docs: create-doc-folder
-	pdoc --output-dir $(DOCS)/code-docs cold.py temperature.py # creates html docs
+	pdoc --output-dir $(DOCS)/code-docs $(SRC_FILES) # creates html docs
 	@echo "html docs created and saved in $(DOCS)/code-docs"
 
 .PHONY: create-uml

@@ -5,7 +5,7 @@ PYTHON = python3
 UMLEXT = plantuml
 UMLDIR = ./uml
 UMLFILES = $(wildcard $(UMLDIR)/*.$(UMLEXT))
-
+SRC_FILES = $(wildcard src/*.py)
 
 .PHONY: all
 all: check-style fix-style check-types run-test run-test-coverage create-docs create-uml clean
@@ -50,7 +50,7 @@ create-doc-folder:
 .PHONY: create-docs
 create-docs: create-doc-folder
 	# provide each module name; current path . not working!
-	pdoc --output-dir $(DOCS)/code-docs hello.py main.py # creates html docs
+	pdoc --output-dir $(DOCS)/code-docs $(SRC_FILES) # creates html docs
 	@echo "html docs created and saved in $(DOCS)/code-docs"
 
 .PHONY: create-uml

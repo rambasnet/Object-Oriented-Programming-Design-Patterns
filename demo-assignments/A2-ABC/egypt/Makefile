@@ -3,6 +3,7 @@ UMLEXT = plantuml
 UMLDIR = ./uml
 UMLFILES = $(wildcard $(UMLDIR)/*.$(UMLEXT))
 DOCS = docs
+SRC_FILES = $(wildcard src/*.py)
 
 all: check-style check_types run-test run-test-coverage create-docs create-uml clean
 	@echo "Make all done...!"
@@ -41,7 +42,7 @@ run-test-coverage: create-doc-folder
 
 .PHONY: create-docs
 create-docs: create-doc-folder
-	pdoc --output-dir $(DOCS)/code-docs egypt.py kattis.py triangle.py # creates html docs
+	pdoc --output-dir $(DOCS)/code-docs $(SRC_FILES) # creates html docs
 	@echo "html docs created and saved in $(DOCS)/code-docs"
 
 .PHONY: create-uml
