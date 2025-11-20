@@ -46,8 +46,8 @@ jobs:
           mypy --strict --allow-untyped-decorators --ignore-missing-imports demo-assignments/A2-ABC/egypt
       - name: Test with pytest
         run: |
-          pytest --verbose demo-assignments/A0/hello/tests
-          pytest --verbose demo-assignments/A0-OOP/hello/tests
-          pytest --verbose demo-assignments/A1/cold/tests
-          pytest --verbose demo-assignments/A1-OOP/cold/tests
-          pytest --verbose demo-assignments/A2-ABC/egypt/tests
+          python -m pytest --verbose demo-assignments/A0/hello/tests
+          python -m pytest --verbose demo-assignments/A0-OOP/hello/tests
+          python -m pytest --verbose demo-assignments/A1/cold/tests
+          python -m pytest --verbose demo-assignments/A1-OOP/cold/tests
+          python -m pytest --verbose demo-assignments/A2-ABC/egypt/tests
