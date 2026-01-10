@@ -1,0 +1,2271 @@
+# Serialization, JSON, and Rich CLI Library
+
+### Topics
+
+- serializing objects
+- deserializing objects
+- pickle
+- JSON
+- Rich CLI Library
+
+## Serializing objects
+
+- objects created in memory are not persistent
+    - they hold a lot of important information/states of objects as the program is being executed
+- to make an object persistent, we need to create a series of bytes that represent the state of the object and write those bytes to a file
+    - need to encode objects (**serializing**)
+    - also need to decode objects from a series of bytes (**deserializing**)
+- web services often use a service described as **RESTful**
+    - REST - REpresentational State Transfer
+- the server and client will exchange representation of objects using RESTful services
+- several ways to serialize objects
+- Pickle, JSON, XML, etc.
+
+## Serializing objects using pickle
+
+- Python `pickle` module is an object-oriented way to store object state directly in a special storage format
+- essentially converts an object's state (and all the state of all the objects it holds as attributes) into a series of bytes
+    - these bytes then can be transported or stored however we see fit
+- pickled files are for temporary persistence
+    - Pickled files using Python 3.7 may not be unpickled by newer version of Python or vice versa
+- NOTE - pickle module is not secure
+    - only unpickle data you trust!
+
+
+```python
+import pickle
+```
+
+
+```python
+help(pickle)
+```
+
+    Help on module pickle:
+    
+    NAME
+        pickle - Create portable serialized representations of Python objects.
+    
+    MODULE REFERENCE
+        https://docs.python.org/3.9/library/pickle
+        
+        The following documentation is automatically generated from the Python
+        source files.  It may be incomplete, incorrect or include features that
+        are considered implementation detail and may vary between Python
+        implementations.  When in doubt, consult the module reference at the
+        location listed above.
+    
+    DESCRIPTION
+        See module copyreg for a mechanism for registering custom picklers.
+        See module pickletools source for extensive comments.
+        
+        Classes:
+        
+            Pickler
+            Unpickler
+        
+        Functions:
+        
+            dump(object, file)
+            dumps(object) -> string
+            load(file) -> object
+            loads(bytes) -> object
+        
+        Misc variables:
+        
+            __version__
+            format_version
+            compatible_formats
+    
+    CLASSES
+        builtins.Exception(builtins.BaseException)
+            _pickle.PickleError
+                _pickle.PicklingError
+                _pickle.UnpicklingError
+        builtins.object
+            _pickle.Pickler
+            _pickle.Unpickler
+            PickleBuffer
+        
+        class PickleBuffer(builtins.object)
+         |  Wrapper for potentially out-of-band buffers
+         |  
+         |  Methods defined here:
+         |  
+         |  raw(self, /)
+         |      Return a memoryview of the raw memory underlying this buffer.
+         |      Will raise BufferError is the buffer isn't contiguous.
+         |  
+         |  release(self, /)
+         |      Release the underlying buffer exposed by the PickleBuffer object.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Static methods defined here:
+         |  
+         |  __new__(*args, **kwargs) from builtins.type
+         |      Create and return a new object.  See help(type) for accurate signature.
+        
+        class PickleError(builtins.Exception)
+         |  Method resolution order:
+         |      PickleError
+         |      builtins.Exception
+         |      builtins.BaseException
+         |      builtins.object
+         |  
+         |  Data descriptors defined here:
+         |  
+         |  __weakref__
+         |      list of weak references to the object (if defined)
+         |  
+         |  ----------------------------------------------------------------------
+         |  Methods inherited from builtins.Exception:
+         |  
+         |  __init__(self, /, *args, **kwargs)
+         |      Initialize self.  See help(type(self)) for accurate signature.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Static methods inherited from builtins.Exception:
+         |  
+         |  __new__(*args, **kwargs) from builtins.type
+         |      Create and return a new object.  See help(type) for accurate signature.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Methods inherited from builtins.BaseException:
+         |  
+         |  __delattr__(self, name, /)
+         |      Implement delattr(self, name).
+         |  
+         |  __getattribute__(self, name, /)
+         |      Return getattr(self, name).
+         |  
+         |  __reduce__(...)
+         |      Helper for pickle.
+         |  
+         |  __repr__(self, /)
+         |      Return repr(self).
+         |  
+         |  __setattr__(self, name, value, /)
+         |      Implement setattr(self, name, value).
+         |  
+         |  __setstate__(...)
+         |  
+         |  __str__(self, /)
+         |      Return str(self).
+         |  
+         |  with_traceback(...)
+         |      Exception.with_traceback(tb) --
+         |      set self.__traceback__ to tb and return self.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Data descriptors inherited from builtins.BaseException:
+         |  
+         |  __cause__
+         |      exception cause
+         |  
+         |  __context__
+         |      exception context
+         |  
+         |  __dict__
+         |  
+         |  __suppress_context__
+         |  
+         |  __traceback__
+         |  
+         |  args
+        
+        class Pickler(builtins.object)
+         |  Pickler(file, protocol=None, fix_imports=True, buffer_callback=None)
+         |  
+         |  This takes a binary file for writing a pickle data stream.
+         |  
+         |  The optional *protocol* argument tells the pickler to use the given
+         |  protocol; supported protocols are 0, 1, 2, 3, 4 and 5.  The default
+         |  protocol is 4. It was introduced in Python 3.4, and is incompatible
+         |  with previous versions.
+         |  
+         |  Specifying a negative protocol version selects the highest protocol
+         |  version supported.  The higher the protocol used, the more recent the
+         |  version of Python needed to read the pickle produced.
+         |  
+         |  The *file* argument must have a write() method that accepts a single
+         |  bytes argument. It can thus be a file object opened for binary
+         |  writing, an io.BytesIO instance, or any other custom object that meets
+         |  this interface.
+         |  
+         |  If *fix_imports* is True and protocol is less than 3, pickle will try
+         |  to map the new Python 3 names to the old module names used in Python
+         |  2, so that the pickle data stream is readable with Python 2.
+         |  
+         |  If *buffer_callback* is None (the default), buffer views are
+         |  serialized into *file* as part of the pickle stream.
+         |  
+         |  If *buffer_callback* is not None, then it can be called any number
+         |  of times with a buffer view.  If the callback returns a false value
+         |  (such as None), the given buffer is out-of-band; otherwise the
+         |  buffer is serialized in-band, i.e. inside the pickle stream.
+         |  
+         |  It is an error if *buffer_callback* is not None and *protocol*
+         |  is None or smaller than 5.
+         |  
+         |  Methods defined here:
+         |  
+         |  __init__(self, /, *args, **kwargs)
+         |      Initialize self.  See help(type(self)) for accurate signature.
+         |  
+         |  __sizeof__(self, /)
+         |      Returns size in memory, in bytes.
+         |  
+         |  clear_memo(self, /)
+         |      Clears the pickler's "memo".
+         |      
+         |      The memo is the data structure that remembers which objects the
+         |      pickler has already seen, so that shared or recursive objects are
+         |      pickled by reference and not by value.  This method is useful when
+         |      re-using picklers.
+         |  
+         |  dump(self, obj, /)
+         |      Write a pickled representation of the given object to the open file.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Static methods defined here:
+         |  
+         |  __new__(*args, **kwargs) from builtins.type
+         |      Create and return a new object.  See help(type) for accurate signature.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Data descriptors defined here:
+         |  
+         |  bin
+         |  
+         |  dispatch_table
+         |  
+         |  fast
+         |  
+         |  memo
+         |  
+         |  persistent_id
+        
+        class PicklingError(PickleError)
+         |  Method resolution order:
+         |      PicklingError
+         |      PickleError
+         |      builtins.Exception
+         |      builtins.BaseException
+         |      builtins.object
+         |  
+         |  Data descriptors inherited from PickleError:
+         |  
+         |  __weakref__
+         |      list of weak references to the object (if defined)
+         |  
+         |  ----------------------------------------------------------------------
+         |  Methods inherited from builtins.Exception:
+         |  
+         |  __init__(self, /, *args, **kwargs)
+         |      Initialize self.  See help(type(self)) for accurate signature.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Static methods inherited from builtins.Exception:
+         |  
+         |  __new__(*args, **kwargs) from builtins.type
+         |      Create and return a new object.  See help(type) for accurate signature.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Methods inherited from builtins.BaseException:
+         |  
+         |  __delattr__(self, name, /)
+         |      Implement delattr(self, name).
+         |  
+         |  __getattribute__(self, name, /)
+         |      Return getattr(self, name).
+         |  
+         |  __reduce__(...)
+         |      Helper for pickle.
+         |  
+         |  __repr__(self, /)
+         |      Return repr(self).
+         |  
+         |  __setattr__(self, name, value, /)
+         |      Implement setattr(self, name, value).
+         |  
+         |  __setstate__(...)
+         |  
+         |  __str__(self, /)
+         |      Return str(self).
+         |  
+         |  with_traceback(...)
+         |      Exception.with_traceback(tb) --
+         |      set self.__traceback__ to tb and return self.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Data descriptors inherited from builtins.BaseException:
+         |  
+         |  __cause__
+         |      exception cause
+         |  
+         |  __context__
+         |      exception context
+         |  
+         |  __dict__
+         |  
+         |  __suppress_context__
+         |  
+         |  __traceback__
+         |  
+         |  args
+        
+        class Unpickler(builtins.object)
+         |  Unpickler(file, *, fix_imports=True, encoding='ASCII', errors='strict', buffers=())
+         |  
+         |  This takes a binary file for reading a pickle data stream.
+         |  
+         |  The protocol version of the pickle is detected automatically, so no
+         |  protocol argument is needed.  Bytes past the pickled object's
+         |  representation are ignored.
+         |  
+         |  The argument *file* must have two methods, a read() method that takes
+         |  an integer argument, and a readline() method that requires no
+         |  arguments.  Both methods should return bytes.  Thus *file* can be a
+         |  binary file object opened for reading, an io.BytesIO object, or any
+         |  other custom object that meets this interface.
+         |  
+         |  Optional keyword arguments are *fix_imports*, *encoding* and *errors*,
+         |  which are used to control compatibility support for pickle stream
+         |  generated by Python 2.  If *fix_imports* is True, pickle will try to
+         |  map the old Python 2 names to the new names used in Python 3.  The
+         |  *encoding* and *errors* tell pickle how to decode 8-bit string
+         |  instances pickled by Python 2; these default to 'ASCII' and 'strict',
+         |  respectively.  The *encoding* can be 'bytes' to read these 8-bit
+         |  string instances as bytes objects.
+         |  
+         |  Methods defined here:
+         |  
+         |  __init__(self, /, *args, **kwargs)
+         |      Initialize self.  See help(type(self)) for accurate signature.
+         |  
+         |  __sizeof__(self, /)
+         |      Returns size in memory, in bytes.
+         |  
+         |  find_class(self, module_name, global_name, /)
+         |      Return an object from a specified module.
+         |      
+         |      If necessary, the module will be imported. Subclasses may override
+         |      this method (e.g. to restrict unpickling of arbitrary classes and
+         |      functions).
+         |      
+         |      This method is called whenever a class or a function object is
+         |      needed.  Both arguments passed are str objects.
+         |  
+         |  load(self, /)
+         |      Load a pickle.
+         |      
+         |      Read a pickled object representation from the open file object given
+         |      in the constructor, and return the reconstituted object hierarchy
+         |      specified therein.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Static methods defined here:
+         |  
+         |  __new__(*args, **kwargs) from builtins.type
+         |      Create and return a new object.  See help(type) for accurate signature.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Data descriptors defined here:
+         |  
+         |  memo
+         |  
+         |  persistent_load
+        
+        class UnpicklingError(PickleError)
+         |  Method resolution order:
+         |      UnpicklingError
+         |      PickleError
+         |      builtins.Exception
+         |      builtins.BaseException
+         |      builtins.object
+         |  
+         |  Data descriptors inherited from PickleError:
+         |  
+         |  __weakref__
+         |      list of weak references to the object (if defined)
+         |  
+         |  ----------------------------------------------------------------------
+         |  Methods inherited from builtins.Exception:
+         |  
+         |  __init__(self, /, *args, **kwargs)
+         |      Initialize self.  See help(type(self)) for accurate signature.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Static methods inherited from builtins.Exception:
+         |  
+         |  __new__(*args, **kwargs) from builtins.type
+         |      Create and return a new object.  See help(type) for accurate signature.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Methods inherited from builtins.BaseException:
+         |  
+         |  __delattr__(self, name, /)
+         |      Implement delattr(self, name).
+         |  
+         |  __getattribute__(self, name, /)
+         |      Return getattr(self, name).
+         |  
+         |  __reduce__(...)
+         |      Helper for pickle.
+         |  
+         |  __repr__(self, /)
+         |      Return repr(self).
+         |  
+         |  __setattr__(self, name, value, /)
+         |      Implement setattr(self, name, value).
+         |  
+         |  __setstate__(...)
+         |  
+         |  __str__(self, /)
+         |      Return str(self).
+         |  
+         |  with_traceback(...)
+         |      Exception.with_traceback(tb) --
+         |      set self.__traceback__ to tb and return self.
+         |  
+         |  ----------------------------------------------------------------------
+         |  Data descriptors inherited from builtins.BaseException:
+         |  
+         |  __cause__
+         |      exception cause
+         |  
+         |  __context__
+         |      exception context
+         |  
+         |  __dict__
+         |  
+         |  __suppress_context__
+         |  
+         |  __traceback__
+         |  
+         |  args
+    
+    FUNCTIONS
+        dump(obj, file, protocol=None, *, fix_imports=True, buffer_callback=None)
+            Write a pickled representation of obj to the open file object file.
+            
+            This is equivalent to ``Pickler(file, protocol).dump(obj)``, but may
+            be more efficient.
+            
+            The optional *protocol* argument tells the pickler to use the given
+            protocol; supported protocols are 0, 1, 2, 3, 4 and 5.  The default
+            protocol is 4. It was introduced in Python 3.4, and is incompatible
+            with previous versions.
+            
+            Specifying a negative protocol version selects the highest protocol
+            version supported.  The higher the protocol used, the more recent the
+            version of Python needed to read the pickle produced.
+            
+            The *file* argument must have a write() method that accepts a single
+            bytes argument.  It can thus be a file object opened for binary
+            writing, an io.BytesIO instance, or any other custom object that meets
+            this interface.
+            
+            If *fix_imports* is True and protocol is less than 3, pickle will try
+            to map the new Python 3 names to the old module names used in Python
+            2, so that the pickle data stream is readable with Python 2.
+            
+            If *buffer_callback* is None (the default), buffer views are serialized
+            into *file* as part of the pickle stream.  It is an error if
+            *buffer_callback* is not None and *protocol* is None or smaller than 5.
+        
+        dumps(obj, protocol=None, *, fix_imports=True, buffer_callback=None)
+            Return the pickled representation of the object as a bytes object.
+            
+            The optional *protocol* argument tells the pickler to use the given
+            protocol; supported protocols are 0, 1, 2, 3, 4 and 5.  The default
+            protocol is 4. It was introduced in Python 3.4, and is incompatible
+            with previous versions.
+            
+            Specifying a negative protocol version selects the highest protocol
+            version supported.  The higher the protocol used, the more recent the
+            version of Python needed to read the pickle produced.
+            
+            If *fix_imports* is True and *protocol* is less than 3, pickle will
+            try to map the new Python 3 names to the old module names used in
+            Python 2, so that the pickle data stream is readable with Python 2.
+            
+            If *buffer_callback* is None (the default), buffer views are serialized
+            into *file* as part of the pickle stream.  It is an error if
+            *buffer_callback* is not None and *protocol* is None or smaller than 5.
+        
+        load(file, *, fix_imports=True, encoding='ASCII', errors='strict', buffers=())
+            Read and return an object from the pickle data stored in a file.
+            
+            This is equivalent to ``Unpickler(file).load()``, but may be more
+            efficient.
+            
+            The protocol version of the pickle is detected automatically, so no
+            protocol argument is needed.  Bytes past the pickled object's
+            representation are ignored.
+            
+            The argument *file* must have two methods, a read() method that takes
+            an integer argument, and a readline() method that requires no
+            arguments.  Both methods should return bytes.  Thus *file* can be a
+            binary file object opened for reading, an io.BytesIO object, or any
+            other custom object that meets this interface.
+            
+            Optional keyword arguments are *fix_imports*, *encoding* and *errors*,
+            which are used to control compatibility support for pickle stream
+            generated by Python 2.  If *fix_imports* is True, pickle will try to
+            map the old Python 2 names to the new names used in Python 3.  The
+            *encoding* and *errors* tell pickle how to decode 8-bit string
+            instances pickled by Python 2; these default to 'ASCII' and 'strict',
+            respectively.  The *encoding* can be 'bytes' to read these 8-bit
+            string instances as bytes objects.
+        
+        loads(data, /, *, fix_imports=True, encoding='ASCII', errors='strict', buffers=())
+            Read and return an object from the given pickle data.
+            
+            The protocol version of the pickle is detected automatically, so no
+            protocol argument is needed.  Bytes past the pickled object's
+            representation are ignored.
+            
+            Optional keyword arguments are *fix_imports*, *encoding* and *errors*,
+            which are used to control compatibility support for pickle stream
+            generated by Python 2.  If *fix_imports* is True, pickle will try to
+            map the old Python 2 names to the new names used in Python 3.  The
+            *encoding* and *errors* tell pickle how to decode 8-bit string
+            instances pickled by Python 2; these default to 'ASCII' and 'strict',
+            respectively.  The *encoding* can be 'bytes' to read these 8-bit
+            string instances as bytes objects.
+    
+    DATA
+        ADDITEMS = b'\x90'
+        APPEND = b'a'
+        APPENDS = b'e'
+        BINBYTES = b'B'
+        BINBYTES8 = b'\x8e'
+        BINFLOAT = b'G'
+        BINGET = b'h'
+        BININT = b'J'
+        BININT1 = b'K'
+        BININT2 = b'M'
+        BINPERSID = b'Q'
+        BINPUT = b'q'
+        BINSTRING = b'T'
+        BINUNICODE = b'X'
+        BINUNICODE8 = b'\x8d'
+        BUILD = b'b'
+        BYTEARRAY8 = b'\x96'
+        DEFAULT_PROTOCOL = 4
+        DICT = b'd'
+        DUP = b'2'
+        EMPTY_DICT = b'}'
+        EMPTY_LIST = b']'
+        EMPTY_SET = b'\x8f'
+        EMPTY_TUPLE = b')'
+        EXT1 = b'\x82'
+        EXT2 = b'\x83'
+        EXT4 = b'\x84'
+        FALSE = b'I00\n'
+        FLOAT = b'F'
+        FRAME = b'\x95'
+        FROZENSET = b'\x91'
+        GET = b'g'
+        GLOBAL = b'c'
+        HIGHEST_PROTOCOL = 5
+        INST = b'i'
+        INT = b'I'
+        LIST = b'l'
+        LONG = b'L'
+        LONG1 = b'\x8a'
+        LONG4 = b'\x8b'
+        LONG_BINGET = b'j'
+        LONG_BINPUT = b'r'
+        MARK = b'('
+        MEMOIZE = b'\x94'
+        NEWFALSE = b'\x89'
+        NEWOBJ = b'\x81'
+        NEWOBJ_EX = b'\x92'
+        NEWTRUE = b'\x88'
+        NEXT_BUFFER = b'\x97'
+        NONE = b'N'
+        OBJ = b'o'
+        PERSID = b'P'
+        POP = b'0'
+        POP_MARK = b'1'
+        PROTO = b'\x80'
+        PUT = b'p'
+        READONLY_BUFFER = b'\x98'
+        REDUCE = b'R'
+        SETITEM = b's'
+        SETITEMS = b'u'
+        SHORT_BINBYTES = b'C'
+        SHORT_BINSTRING = b'U'
+        SHORT_BINUNICODE = b'\x8c'
+        STACK_GLOBAL = b'\x93'
+        STOP = b'.'
+        STRING = b'S'
+        TRUE = b'I01\n'
+        TUPLE = b't'
+        TUPLE1 = b'\x85'
+        TUPLE2 = b'\x86'
+        TUPLE3 = b'\x87'
+        UNICODE = b'V'
+        __all__ = ['PickleError', 'PicklingError', 'UnpicklingError', 'Pickler...
+    
+    FILE
+        /Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/pickle.py
+    
+    
+
+
+
+```python
+some_data = ['a list', 'containing', 5, 'items', {"including": ("str", "int", "dict", "list", "tuple")}]
+```
+
+
+```python
+some_data
+```
+
+
+
+
+    ['a list',
+     'containing',
+     5,
+     'items',
+     {'including': ('str', 'int', 'dict', 'list', 'tuple')}]
+
+
+
+
+```python
+# let's pickle/serialize the object list object
+with open("pickled_list.pkl", 'wb') as file:
+    pickle.dump(some_data, file)
+```
+
+
+```python
+# let's deserialize/load the object from file
+with open("pickled_list.pkl", 'rb') as file:
+    loaded_list = pickle.load(file)
+```
+
+
+```python
+type(loaded_list)
+```
+
+
+
+
+    list
+
+
+
+
+```python
+loaded_list
+```
+
+
+
+
+    ['a list',
+     'containing',
+     5,
+     'items',
+     {'including': ('str', 'int', 'dict', 'list', 'tuple')}]
+
+
+
+
+```python
+some_data == loaded_list
+```
+
+
+
+
+    True
+
+
+
+
+```python
+# use loaded_list object
+loaded_list.append([1, 2, 3])
+```
+
+
+```python
+loaded_list
+```
+
+
+
+
+    ['a list',
+     'containing',
+     5,
+     'items',
+     {'including': ('str', 'int', 'dict', 'list', 'tuple')},
+     [1, 2, 3]]
+
+
+
+## Serializing objects using JSON
+
+- there are many text-based format to exchange data
+- XML - Extensive Markup Language (XML)
+- YAML - Yet Another Markup Language
+- CSV - Comma-Separated Value
+- most of these techniques have obscure features that can be exploited from a security point of view
+    - e.g., may allow arbitrary commands to be executed on the host machine
+
+### JSON - JavaScript Object Notation
+
+- human-readable text-based format for exchanging data
+- one of the most popular techniques used by RESTful API services
+- JSON, as the name says, is more popular in JavaScript language to transfer data to a browser from the web server
+- JSON though popular is not as robust as the **pickle** module
+- it can serialize only basic data: 
+    - integers, floats, strings, and simple containers such as lists and dictionaries
+- generally, `json` module's functions try to serialize the object's state using the value of the object's `__dict__` attribute
+- json provides **dump** and **dumps**, **load** and **loads** functions
+
+
+```python
+import json
+```
+
+
+```python
+help(json)
+```
+
+
+```python
+class Contact:
+    def __init__(self, first, last):
+        self.first = first
+        self.last = last
+        
+    @property
+    def full_name(self):
+        return f'{self.first} {self.last}'
+```
+
+
+```python
+c = Contact("John", "Smith")
+```
+
+
+```python
+c.full_name
+```
+
+
+
+
+    'John Smith'
+
+
+
+
+```python
+json.dumps(c.__dict__)
+```
+
+
+
+
+    '{"first": "John", "last": "Smith"}'
+
+
+
+
+```python
+# better approach
+from typing import Any
+import json
+
+class ContactEncoder(json.JSONEncoder):
+    def default(self, obj: Any) -> Any:
+        if isinstance(obj, Contact):
+            return {
+                "__class__": "Contact",
+                "first": obj.first,
+                "last": obj.last,
+                "full_name": obj.full_name,
+            }
+        return super().default(obj)
+```
+
+
+```python
+c = Contact("John", "Smith")
+text = json.dumps(c, cls=ContactEncoder)
+```
+
+
+```python
+text
+```
+
+
+
+
+    '{"__class__": "Contact", "first": "John", "last": "Smith", "full_name": "John Smith"}'
+
+
+
+
+```python
+def decode_contact(json_object: Any) -> Any:
+    if json_object.get("__class__") == "Contact":
+        return Contact(json_object["first"], json_object["last"])
+    else:
+        return json_object
+```
+
+
+```python
+c2 = json.loads(text, object_hook=decode_contact)
+```
+
+
+```python
+c2.full_name
+```
+
+
+
+
+    'John Smith'
+
+
+
+
+```python
+type(c2)
+```
+
+
+
+
+    __main__.Contact
+
+
+
+
+```python
+some_text = ('{"__class__": "Contact", "first": "Milli", "last": "Dale", '
+            '"full_name": "Milli Dale"}')
+```
+
+
+```python
+c3 = json.loads(some_text, object_hook=decode_contact)
+```
+
+
+```python
+c3.full_name
+```
+
+
+
+
+    'Milli Dale'
+
+
+
+
+```python
+help(c3)
+```
+
+    Help on Contact in module __main__ object:
+    
+    class Contact(builtins.object)
+     |  Contact(first, last)
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, first, last)
+     |      Initialize self.  See help(type(self)) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Readonly properties defined here:
+     |  
+     |  full_name
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+    
+
+
+## JSON API and Weather App
+
+- Weather data sources: Open Weather, Weather Stack, Google Search, etc.
+- most services provide free API access with some limitations
+- replace access_key/api_id with your API key in the following demo
+
+### Weather Stack
+
+- real-time & Historical World Weather Data API
+- retrieve instant, accurate weather information for any location in the world in lightweight JSON format
+- Visit [https://weatherstack.com/](https://weatherstack.com/) to create your free account and API keys
+
+
+```python
+import json
+```
+
+
+```python
+! pip install requests
+```
+
+    Defaulting to user installation because normal site-packages is not writeable
+    Requirement already satisfied: requests in /Users/rbasnet/Library/Python/3.9/lib/python/site-packages (2.32.4)
+    Requirement already satisfied: charset_normalizer<4,>=2 in /Users/rbasnet/Library/Python/3.9/lib/python/site-packages (from requests) (3.4.3)
+    Requirement already satisfied: idna<4,>=2.5 in /Users/rbasnet/Library/Python/3.9/lib/python/site-packages (from requests) (3.10)
+    Requirement already satisfied: urllib3<3,>=1.21.1 in /Users/rbasnet/Library/Python/3.9/lib/python/site-packages (from requests) (2.5.0)
+    Requirement already satisfied: certifi>=2017.4.17 in /Users/rbasnet/Library/Python/3.9/lib/python/site-packages (from requests) (2025.8.3)
+
+
+
+```python
+# get current weather info for Grand Junction, Colorado
+# using weatherstack.com API
+
+import requests
+
+params = {
+    'access_key': '',  # FIXME
+  'query': 'Grand Junction, Colorado'
+}
+
+api_result = requests.get('http://api.weatherstack.com/current', params) 
+# only allows http access with free account
+
+api_response = api_result.json()
+```
+
+    /Users/rbasnet/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+      warnings.warn(
+
+
+
+```python
+api_response
+```
+
+
+
+
+    {'request': {'type': 'City',
+      'query': 'Grand Junction, United States of America',
+      'language': 'en',
+      'unit': 'm'},
+     'location': {'name': 'Grand Junction',
+      'country': 'United States of America',
+      'region': 'Colorado',
+      'lat': '39.064',
+      'lon': '-108.550',
+      'timezone_id': 'America/Denver',
+      'localtime': '2025-10-16 12:10',
+      'localtime_epoch': 1760616600,
+      'utc_offset': '-6.0'},
+     'current': {'observation_time': '06:10 PM',
+      'temperature': 11,
+      'weather_code': 113,
+      'weather_icons': ['https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png'],
+      'weather_descriptions': ['Sunny'],
+      'astro': {'sunrise': '07:25 AM',
+       'sunset': '06:33 PM',
+       'moonrise': '02:35 AM',
+       'moonset': '04:29 PM',
+       'moon_phase': 'Waning Crescent',
+       'moon_illumination': 27},
+      'air_quality': {'co': '132.85',
+       'no2': '2.75',
+       'o3': '104',
+       'so2': '1.35',
+       'pm2_5': '5.55',
+       'pm10': '36.85',
+       'us-epa-index': '1',
+       'gb-defra-index': '1'},
+      'wind_speed': 4,
+      'wind_degree': 304,
+      'wind_dir': 'WNW',
+      'pressure': 1017,
+      'precip': 0,
+      'humidity': 48,
+      'cloudcover': 0,
+      'feelslike': 11,
+      'uv_index': 4,
+      'visibility': 16,
+      'is_day': 'yes'}}
+
+
+
+
+```python
+# print better
+print(json.dumps(api_response, indent=2))
+```
+
+    {
+      "request": {
+        "type": "City",
+        "query": "Grand Junction, United States of America",
+        "language": "en",
+        "unit": "m"
+      },
+      "location": {
+        "name": "Grand Junction",
+        "country": "United States of America",
+        "region": "Colorado",
+        "lat": "39.064",
+        "lon": "-108.550",
+        "timezone_id": "America/Denver",
+        "localtime": "2025-10-16 12:10",
+        "localtime_epoch": 1760616600,
+        "utc_offset": "-6.0"
+      },
+      "current": {
+        "observation_time": "06:10 PM",
+        "temperature": 11,
+        "weather_code": 113,
+        "weather_icons": [
+          "https://cdn.worldweatheronline.com/images/wsymbols01_png_64/wsymbol_0001_sunny.png"
+        ],
+        "weather_descriptions": [
+          "Sunny"
+        ],
+        "astro": {
+          "sunrise": "07:25 AM",
+          "sunset": "06:33 PM",
+          "moonrise": "02:35 AM",
+          "moonset": "04:29 PM",
+          "moon_phase": "Waning Crescent",
+          "moon_illumination": 27
+        },
+        "air_quality": {
+          "co": "132.85",
+          "no2": "2.75",
+          "o3": "104",
+          "so2": "1.35",
+          "pm2_5": "5.55",
+          "pm10": "36.85",
+          "us-epa-index": "1",
+          "gb-defra-index": "1"
+        },
+        "wind_speed": 4,
+        "wind_degree": 304,
+        "wind_dir": "WNW",
+        "pressure": 1017,
+        "precip": 0,
+        "humidity": 48,
+        "cloudcover": 0,
+        "feelslike": 11,
+        "uv_index": 4,
+        "visibility": 16,
+        "is_day": "yes"
+      }
+    }
+
+
+
+```python
+def celciusToFahrenheit(celcius: int) -> float:
+    return celcius*(9/5)+32 
+```
+
+
+```python
+celciusTemp = api_response['current']['temperature']
+```
+
+
+```python
+print('Current temperature in %s is %d℃' % (api_response['location']['name'], celciusTemp))
+```
+
+    Current temperature in Grand Junction is 11℃
+
+
+
+```python
+print(f"Current temperature in {api_response['location']['name']} is \
+    {celciusToFahrenheit(celciusTemp)} {chr(8457)}")
+```
+
+    Current temperature in Grand Junction is     51.8 ℉
+
+
+### OpenWeather
+
+- Weather forecasts, nowcasts and history in a fast and elegant way
+- visit [https://openweathermap.org/](https://openweathermap.org/) to create a free account and create API keys
+- it takes a couple of hours to activate your API
+- 1,000 API calls per day for free
+- 0.0015 USD per API call over the daily limit
+
+
+```python
+# get current weather info for Grand Junction, Colorado
+# using openweathermap.org API
+import requests
+
+params = {
+    'appid': '',  # FIXME
+  'q': 'Grand Junction, Colorado'
+}
+
+url = 'https://api.openweathermap.org/data/2.5/weather'
+
+# https is supported for free tier
+api_result = requests.get(url, params)
+
+api_response = api_result.json()
+```
+
+
+```python
+api_response
+```
+
+
+
+
+    {'coord': {'lon': -108.5507, 'lat': 39.0639},
+     'weather': [{'id': 800,
+       'main': 'Clear',
+       'description': 'clear sky',
+       'icon': '01d'}],
+     'base': 'stations',
+     'main': {'temp': 285.87,
+      'feels_like': 284.32,
+      'temp_min': 284.95,
+      'temp_max': 286.67,
+      'pressure': 1015,
+      'humidity': 43,
+      'sea_level': 1015,
+      'grnd_level': 832},
+     'visibility': 10000,
+     'wind': {'speed': 5.66, 'deg': 330},
+     'clouds': {'all': 0},
+     'dt': 1760637966,
+     'sys': {'type': 2,
+      'id': 2020637,
+      'country': 'US',
+      'sunrise': 1760621093,
+      'sunset': 1760661248},
+     'timezone': -21600,
+     'id': 5423573,
+     'name': 'Grand Junction',
+     'cod': 200}
+
+
+
+
+```python
+import json
+print(json.dumps(api_response, indent=2))
+```
+
+    {
+      "coord": {
+        "lon": -108.5507,
+        "lat": 39.0639
+      },
+      "weather": [
+        {
+          "id": 800,
+          "main": "Clear",
+          "description": "clear sky",
+          "icon": "01d"
+        }
+      ],
+      "base": "stations",
+      "main": {
+        "temp": 285.87,
+        "feels_like": 284.32,
+        "temp_min": 284.95,
+        "temp_max": 286.67,
+        "pressure": 1015,
+        "humidity": 43,
+        "sea_level": 1015,
+        "grnd_level": 832
+      },
+      "visibility": 10000,
+      "wind": {
+        "speed": 5.66,
+        "deg": 330
+      },
+      "clouds": {
+        "all": 0
+      },
+      "dt": 1760637966,
+      "sys": {
+        "type": 2,
+        "id": 2020637,
+        "country": "US",
+        "sunrise": 1760621093,
+        "sunset": 1760661248
+      },
+      "timezone": -21600,
+      "id": 5423573,
+      "name": "Grand Junction",
+      "cod": 200
+    }
+
+
+
+```python
+max_temp = api_response['main']['temp_max'] # temperature is in Kelvin
+```
+
+
+```python
+max_temp 
+```
+
+
+
+
+    286.67
+
+
+
+
+```python
+curr_temp = api_response['main']['temp']
+```
+
+
+```python
+curr_temp
+```
+
+
+
+
+    285.87
+
+
+
+
+```python
+print(f'Current Temperature in {api_response["name"]} is: {celciusToFahrenheit(curr_temp-273.15):.1f}{chr(8457)}')
+```
+
+    Current Temperature in Grand Junction is: 54.9℉
+
+
+
+```python
+api_response['main']['temp_min']
+```
+
+
+
+
+    284.95
+
+
+
+## Using Google Search
+
+- When you search for places in Google, it provides some weather info as well
+- use `beautifulsoup4` python package to parse html data
+- muse pip install it; already installed in the docker container
+
+
+```python
+from bs4 import BeautifulSoup
+import requests
+```
+
+
+```python
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+}
+
+def getGoogleWeather(city):
+    city = city.replace(" ", "+")
+    url = f'https://www.google.com/search?q={city}'
+    res = requests.get(url, headers=headers)
+    print("Searching...\n")
+    print(f'{res=}')
+    print(res.text)
+    soup = BeautifulSoup(res.text, 'html.parser')
+    location_tag = soup.find_all('div')
+    print(f'{len(location_tag)}')
+    location = soup.select_one('.BBwThe').getText().strip() # search by class
+    time = soup.select('#wob_dts')[0].getText().strip() #search by id
+    forecast = soup.select('#wob_dc')[0].getText().strip()
+    temp = soup.select('#wob_tm')[0].getText().strip()
+    return location, time, forecast, temp
+
+```
+
+
+```python
+city = input("Enter the Name of a City ->  ")
+city = city+" weather"
+result = getGoogleWeather(city)
+```
+
+    Searching...
+    
+    res=<Response [200]>
+    <!DOCTYPE html><html lang="en"><head><title>Google Search</title><style>body{background-color:#fff}</style><script nonce="YGJ95VOdbsybnZ1WkUNFOQ">window.google = window.google || {};window.google.c = window.google.c || {cap:0};</script></head><body><noscript><style>table,div,span,p{display:none}</style><meta content="0;url=/httpservice/retry/enablejs?sei=tTXxaPvNG_6Z0PEP4ruj8Ag" http-equiv="refresh"><div style="display:block">Please click <a href="/httpservice/retry/enablejs?sei=tTXxaPvNG_6Z0PEP4ruj8Ag">here</a> if you are not redirected within a few seconds.</div></noscript><script nonce="YGJ95VOdbsybnZ1WkUNFOQ">(function(){var sctm=false;(function(){sctm&&google.tick("load","pbsst");}).call(this);})();</script><script nonce="YGJ95VOdbsybnZ1WkUNFOQ">//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjogMywic291cmNlcyI6WyIiXSwic291cmNlc0NvbnRlbnQiOlsiICJdLCJuYW1lcyI6WyJjbG9zdXJlRHluYW1pY0J1dHRvbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEifQ==
+    (function(){var U=function(Z,M,a,k,g,x,Y,X,I,P){for(I=99;I!=29;)if(I==M){if((X=(Y=x,D.trustedTypes))&&X.createPolicy){try{Y=X.createPolicy(g,{createHTML:H,createScript:H,createScriptURL:H})}catch(b){if(D.console)D.console[k](b.message)}P=Y}else P=Y;I=84}else if(I==90)P=k,I=44;else if(I==Z)I=(a|7)>>4>=0&&a>>1<16?90:44;else if(I==99)I=Z;else{if(I==84)return P;I==44&&(I=(a-2^28)>=a&&(a-3|34)<a?M:84)}},D=this||self,H=function(Z){return U.call(this,93,61,3,Z)};(0,eval)(function(Z,M){return(M=U(93,61,35,"error","ks",null))&&Z.eval(M.createScript("1"))===1?function(a){return M.createScript(a)}:function(a){return""+a}}(D)(Array(Math.random()*7824|0).join("\n")+['//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjogMywic291cmNlcyI6WyIiXSwic291cmNlc0NvbnRlbnQiOlsiICJdLCJuYW1lcyI6WyJjbG9zdXJlRHluYW1pY0J1dHRvbiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEifQ==',
+    '(function(){/*',
+    '',
+    ' Copyright Google LLC',
+    ' SPDX-License-Identifier: Apache-2.0',
+    '*/',
+    'var n=function(a,Z,I,M,D,Y,H,X,g,U,x){return((Z&90)==((Z&52)==Z&&(x=(U=(Y=(H=a[M]<<24,X=a[(M|0)+1]<<16,-(H&X)-I*~(H|X)+(H^X)+I*(~H^X)),D=a[-2*~(M&I)+4*(M&-3)-(M|-3)+3*(~M|I)]<<8,(Y|0)+(Y&D)+~(Y&D)-(Y|~D)),g=a[(M|0)+3],I*(U|0)-(U&g)-(U^g)+I*(~U&g))),Z)&&(g=Zp,a=[-89,95,-55,-61,-84,38,a,29,68,-46],X=(M|7)-(M&-8)-(~M&7),U=YB[D.P](D.q7),U[D.P]=function(P){X=(X+=(H=P,I)+7*M,-~X+(~X^7)+(~X&7))},U.concat=function(P,k,t){return((H=(P=-3800*Y*(k=Y%16+1,H)-k*H+a[X+75&7]*Y*k+(g()|0)*k+X-1640*H+40*H*H+2*Y*Y*k-80*Y*Y*H,t=a[P],void 0),a)[(X+29&7)+(-2*~M+-3-(M|-3)+2*(~M|2))]=t,a)[X+(M&2)]=95,t},x=U),Z<<1&15)>=10&&Z-8<11&&(D=P2(8,true,a),D&128&&(D=(Y=D&127,M=P2(8,true,a)<<I,-~M+(Y^M)+(Y|~M))),x=D),x},gI=function(a,Z,I,M,D,Y,H,X,g,U,x){for(U=89;U!=65;)if(U==Z){a:{switch(X){case 1:x=g?"disable":"enable";break a;case 2:x=g?"highlight":"unhighlight";break a;case D:x=g?"activate":"deactivate";break a;case I:x=g?"select":"unselect";break a;case 16:x=g?"check":"uncheck";break a;case H:x=g?"focus":"blur";break a;case Y:x=g?"open":"close";break a}throw Error("Invalid component state");}U=4}else{if(U==39)return x;U==24?U=M+7>>2<M&&M-8<<1>=M?Z:4:U==10?(D.classList?Array.prototype.forEach.call(I,function(P){kB(39,52,a,"class","string"," ",P,D)}):Dp("string",10,D,Array.prototype.filter.call(XF(7,26,"class",D),function(P){return!UA(31,I,a,P)}).join(" ")),U=39):U==89?U=24:U==4&&(U=(M-1|39)>=M&&(M-5^13)<M?10:39)}},bk=function(a,Z,I,M,D,Y,H,X,g){for(X=82;X!=35;)if(X==82)X=21;else if(X==33)X=(Z|3)>=21&&(Z^37)<27?75:55;else if(X==23)H=sA(19,3,0,I,D,M),(Y=H>=0)&&Array.prototype.splice.call(D,H,I),g=Y,X=33;else if(X==21)X=((Z|9)&7)==a?23:33;else if(X==75)D.Wn(function(U){Y=U},I,M),g=Y,X=55;else if(X==55)return g},v2=function(a,Z,I,M,D,Y,H,X,g,U,x,P){for(P=99;P!=4;)if(P==17)v2(44,83,true,"object",D[U],Y,H,X,g),P=37;else if(P==77)P=TW?46:11;else if(P==26)H.setAttribute(U,Y),P=66;else if(P==93)X=Dp(X,13),Y&&Y[hX]?Y.V.add(String(D),X,I,T(H,51,M)?!!H.capture:!!H,g):OA(32,"object",false,H,I,Y,D,X,g),P=53;else if(P==12)P=Array.isArray(D)?38:93;else if(P==54)x=D,P=61;else if(P==11)g={},TW=(g.atomic=I,g.autocomplete="none",g.dropeffect="none",g.haspopup=I,g.live="off",g.multiline=I,g.multiselectable=I,g.orientation="vertical",g.readonly=I,g.relevant="additions text",g.required=I,g.sort="none",g.busy=I,g.disabled=I,g[M]=I,g.invalid="false",g),P=46;else if(P==83)this.type=I,this.currentTarget=this.target=M,this.defaultPrevented=this.Yb=false,P=25;else if(P==2)P=I.Dk?97:a;else if(P==9)H=M,H=(X=H<<13,(H|0)-(H&X)+(~H&X)),H=(Y=H>>17,(H|0)+~H-(~H^Y)),(H=(H^H<<5)&D)||(H=1),x=(I|H)+~(I|H)-(~I^H),P=94;else if(P==25)P=(Z-9&23)==4?9:94;else if(P==82)P=Y===""||Y==void 0?77:26;else if(P==51)Array.isArray(Y)&&(Y=Y.join(" ")),U="aria-"+D,P=82;else{if(P==53)return x;P==38?(U=0,P=15):P==97?(D=true,P=54):P==94?P=(Z&120)==Z?2:61:P==46?(X=TW,D in X?H.setAttribute(U,X[D]):H.removeAttribute(U),P=66):P==34?P=U<D.length?17:53:P==15?P=34:P==37?(U++,P=34):P==61?P=(Z-2&6)>=3&&(Z<<1&24)<15?51:66:P==99?P=50:P==66?P=(Z^95)>>4?53:12:P==50?P=(Z-5&15)==4?83:25:P==a&&(H=new wI(M,this),X=I.listener,Y=I.aq||I.src,I.X$&&w(I,null,1,5),D=X.call(Y,H),P=54)}},OA=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k,t,G,b){{b=56;while(b!=3){if(b==78)return G;if(b==14)b=Y.attachEvent?53:97;else if(b==16)Z.JE=void 0,Z.Zk=function(){return Z.JE?Z.JE:Z.JE=new Z},b=31;else if(b==73)jQ++,b=19;else if(b==69)G=(U=qW[Z.substring(0,3)+"_"])?U(Z.substring(3),I,M,D,Y,H,X,g):K0(78,17,Z,I),b=78;else if(b==88)t=function(){},H=void 0,D=uk(Z,function(E,d){for(d=62;d!=17;)d==37?(I&&rI(I),H=E,t(),t=void 0,d=17):d==62&&(d=t?37:17)},!!I),Y=D[0],M=D[1],G={top:function(E,d,z,A,v,N,q){for(q=16;q!=68;)if(q==53)N(),q=68;else{if(q==55)return v=Y(z),E&&E(v),v;q==16?(N=function(){H(function(S){rI(function(){E(S)})},z)},q=19):q==19?q=d?43:55:q==47?(A=t,t=function(){(A(),rI)(N)},q=68):q==43&&(q=H?53:47)}},pe:function(E){M&&M(E)}},b=17;else if(b==27)x=T(M,48,Z)?!!M.capture:!!M,(k=sA(19,66,Y))||(Y[QJ]=k=new c2(Y)),P=k.add(H,X,D,x,g),b=43;else if(b==33)b=Y.addEventListener?52:14;else if(b==8)U=VJ(5),P.proxy=U,U.src=Y,U.listener=P,b=33;else{if(b==18)throw Error("addEventListener and attachEvent are unavailable.");if(b==10)b=(a&104)==a?37:19;else if(b==17)b=((a^26)&15)==1?1:10;else if(b==91)Y.addListener(U),b=73;else if(b==36)b=a+3<15&&a+3>>3>=1?16:31;else if(b==45){for(D in M=((Array.prototype.forEach.call(XF(7,24,(Y={},"class"),Z),function(E){Y[E]=true}),Array).prototype.forEach.call(I,function(E){Y[E]=true}),""),Y)M+=M.length>0?" "+D:D;b=(Dp("string",8,Z,M),10)}else if(b==31)b=(a-3&15)==1?88:17;else if(b==97)b=Y.addListener&&Y.removeListener?91:18;else if(b==56)b=36;else if(b==37)b=H?27:9;else if(b==52)f0||(M=x),M===void 0&&(M=I),Y.addEventListener(H.toString(),U,M),b=73;else if(b==53)Y.attachEvent(n0("on",H.toString(),3),U),b=73;else if(b==1)b=Z.classList?20:45;else if(b==43)b=P.proxy?19:8;else if(b==19)b=a>>2&27?78:69;else if(b==20)Array.prototype.forEach.call(I,function(E,d,z){for(z=84;z!=60;)z==84?z=Z.classList?25:65:z==25?(Z.classList.add(E),z=60):z==65?z=(Z.classList?Z.classList.contains(E):UA(7,XF(7,27,"class",Z),0,E))?60:47:z==47&&(d=Dp("class",16,"",Z),Dp("string",6,Z,d+(d.length>0?" "+E:E)),z=60)}),b=10;else if(b==9)throw Error("Invalid event type");}}}},n0=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k,t){{k=79;while(k!=35)if(k==83)k=(Y=tX[D])?53:49;else if(k==69)k=(g=Z)?36:72;else if(k==2)k=I+8>>4?65:42;else if(k==79)k=74;else if(k==73)M-=8,Y.push((X=D>>M,510-~(X&255)- -1+-512)),k=26;else if(k==14)H++,k=15;else if(k==57)k=I-1>>3==1?16:7;else if(k==42)P=Z in ik?ik[Z]:ik[Z]=a+Z,k=65;else{if(k==7)return P;if(k==65)k=(I>>1&15)>=12&&I+4>>4<4?0:57;else if(k==98)k=15;else if(k==45)k=46;else if(k==4)U++,k=40;else if(k==22)t(x),k=4;else if(k==87){a:{if(x&&typeof x.length=="number"){if(T(x,50,Z)){g=typeof x.item=="function"||typeof x.item==a;break a}if(typeof x==="function"){g=typeof x.item=="function";break a}}g=false}k=(GW(8,M,"",t,g?EA(9,M,x):x),4)}else k==72?(X=this.constructor,k=8):k==82?k=76:k==40?k=U<Y.length?91:7:k==74?k=I-4>=22&&(I>>1&16)<16?54:2:k==16?(t=function(G){G&&H.appendChild(typeof G==="string"?X.createTextNode(G):G)},U=1,k=64):k==54?(zW.call(this,M),k=69):k==97?(D=dI(16,X),k=83):k==95?(D=D<<Z|a[H],M+=Z,k=45):k==36?(this.o=g,k=2):k==46?k=M>7?73:14:k==49?(X=(H=Object.getPrototypeOf(X.prototype))&&H.constructor,k=82):k==53?k=41:k==15?k=H<a.length?95:21:k==27?k=!GW(18,Z,"number",D,x)||T(x,52,Z)&&x.nodeType>M?22:87:k==91?(x=Y[U],k=27):k==64?k=40:k==0?(H=M=0,Y=[],k=98):k==76?k=X?97:41:k==41?(g=Y?typeof Y.Zk==="function"?Y.Zk():new Y:null,k=36):k==21?(P=Y,k=57):k==26?k=46:k==8&&(k=76)}}},W2=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k,t){for(k=(t=43,39);;)try{if(t==55)break;else if(t==98)P=X,t=59;else{if(t==73)return P;t==63?(U=Y.u,U(function(){T(I,35,false,Y,I)}),t=98):t==9?(k=57,X=NW(D,0,g,Y),t=92):t==19?t=99:t==99?t=Y.C.length?66:98:t==92?(k=39,t=45):t==59?t=(a&111)==a?70:73:t==43?t=68:t==24?(k=39,JX(3,M,Y,x),t=92):t==68?t=(a^2)>>5<3&&(a^33)>>4>=1?19:59:t==70?(me.call(this),Z||p0||(p0=new eQ),this.eL=this.EH=null,this.E0=void 0,this.i4=this.vn=null,this.T_=this.r9=false,this.U=null,t=73):t==51?t=99:t==66?(Y.u=Z,g=Y.C.pop(),t=9):t==45&&(t=H&&Y.u?63:51)}}catch(G){if(k==39)throw G;k==57&&(x=G,t=24)}},XF=function(a,Z,I,M,D,Y){for(Y=99;Y!=29;)if(Y==61)D=M.classList?M.classList:Dp(I,18,"",M).match(/\\S+/g)||[],Y=84;else if(Y==90)this.src=I,this.v={},this.hE=0,Y=44;else if(Y==93)Y=(Z-a|34)>=Z&&(Z+9&45)<Z?90:44;else if(Y==99)Y=93;else{if(Y==84)return D;Y==44&&(Y=(Z|16)==Z?61:84)}},O=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k,t,G){{t=48;while(t!=92)if(t==96){if(H=I.V.v[String(D)]){for(P=(H=H.concat(),g=Z,0);P<H.length;++P)(x=H[P])&&!x.Dk&&x.capture==M&&(X=x.listener,U=x.aq||x.src,x.X$&&dI(5,1,x,I.V),g=X.call(U,Y)!==false&&g);G=g&&!Y.defaultPrevented}else G=Z;t=41}else if(t==16)k=function(){},k.prototype=M.prototype,I.Y=M.prototype,I.prototype=new k,I.prototype.constructor=I,I.zJ=function(b,E,d){for(var z=10;z!=2;)if(z==10)var A=Array((z=90,arguments).length-Z),v=Z;else if(z==63)z=v<arguments.length?71:70;else if(z==90)z=63;else if(z==93)v++,z=63;else if(z==71)A[v-Z]=arguments[v],z=93;else if(z==70)return M.prototype[E].apply(b,A)},t=76;else if(t==41)t=(a+2^18)<a&&(a+1&62)>=a?16:76;else{if(t==76)return G;t==24?(I.Dk=Z,I.listener=null,I.proxy=null,I.src=null,I.aq=null,t=78):t==99?t=a>>2&7?78:24:t==78?t=a>>2>=9&&(a^41)>>5<2?96:41:t==48&&(t=99)}}},GW=function(a,Z,I,M,D,Y,H,X,g,U){for(g=86;g!=12;)if(g==92)g=88;else if(g==97)Y in H&&M.call(void 0,H[Y],Y,D),g=18;else if(g==49)M.C.splice(Z,Z,I),g=22;else if(g==74)g=((a|1)&7)==1?7:38;else if(g==7)X=D.length,H=typeof D==="string"?D.split(I):D,Y=Z,g=92;else{if(g==38)return U;g==88?g=Y<X?97:38:g==22?g=(a|24)==a?72:54:g==18?(Y++,g=88):g==54?g=(a^23)<6&&(a>>2&15)>=1?34:74:g==72?g=54:g==34?(Y=typeof D,H=Y!=Z?Y:D?Array.isArray(D)?"array":Y:"null",U=H==M||H==Z&&typeof D.length==I,g=74):g==86?g=47:g==47&&(g=(a>>1&15)==1?49:22)}},Dp=function(a,Z,I,M,D,Y){{Y=75;while(Y!=51)if(Y==75)Y=96;else if(Y==89)D=typeof M.className=="string"?M.className:M.getAttribute&&M.getAttribute(a)||I,Y=17;else if(Y==53)typeof a==="function"?D=a:(a[AX]||(a[AX]=function(H){return a.handleEvent(H)}),D=a[AX]),Y=8;else if(Y==8)Y=Z+3>>4?55:56;else if(Y==17)Y=(Z<<1&7)==2?53:8;else{if(Y==55)return D;Y==56?(typeof I.className==a?I.className=M:I.setAttribute&&I.setAttribute("class",M),Y=55):Y==96&&(Y=(Z+5&15)<9&&(Z+8&9)>=8?89:17)}}},sA=function(a,Z,I,M,D,Y,H,X,g){{g=11;while(g!=95)if(g==11)g=97;else if(g==22)X=this.n===0?0:Math.sqrt(this.U0/this.n),g=a;else if(g==17)D=I,X=function(){return D<M.length?{done:false,value:M[D++]}:{done:true}},g=48;else if(g==68){a:if(typeof D==="string")X=typeof Y!=="string"||Y.length!=M?-1:D.indexOf(Y,I);else{for(H=I;H<D.length;H++)if(H in D&&D[H]===Y){X=H;break a}X=-1}g=8}else if(g==48)g=Z-8>>4<4&&(Z>>2&7)>=3?52:87;else if(g==8)g=(Z-1^8)>=Z&&(Z+7&58)<Z?3:59;else if(g==52)this[this+""]=this,X=Promise.resolve(),g=87;else{if(g==a)return X;g==59?g=(Z|88)==Z?22:a:g==3?(M=I[QJ],X=M instanceof c2?M:null,g=59):g==97?g=Z-5>>4>=2&&(Z|5)>>5<2?17:48:g==87&&(g=(Z+5&61)>=Z&&(Z-6^15)<Z?68:8)}}},w=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k,t,G,b){for(b=57;b!=52;)if(b==70)O(32,true,a),b=61;else if(b==36)dI(6,I,a,D),b=71;else if(b==69)H=a.src,b=73;else if(b==55)b=H?24:58;else if(b==32)X=a.proxy,Y=a.type,H.removeEventListener?H.removeEventListener(Y,X,a.capture):H.detachEvent?H.detachEvent(n0("on",Y,5),X):H.addListener&&H.removeListener&&H.removeListener(X),jQ--,D=sA(19,67,H),b=35;else if(b==12)D.src=Z,H[QJ]=Z,b=61;else{if(b==58)return G;if(b==73)b=H&&H[hX]?85:32;else if(b==35)b=D?36:70;else if(b==33)b=typeof a!=="number"&&a&&!a.Dk?69:61;else if(b==57)b=3;else if(b==2)b=M-3&3?58:55;else if(b==71)b=D.hE==0?12:61;else if(b==3)b=((M|3)&7)>=4&&M>>1<11?33:61;else if(b==85)dI(3,I,a,H.V),b=61;else if(b==26)m(I,Z,a),a[SQ]=2796,b=2;else if(b==61)b=(M<<1&15)==2?26:2;else if(b==24){a:{for(t=(x=(k=oF,Y).split(D),I);t<x.length-Z;t++){if(!((P=x[t],P)in k))break a;k=k[P]}(U=(X=k[g=x[x.length-Z],g],H(X)),U!=X&&U!=a)&&lk(k,g,{configurable:true,writable:true,value:U})}b=58}}},K0=function(a,Z,I,M,D,Y,H,X,g,U,x){for(x=17;x!=6;)if(x==28)x=Z-5>>4>=3&&Z+6>>5<2?14:59;else if(x==14){for(X in H=I,D.v){for(g=D.v[X],Y=I;Y<g.length;Y++)++H,O(3,M,g[Y]);delete D.v[D.hE--,X]}x=59}else if(x==a)this.l=I,x=41;else if(x==5)x=(Z>>2&15)==3?63:28;else if(x==41)x=Z+7>>3==3?22:25;else if(x==22)M(function(P){P(I)}),U=[function(){return I},function(){}],x=25;else if(x==63)this.N6=p.document||document,x=28;else if(x==17)x=5;else if(x==59)x=(Z&100)==Z?a:41;else if(x==25)return U},EA=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k){{k=11;while(k!=71)if(k==25)M+=8192,k=66;else if(k==77)Y=D(I).replace(/\\+/g,"-").replace(/\\//g,"_").replace(/=/g,""),k=98;else if(k==86)gT.call(this),this.V=new c2(this),this.N7=this,this.tE=null,k=75;else if(k==65)D=window.btoa,k=49;else if(k==98)P=Y,k=92;else if(k==56)Y=void 0,k=98;else if(k==23)k=66;else if(k==11)k=84;else if(k==70)k=(a>>2&14)==2?24:53;else if(k==84)k=(a-1&15)==2?65:92;else if(k==72)I+=String.fromCharCode.apply(null,Z.slice(M,M+8192)),k=25;else if(k==24){if((Y=I.length,Y)>Z){for(M=(D=Array(Y),Z);M<Y;M++)D[M]=I[M];P=D}else P=[];k=53}else if(k==75)k=(a|7)>>3==3?40:70;else if(k==47)M=0,I="",k=23;else if(k==49)k=D?47:56;else if(k==40){if(Y.l=((Y.B+=(H=(U=(x=(M||Y.Pn++,Y.F$>0&&Y.T&&Y.sH&&Y.wC<=1&&!Y.F&&!Y.u)&&(!M||Y.vB-I>1)&&document.hidden==0,(X=Y.Pn==4)||x)?Y.D():Y.s0,U)-Y.s0,H)>>14>0,Y).Z&&(Y.Z^=(Y.B+1>>2)*(H<<2)),Y).B+1>>2!=0||Y.l,X||x)Y.Pn=0,Y.s0=U;k=(x?(Y.F$>Y.p9&&(Y.p9=Y.F$),U-Y.Vr<Y.F$-(D?255:M?5:2)?P=false:(Y.vB=I,g=r(Y,M?319:29),m(Z,Y,Y.A),Y.C.push([sI,g,M?I+1:I,Y.R,Y.K]),Y.u=rI,P=true)):P=false,70)}else if(k==92)k=(a&108)==a?86:75;else if(k==66)k=M<Z.length?72:77;else if(k==53)return P}},UA=function(a,Z,I,M,D,Y,H,X){{X=56;while(X!=35)if(X==66)X=(a|2)>>3==2?82:43;else if(X==56)X=66;else if(X==46)H=!!(D=M.PB,(Z|I)- -1+(D|~Z)),X=69;else if(X==43)X=(a+3&7)==2?28:85;else if(X==28)H=sA(19,5,I,1,Z,M)>=I,X=85;else if(X==82)H=UA(12,D,0,M)&&!!(M.X&D)!=Z&&(!(Y=M.ty,-2*~(Y&D)+~Y+2*(Y&~D)+(~Y|D))||M.dispatchEvent(gI(0,97,8,21,4,64,I,D,Z)))&&!M.b4,X=43;else if(X==85)X=(a-8|29)>=a&&(a+2^6)<a?46:69;else if(X==69)return H}},T=function(a,Z,I,M,D,Y,H,X,g,U,x){{U=71;while(U!=88)if(U==43)this.n++,U=44;else if(U==70)this.W.push(I),U=16;else if(U==29)U=(Z|16)==Z?30:8;else if(U==71)U=83;else if(U==44)U=this.W.length<50?70:69;else if(U==21)this.n++,a=I-this.L,this.L+=a/this.n,this.U0+=a*(I-this.L),U=61;else if(U==83)U=(Z&31)==Z?43:16;else if(U==30)M=typeof a,x=M==I&&a!=null||M=="function",U=8;else if(U==72){if(M.C.length){M.T&&":TQR:TQR:"(),M.T=true,M.sH=D;try{g=M.D(),M.Pn=0,M.s0=g,M.p9=0,M.Vr=g,X=W2(16,null,true,2048,4,M,D),H=a?0:10,Y=M.D()-M.Vr,M.SL+=Y,M.yr&&M.yr(Y-M.J,M.R,M.K,M.p9),M.K=I,M.R=I,M.J=0,Y<H||M.K9--<=0||(Y=Math.floor(Y),M.L9.push(Y<=254?Y:254))}finally{M.T=I}x=X}U=29}else if(U==61)U=(Z+6&41)>=Z&&(Z+6&30)<Z?72:29;else if(U==69)a=Math.floor(Math.random()*this.n),a<50&&(this.W[a]=I),U=16;else if(U==16)U=(Z&78)==Z?21:61;else if(U==8)return x}},EI=function(a,Z,I,M,D,Y,H,X,g,U,x,P){{x=15;while(x!=86)if(x==61){a:{for(U=[Y==typeof globalThis&&globalThis,H,Y==typeof window&&window,Y==typeof self&&self,Y==typeof global&&global],X=D;X<U.length;++X)if((g=U[X])&&g[M]==Math){P=g;break a}throw Error("Cannot find global object");}x=97}else{if(x==Z)return P;x==95?x=(I<<1&a)>=3&&((I^34)&4)<4?61:97:x==15?x=95:x==99?(P=M&&M.parentNode?M.parentNode.removeChild(M):null,x=Z):x==97&&(x=I-9>>3?Z:99)}}},dI=function(a,Z,I,M,D,Y,H,X,g,U,x,P){{x=63;while(x!=29)if(x==58)P=!!(D=M.ZH,(I|Z)-~(D&I)+~I)&&UA(13,I,Z,M),x=69;else if(x==41)g++,x=75;else{if(x==69)return P;x==75?x=g<D.length?68:98:x==1?(H=g=0,x=80):x==57?x=(a+8&11)==1?1:76:x==16?(g+=g<<3,g^=g>>11,X=g+(g<<15)>>>0,U=new Number(X&(Y=1<<I,-2*(Y&1)-~Y- -2+2*(Y|-2))),U[0]=(X>>>I)%M,P=U,x=76):x==0?(D=I.type,x=86):x==99?x=H<Z.length?79:16:x==15?x=75:x==82?(v2(44,82,Z,"object",D,Y,H,X,M),x=98):x==63?x=9:x==9?x=(a&92)==a?53:71:x==86?x=D in M.v&&bk(1,16,Z,I,M.v[D])?88:57:x==76?x=(a|48)==a?58:69:x==5?(g=0,x=15):x==68?(dI(18,true,false,M,D[g],Y,H,X),x=41):x==13?x=H&&H.once?82:52:x==52?x=Array.isArray(D)?5:56:x==71?x=(a<<1&15)==4?13:98:x==79?(g+=Z.charCodeAt(H),g+=g<<10,g=(D=g>>6,-(g&D)-1-~(g|D)),x=42):x==98?x=(a^28)>>3>=2&&(a>>1&26)<9?0:57:x==6?(delete M.v[D],M.hE--,x=57):x==12?x=M.v[D].length==0?6:57:x==53?(P=Object.prototype.hasOwnProperty.call(Z,xD)&&Z[xD]||(Z[xD]=++bG),x=71):x==80?x=99:x==88?(O(34,true,I),x=12):x==56?(X=Dp(X,25),Y&&Y[hX]?Y.V.add(String(D),X,I,T(H,49,"object")?!!H.capture:!!H,M):OA(40,"object",false,H,I,Y,D,X,M),x=98):x==42&&(H++,x=99)}}},kB=function(a,Z,I,M,D,Y,H,X,g,U){{U=25;while(U!=3)if(U==34)this.listener=Y,this.proxy=null,this.src=I,this.type=D,this.capture=!!H,this.aq=M,this.key=++B2,this.Dk=this.X$=false,U=26;else{if(U==96)return g;U==66?(g=Math.floor(this.SL+(this.D()-this.Vr)),U=96):U==25?U=14:U==14?U=(Z|48)==Z?87:75:U==26?U=(Z>>1&7)==1?66:96:U==75?U=Z>>1&7?26:34:U==87&&(X.classList?X.classList.remove(H):(X.classList?X.classList.contains(H):UA(a,XF(7,25,M,X),I,H))&&Dp(D,7,X,Array.prototype.filter.call(XF(7,23,M,X),function(x){return x!=H}).join(Y)),U=75)}}},JX=function(a,Z,I,M,D,Y){{D=27;while(D!=2)if(D==27)D=6;else if(D==42)Y=Math.floor(this.D()),D=48;else{if(D==48)return Y;if(D==94)D=typeof Z!=="function"?64:31;else if(D==37)D=66;else if(D==40)I.h=((I.h?I.h+"~":"E:")+M.message+":"+M.stack).slice(0,Z),D=12;else if(D==66)D=(a|6)<41&&a-4>=21?42:48;else{if(D==64)throw Error("Invalid decorator function "+Z);if(D==31)D=((a|3)&13)>=9&&(a|5)<20?37:66;else{if(D==62)throw Error("Invalid class name "+I);D==6?D=a+6>>4?12:40:D==80?D=I?94:62:D==12&&(D=(a^45)>>4?31:80)}}}}},VJ=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k,t,G){for(G=0;G!=23;)if(G==41)g=I,G=76;else if(G==49)x=sA(19,65,M),G=91;else if(G==35)G=g<X.length?77:84;else if(G==73)P=T(D,53,Z)?!!D.capture:!!D,H=Dp(H,21),G=58;else if(G==4)(U=x.AE(X,H,P,Y))&&w(U,null,1,6),G=84;else if(G==21)G=(a|5)<19&&((a^39)&14)>=2?95:97;else if(G==76)G=35;else if(G==55)this.f9=this.f9,this.b4=this.b4,G=21;else if(G==97)G=(a^16)>>4?36:67;else if(G==0)G=52;else if(G==31)G=M?49:84;else if(G==58)G=M&&M[hX]?20:31;else if(G==6)G=Array.isArray(X)?41:73;else if(G==84)G=a>>2&3?21:55;else if(G==67)G=36;else if(G==39)g++,G=35;else if(G==20)M.V.remove(String(X),H,P,Y),G=84;else if(G==91)G=x?4:84;else{if(G==36)return k;G==52?G=(a-3&7)>=6&&(a<<2&16)<4?6:84:G==95?(t=function(b){return Z.call(t.src,t.listener,b)},Z=t0,k=t,G=97):G==77&&(VJ(42,"object",0,M,D,Y,H,X[g]),G=39)}},UI=function(a,Z,I,M,D,Y,H,X,g){{X=36;while(X!=70)if(X==73)I.i4&&I.i4.forEach(M,void 0),X=38;else if(X==83)g=YB[M](YB.prototype,{length:I,console:I,floor:I,prototype:I,propertyIsEnumerable:I,document:I,replace:I,splice:I,parent:I,call:I,stack:I,pop:I}),X=74;else{if(X==38)return g;if(X==65){a:{for(H in Y)if(D.call(void 0,Y[H],H,Y)){g=I;break a}g=M}X=10}else X==74?X=(Z|a)==Z?65:10:X==91?X=(Z|1)>>3==2?83:74:X==36?X=91:X==10&&(X=(Z&41)==Z?73:38)}}},K=function(a,Z,I,M,D,Y,H,X,g){if((Z+9<19&&(Z<<2&15)>=2&&(a.F?g=Pi(a.G,a):(M=Dg(true,a,8),M&128&&(M^=128,I=Dg(true,a,2),M=(D=M<<2,(D&I)-1-~(D|I))),g=M)),Z|72)==Z)switch(!(H=Xm("splice","array",M)==="array"?M:[M],this.h)){case null!=(![""]!=0):try{D=[],Y=!this.C.length&&!this.T,GW(3,0,[Hi,D,H],this),GW(67,0,[kD,a,D],this),I&&!Y||T(true,37,false,this,I)}catch(U){JX(7,2048,this,U),a(this.h)}break;case false:a(this.h);break}while((Z&76)==Z){while(true)if(Y=F(53,M),true)break;{D=0;while(I>0)D=(X=D<<8,H=P2(8,true,M),(H|0)-(X&H)-a-~X),I--}if(W(Y,M,D),[])break}return(Z^44)>>3==2&&(M=YB[a.P](a.ai),M[a.P]=function(){return I},M.concat=function(U){I=U},g=M),g},RF=function(a,Z,I,M,D,Y,H,X,g){for(X=43;X!=59;)if(X==90)X=((Z^52)&15)==2?10:86;else if(X==80){if((Y=(H=M,p).trustedTypes)&&Y.createPolicy){try{H=Y.createPolicy(I,{createHTML:$B,createScript:$B,createScriptURL:$B})}catch(U){if(p.console)p.console[D](U.message)}g=H}else g=H;X=a}else if(X==74)this[this+""]=this,X=72;else if(X==43)X=90;else if(X==3)yJ.call(this,I?I.type:""),this.relatedTarget=this.currentTarget=this.target=null,this.button=this.screenY=this.screenX=this.clientY=this.clientX=this.offsetY=this.offsetX=0,this.key="",this.charCode=this.keyCode=0,this.metaKey=this.shiftKey=this.altKey=this.ctrlKey=false,this.state=null,this.pointerId=0,this.pointerType="",this.timeStamp=0,this.jL=null,I&&this.init(I,M),X=78;else{if(X==78)return g;X==a?X=(Z-2&15)==1?74:72:X==86?X=(Z+6&23)<Z&&(Z+7&38)>=Z?80:a:X==72?X=(Z&108)==Z?3:78:X==10&&(g=I,X=86)}},YD=function(a,Z,I,M,D,Y,H,X,g,U,x){{U=43;while(U!=25)if(U==20){a:{for(g=I;g<M.length;++g)if(X=M[g],!X.Dk&&X.listener==Y&&X.capture==!!H&&X.aq==D){x=g;break a}x=-1}U=70}else if(U==43)U=29;else{if(U==35)return x;U==95?(this.n===0?x=[0,0]:(this.W.sort(function(P,k){return P-k}),x=[this.n,this.W[this.W.length>>1]]),U=93):U==38?U=(Z|48)==Z?95:93:U==37?U=35:U==a?(IG.call(this,I,M||M9.Zk(),D),U=38):U==29?U=Z-3<19&&((Z|3)&7)>=5?20:70:U==93?U=(Z|64)==Z?37:35:U==70&&(U=(Z&30)==Z?a:38)}}},F=function(a,Z,I,M,D,Y,H,X,g,U,x){return a-5>>((((a^58)&16)<2&&(a|7)>=-41&&(Z.F?x=Pi(Z.G,Z):(M=Dg(true,Z,8),M&128&&(M^=128,D=Dg(true,Z,2),M=(I=M<<2,(I&D)-1-~(I|D))),x=M)),a+9&44)<a&&(a+2&58)>=a&&(Z.F?x=Pi(Z.G,Z):(M=Dg(true,Z,8),M&128&&(M^=128,I=Dg(true,Z,2),M=(D=M<<2,(D&I)-1-~(D|I))),x=M)),3)||(x=U=function(){for(var P=39;P!=90;)if(P==39)P=Y.l==Y?65:90;else if(P==24)var k=[iG,(P=6,D),M,void 0,X,g,arguments];else if(P==65)P=Y.j?24:61;else if(P==45)P=H==Z?51:46;else if(P==46){var t=NW(4,0,k,Y);P=36}else if(P==6)P=H==I?77:45;else{if(P==36)return t;if(P==51){var G=!Y.C.length&&!Y.T;(GW(35,0,k,Y),G)&&T(false,33,false,Y,false),P=36}else P==61?(X&&g&&X.removeEventListener(g,U,GA),P=90):P==77&&(GW(3,0,k,Y),t=T(false,36,false,Y,false),P=36)}}),x},Q=function(a,Z,I,M,D,Y,H,X){X=this;try{L7(M,Z,this,H,I,D,a,Y)}catch(g){JX(3,2048,this,g),I(function(U){U(X.h)})}},c=function(a,Z,I){I=Z.j[a];switch(!(I===void 0)){case true:!null;break;case false:throw[zA,30,a];break}while(I.value){return I.create();if(true)break}return(I.create(a*2*a+95*a+41),I).prototype},n7=function(a,Z){for(var I=61;I!=93;)if(I==64)I=M<arguments.length?87:93;else if(I==58)I=64;else if(I==31)M++,I=64;else if(I==61)var M=(I=58,1);else if(I==87){var D=arguments[M];for(H in D)a[H]=D[H];var Y=(I=1,0)}else if(I==24)Y++,I=21;else if(I==59){var H=dT[Y];I=(Object.prototype.hasOwnProperty.call(D,H)&&(a[H]=D[H]),24)}else I==21?I=Y<dT.length?59:31:I==1&&(I=21)},A0=function(a,Z,I){return YD.call(this,94,8,a,Z,I)},vi=function(a,Z,I,M){V((M=K(Z,(I=K(Z,3),5)),M),Z,C(a,l(I,Z)))},V=function(a,Z,I,M,D,Y,H,X,g){if(Z.l==Z){{H=r(Z,a),a==458||a==276||a==95?(Y=function(U,x,P,k,t,G,b,E){for(b=3,E=80;;)try{if(b==26)break;else{if(b==70)throw E=80,G;b==7?(E=87,H.G_=f7(14,2925,n(H,36,2,2*(P&4)+2*(P&-5)-(P^4)+2*(~P&4)),n(H,32,2,P),k),b=78):b==3?(t=H.length,x=-(t&4)-~(t&4)+(t&-5)+(t|-5)>>3,b=67):b==67?b=H.rC!=x?65:78:b==65?(k=[0,0,g[1],g[2]],H.rC=x,P=(x<<3)-4,b=7):b==78&&(H.push(H.G_[t&7]^U),b=26)}}catch(d){if(E==80)throw d;E==87&&(G=d,b=70)}},g=l(102,Z)):Y=function(U){H.push(U)},M&&Y(M&255),X=I.length,D=0;while(D<X)Y(I[D]),D++}}},L7=function(a,Z,I,M,D,Y,H,X,g,U,x){for(I.ai=(I.q7=(I.nd=I[kD],I.d9=(I.UH=p7,eW),UI(24,17,{get:function(){return this.concat()}},I.P)),YB[I.P](I.q7,{value:{value:{}}})),x=[],U=0;U<337;U++)x[U]=String.fromCharCode(U);I.Z=(((I.dC=[],I.pd=[],I).Pn=(I.l=I,void 0),I.C9=false,I).G=void 0,void 0);while(true)if(I.F$=0,!![])break;(I.w9=((I.SL=0,I.J=(I.R=!(I.M6=[],1),0),I.K9=25,I).kb=void 0,I.j=[],I.h=void 0,I.ek=function(P){return K0.call(this,78,32,P)},I.mY=X,I.T=false,I.A=0,I.K=false,I.iV=(I.g=void 0,I.C=[],[]),I.wC=(I.vB=10001,I.Sk=0,I.F=void 0,(I.p9=0,I).s0=0,I.u4=void 0,0),I.L9=[],(I.yr=(I.mt=false,I.sH=false,g=window.performance||{},a),I).q6=(I.Vr=0,I.B=(I.u=null,1),[]),g.timeOrigin||(g.timing||{}).navigationStart)||0,Y)&&Y.length==2&&(I.pd=Y[1],I.iV=Y[0]);switch(!Z){case false==0:true+([]!=true);break;case ![]:try{I.u4=JSON.parse(Z)}catch(P){I.u4={}}break}w(function(P,k){Wi(0,(k=l(F(39,P),P),319),104,k,29,P.l)},((w(function(P,k,t,G,b,E){m((k=(t=c((G=K(P,(E=(b=F(18,P),F(20,P)),7)),b),P),c(E,P)),G),P,t[k])},(w(function(P,k,t,G,b,E,d,z,A,v,N){{N=88;while(N!=68)N==71?N=v!==0?5:68:N==88?(d=F(15,P),b=F(51,P),E=F(14,P),t=K(P,3),G=r(P,t),v=c(d,P.l),z=r(P,b),A=r(P,E),N=71):N==5&&(k=F(6,1,2,G,A,P,1,v,z),v.addEventListener(z,k,GA),r(P,12).push(function(){v.removeEventListener(z,k,GA)}),W(112,P,[v,z,k]),N=68)}},I,450,(m(191,(R((R(319,(W(29,I,(w(function(P,k,t,G,b,E,d,z,A,v){for(v=16;v!=54;)v==81?v=5:v==5?v=z<d.length?19:83:v==19?(A+=String.fromCharCode((G=d[z],-(G&121)-1-~G+(~G&121))),v=13):v==83?(W(b,P,A in k|0),v=54):v==13?(z++,v=5):v==16&&(t=K(P,3),E=K(P,3),b=F(19,P),d=r(P,t),k=c(E,P),z=0,A="",v=81)},I,(w(function(P,k,t,G,b,E,d,z,A){{A=17;while(A!=9)A==91?(t++,A=3):A==17?(z=F(23,P),d=F(27,P),k=K(P,5),b=l(z,P),E=c(d,P),G="",t=0,A=93):A==3?A=t<E.length?76:1:A==76?(G+=String.fromCharCode(E[t]^121),A=91):A==1?(W(k,P,b[G]),A=9):A==93&&(A=3)}},(w(function(P,k,t,G,b,E,d,z){for(z=86;z!=15;)z==28?z=t--?20:2:z==2?(W(d,P,G),z=15):z==37?z=28:z==20?(k=((k|0)+(n(P,6,7)|0))%E,G.push(b[k]),z=37):z==43?z=28:z==86&&(d=F(31,P),t=n(P,13,7),G=[],b=l(325,P),E=b.length,k=0,z=43)},I,504,17),I),256,41),240),9),0)),I),0),160),I,0),I),[2048]),49)),I),124,9),w)(function(P){h0(P,4)},I,273,33),I),286,41);while([])if(R(12,I,[]),{})break;I.Ld=(w(function(P,k,t,G){(k=(G=F(26,(t=F(30,P),P)),F)(47,P),W)(k,P,l(t,P)||c(G,P))},I,(w(function(P,k,t,G,b,E){for(E=48;E!=35;)E==98?(b++,E=92):E==50?(R(t,P,G),E=35):E==92?E=b<k?12:50:E==12?(G.push(P2(8,true,P)),E=98):E==48?(t=F(40,P),k=n(P,7,7),G=[],b=0,E=20):E==20&&(E=92)},I,(m(108,I,(w(function(P,k,t,G){t=F(41,(G=P2(8,(k=F(15,P),true),P),P)),W(t,P,r(P,k)>>>G)},(w(function(P,k){k=K(P,7),m(k,P,[])},I,(w(function(P){K(1,64,4,P)},I,189,(W(111,((new A0("Submit")).dispose(),I),{}),25)),257),33),I),427,57),[])),67),9),45),57),0);while({})if(w(function(P,k,t,G,b,E,d,z,A,v,N,q,S,IF,e){for(e=80;e!=40;)if(e==54)d=K(P,3),v=F(40,P),t=F(46,P),G=F(25,P),b=l(t,P),N=r(P,d),z=c(G,P),IF=r(P,v),e=8;else if(e==49)e=E<S?76:40;else if(e==8)e=Xm("splice","array",N)=="object"?31:5;else if(e==21)E+=b,e=49;else if(e==10)b=b>0?b:1,S=N.length,E=0,e=77;else if(e==76)IF(N.slice(E,(E|0)+(b|0)),z),e=21;else if(e==31){for(q in A=[],N)A.push(q);N=(e=5,A)}else e==80?e=EA(28,29,k,true,true,P)?40:54:e==5?e=P.l==P?10:40:e==77&&(e=49)},I,261,33),true)break;T(true,(GW((GW(34,(w(function(P,k,t,G,b,E){m((G=(b=r((t=F(39,(k=F(39,(E=F(59,P),P)),P)),P),E),c(k,P)),t),P,b in G|0)},(I.M7=(w(function(P,k,t,G,b,E,d,z,A,v){for(v=97;v!=99;)v==97?v=EA(27,29,k,true,false,P)?99:40:v==40&&(A=q9(28,19,P.l,1,0),z=A.xb,E=A.Ys,d=A.I,G=A.DH,b=d.length,t=b==0?new E[z]:b==1?new E[z](d[0]):b==2?new E[z](d[0],d[1]):b==3?new E[z](d[0],d[1],d[2]):b==4?new E[z](d[0],d[1],d[2],d[3]):2(),W(G,P,t),v=99)},(w(function(P){vi(4,P)},I,52,(W(47,I,(w(function(P,k,t,G,b,E,d,z,A,v,N,q,S,IF,e,FF,h,L0){{h=0;while(h!=75)h==24?h=52:h==65?h=52:h==78?h=G<S?71:59:h==3?h=IF<S?27:42:h==9?h=67:h==47?(IF++,h=3):h==0?(L0=function(f,y){for(;b<f;)d|=P2(8,true,P)<<b,b+=8;return y=d&(b-=f,1<<f)-1,d>>=f,y},A=F(41,P),d=b=0,E=(L0(3)|0)+1,S=L0(5),k=0,z=[],FF=0,h=9):h==71?(z[G]||(v[G]=L0(e)),h=82):h==59?(IF=0,h=1):h==19?(w(function(f,y,xB,MW,aF,J){for(J=10;J!=4;)J==10?(xB=0,MW=[],aF=[],J=14):J==16?(MW.push(F(47,f)),J=35):J==55?J=z[xB]?66:23:J==14?J=11:J==28?(y=MW[y],J=66):J==11?J=xB<S?29:21:J==66?(aF.push(y),J=15):J==23?J=61:J==21?(f.F=K(f,58,N.slice()),f.G=K(f,59,aF),J=4):J==15?(xB++,J=11):J==61?J=y>=MW.length?16:28:J==35?J=61:J==29&&(y=v[xB],J=55)},P,A,25),h=75):h==25?(FF++,h=67):h==67?h=FF<S?84:95:h==42?(t=E,N=[],h=24):h==82?(G++,h=78):h==1?h=3:h==92?(N.push(c(F(15,P),P)),h=65):h==52?h=t--?92:19:h==77?h=78:h==27?(z[IF]&&(v[IF]=F(14,P)),h=47):h==95?(e=((k|0)-1).toString(2).length,G=0,v=[],h=77):h==84&&(q=L0(1),z.push(q),k+=q?0:1,h=25)}},I,(w(function(P){h0(P,3)},I,(w(function(P,k,t,G,b,E,d,z){{z=31;while(z!=53)z==85?(P.Z=Dg(false,P,32),P.g=void 0,z=53):z==42?(P.g=void 0,z=86):z==31?(k=F(20,P),d=F(21,P),E=F(58,P),z=69):z==64?(b=l(d,P),G=c(k,P),t=r(P,E),G[b]=t,z=76):z==86?z=b==2?85:53:z==76?z=k==181?42:53:z==69&&(z=P.l==P?64:53)}},I,(R(128,I,[(R(112,(w(function(){},I,353,(R(276,I,(m(299,I,(W(458,(m(471,((w(function(P,k,t){(t=K(P,7),k=l(t,P.l),k)[0].removeEventListener(k[1],k[2],GA)},I,(w(function(P,k,t,G,b){{b=27;while(b!=93)b==40?(k[471]=P.j[471],k[191]=P.j[191],P.j=k,b=93):b==3?(t=P2(8,true,P),b=44):b==28?(G=F(46,P),k[G]=P.j[G],b=56):b==27?(k=P.M6.pop(),b=96):b==56?(t--,b=78):b==47?(W(29,P,P.A),b=93):b==44?b=78:b==78?b=t>0?28:40:b==96&&(b=k?3:47)}},I,(W(102,(w(function(P,k,t,G,b,E,d,z,A){for(A=93;A!=9;)A==63?A=d--?33:94:A==95?A=63:A==93?(k=F(41,P),d=n(P,5,7),t="",z=l(325,P),E=z.length,b=0,A=24):A==94?(W(k,P,t),A=9):A==33?(b=(G=n(P,14,7),~b-3*~G+2*(b&~G)+2*(b|~G))%E,t+=x[z[b]],A=95):A==24&&(A=63)},I,459,(w(function(P,k,t,G,b,E){(E=c((t=(G=K(P,(k=K(P,(b=F(52,P),6)),9)),c)(k,P),b),P)==t,R)(G,P,+E)},I,(R(34,(R(75,I,((m((w((m((w(function(P,k,t,G,b){for(b=49;b!=68;)b==80?(G=K(P,7),t=F(23,P),W(t,P,function(E){return eval(E)}(Fm(r(P.l,G)))),b=68):b==49&&(b=EA(26,29,k,true,false,P)?68:80)},(w(function(P,k,t,G){r(P,(G=r(P,(t=F((k=K(P,9),40),P),t)),k))!=0&&R(29,P,G)},(w(function(P,k,t,G,b){k=(G=(t=F(18,(b=F(50,P),P)),l(b,P)),l(t,P)),W(t,P,k+G)},I,444,(w(function(P){vi(1,P)},I,(w(function(P,k,t,G,b){R((b=Xm("splice","array",(k=l((G=F((t=K(P,5),24),P),t),P),k)),G),P,b)},I,169,(w(function(P,k,t){W((k=F(21,(t=F(24,P),P)),k),P,""+l(t,P))},I,442,17),57)),159),33),41)),I),251,33),I),372,41),95),I,jW(4)),function(P,k,t,G,b,E){for(E=18;E!=12;)E==38?(G=q9(28,19,P,1,0),b=G.xb,t=G.Ys,E=79):E==18?E=EA(25,29,k,true,false,P)?12:38:E==35?(m(G.DH,P,b.apply(t,G.I)),P.s0=P.D(),E=12):E==79&&(E=P.l==P||b==P.ek&&t==P?35:12)}),I,140,49),64),I,p),I).uV=0,[])),I),{}),340),17),57)),I),[0,0,0]),171),25),485),17),w)(function(P,k,t,G,b,E,d,z){if(E=F(47,(d=K(P,(b=K(P,(z=K(P,6),5)),6)),P)),true)G=c(E,P);m((t=r(P,(k=c(b,P),d)),z),P,F(5,1,2,t,k,P,G))},I,426,17),I),[]),I),jW(4)),I)),jW(4))),9)),I),0),154),0,0]),W(151,I,180),428),49),39),25),208),9),[])),25)),I),265,41),0),I),361,49),H||GW(35,0,[SQ],I),0),[K7,M],I),34),0,[ci,D],I),34),false,I,true)},J0=function(a,Z,I,M,D,Y,H,X,g){if(!Z.h){while("O")if(NaN!==(Z.wC++,NaN))break;if(NaN!==NaN)try{g=void 0,Y=Z.A;{X=0;while(--M)try{if((H=void 0,Z).F)g=Pi(Z.F,Z);else{if((X=c(29,Z),X)>=Y)break;g=(H=(m(319,Z,X),K(Z,9)),r)(Z,H)}EA(a,29,(g&&(D=g[N9],(D|0)+(~D^2048)-(D|-2049))?g(Z,M):wT(0,[zA,21,H],Z,319),M),false,false,Z)}catch(U){l(151,Z)?wT(I,U,Z,319):W(151,Z,U)}}switch(!!M){case true:!null;break;case !!null:if(Z.g9){J0(24,Z,(Z.wC--,22),501612776262);return}wT(0,[zA,33],Z,319);break}}catch(U){try{wT(I,U,Z,319)}catch(x){JX(6,2048,Z,x)}}Z.wC--}},$D=function(a,Z,I,M,D,Y){try{while("c")if(Y=a[((Z|0)+2)%3],a[Z]=(M=a[Z],D=a[((Z|0)+1)%3],-3*~(M&D)+2*~D+~(M|D)+2*(M^D))-(Y|0)^(Z==1?Y<<I:Y>>>I),"F")break}catch(H){throw H;}},Pi=function(a,Z,I){return(I=a.create().shift(),Z).F.create().length||Z.G.create().length||(Z.F=void 0,Z.G=void 0),I},m0=function(){return JX.call(this,10)},c2=function(a){return XF.call(this,7,7,a)},wT=function(a,Z,I,M,D,Y,H,X,g,U,x,P){for(NaN;!I.C9&&(g=void 0,Z&&Z[0]===zA&&(g=Z[2],a=Z[1],Z=void 0),P=r(I,471),P.length==0&&(Y=r(I,M)>>3,P.push(a,Y>>8&255,-~Y+(~Y^255)+(~Y&255)),g!=void 0&&P.push(g&255)),U="",Z&&(Z.message&&(U+=Z.message),Z.stack&&(U+=":"+Z.stack)),H=c(191,I),H[0]>3);NaN){I.l=(x=(U=(H[0]-=(U=U.slice(0,(H[0]|0)-3),(U.length|0)+3),TA(U,1023)),I.l),I);try{I.mt?(D=(D=r(I,47))&&D[D.length-1]||95,(X=c(108,I))&&X[X.length-1]==D||OI(255,I,108,[D&255])):V(47,I,[95]),OI(255,I,458,C(2,U.length).concat(U),51)}finally{I.l=x}if(true)break}},oG=function(a,Z,I,M,D){return OA.call(this,27,a,Z,I,M,D)},f7=function(a,Z,I,M,D,Y,H,X){Y=D[X=0,2]|0;{H=D[3]|0;while(X<a)I=I>>>8|I<<24,H=H>>>8|H<<24,H+=Y|0,I+=M|0,H^=X+Z,M=M<<3|M>>>29,I^=Y+Z,Y=Y<<3|Y>>>29,M^=I,Y^=H,X++}return[M>>>24&255,M>>>16&255,M>>>8&255,M>>>0&255,I>>>24&255,I>>>16&255,I>>>8&255,I>>>0&255]},P2=function(a,Z,I){return I.F?Pi(I.G,I):Dg(Z,I,a)},m=function(a,Z,I){switch(!(a==29||a==319)){case !!null!=null:for(1;Z.C9&&a!=181;true.true){return;if(!false==!"")break}a==128||a==458||a==75||a==95||a==471||a==47||a==108||a==102||a==276||a==191?Z.j[a]||(Z.j[a]=n(I,8,6,30,Z,a)):Z.j[a]=n(I,24,6,65,Z,a);break;case 0===-0==[]:Z.j[a]?Z.j[a].concat(I):Z.j[a]=K(Z,60,I);break}a==181&&(Z.Z=Dg(false,Z,32),Z.g=void 0)},Xm=function(a,Z,I,M,D){while([])if(M=typeof I,7)break;if(M=="object")switch(!I){case ![undefined]==Number()!=![]:return"null";break;case false:for(null==(![]!=Number());I instanceof Array;![]!=false){return Z;if(NaN!==NaN)break}while(I instanceof Object){return M;if(true)break}if(D=Object.prototype.toString.call(I),D=="[object Window]")return"object";for((NaN===Number(undefined)==![]).true;D=="[object Array]"||typeof I.length=="number"&&typeof I.splice!="undefined"&&typeof I.propertyIsEnumerable!="undefined"&&!I.propertyIsEnumerable(a);false==null){return Z;if(true)break}while(D=="[object Function]"||typeof I.call!="undefined"&&typeof I.propertyIsEnumerable!="undefined"&&!I.propertyIsEnumerable("call")){return"function";if(NaN!==NaN)break}break}else if(M=="function"&&typeof I.call=="undefined")return"object";return M},yy=function(a,Z,I,M,D,Y){return r(M,(R(I,(J0(24,M,22,((Y=r(M,I),M.q6&&Y<M.A)?(W(I,M,M.A),Wi(0,a,104,Z,I,M)):W(I,M,Z),D)),M),Y),34))},q9=function(a,Z,I,M,D,Y,H,X,g,U){(g=K(I,(U=I[C7]||{},6)),U).DH=F(a,I),U.I=[];while(![""]==0)if([]!=(X=I.l==I?(P2(8,true,I)|D)-M:1,-0===0))break;Y=K(I,9);{H=D;while(H<X)U.I.push(F(Z,I)),H++}{U.Ys=r(I,Y);while(X--)U.I[X]=r(I,U.I[X])}return U.xb=c(g,I),U},lG=function(a,Z){function I(){this.n=(this.W=[],0)}I.prototype.jk=function(){return YD.call(this,94,48)};while(null!=(null==(0!=![""])))if(I.prototype.Rq=function(M,D){return T.call(this,D,3,M)},true)break;return a=new I,Z=new I,[function(M){while(true)if(a.Rq(M),{})break;Z.Rq(M)},function(M){return Z=(M=a.jk().concat(Z.jk()),new I),M}]},W=function(a,Z,I){if(a==29||a==319)Z.j[a]?Z.j[a].concat(I):Z.j[a]=K(Z,57,I);else{if(Z.C9&&a!=181)return;a==128||a==458||a==75||a==95||a==471||a==47||a==108||a==102||a==276||a==191?Z.j[a]||(Z.j[a]=n(I,10,6,30,Z,a)):Z.j[a]=n(I,8,6,65,Z,a)}a==181&&(Z.Z=Dg(false,Z,32),Z.g=void 0)},B,h0=function(a,Z,I,M,D,Y,H){while(13)if(H=Z&4,[])break;((D=F((Y=F((I=Z&3,14),a),29),a),M=l(Y,a),H&&(M=TA(""+M,1023)),I)&&V(D,a,C(2,M.length)),V)(D,a,M)},wI=function(a,Z){return RF.call(this,84,8,a,Z)},Vy=function(a,Z,I,M,D){return kB.call(this,39,16,I,M,D,Z,a)},C=function(a,Z,I,M){I=[];{M=-1+(~a^1)-2*(~a|1);while(M>=0)I[(a|0)-1-(M|0)]=Z>>M*8&255,M--}return I},SW=function(){return GW.call(this,26)},me=function(){return EA.call(this,32)},RG=function(a){return EI.call(this,5,72,9,a)},Iq=function(a,Z){return gI.call(this,0,97,Z,3,a)},Bi=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k,t){Z.push((I=(M=a[0]<<24,D=a[1]<<16,(D|0)+~D-~(M|D)),x=a[2]<<8,(I&x)+~(I&x)-~x+(I&~x))|a[3]),Z.push((t=(H=(Y=a[4]<<24,P=a[5]<<16,-~P+(Y^P)+(Y|~P)),k=a[6]<<8,-1-~k+(H&~k)),g=a[7],-1-~g+(t&~g))),Z.push((X=a[8]<<24|a[9]<<16|a[10]<<8,U=a[11],-(X|0)-2*~(X|U)+(~X&U)+2*(X|~U)))},M9=function(){return YD.call(this,94,64)},yJ=function(a,Z){return v2.call(this,44,9,a,Z)},zW=function(a){return W2.call(this,32,a)},OI=function(a,Z,I,M,D,Y,H,X,g,U){for(0;Z.l==Z;0==![]){for(X=r(Z,I),I==458||I==276||I==95?(H=function(x,P,k,t,G,b,E,d){for(b=(d=3,71);;)try{if(d==4)break;else if(d==75)X.push(X.G_[k&7]^x),d=4;else if(d==99)X.rC=G,P=[0,0,Y[1],Y[2]],t=(G<<3)-4,d=97;else if(d==13)d=X.rC!=G?99:75;else if(d==97)b=5,X.G_=f7(14,2925,n(X,48,2,2*(t&4)+2*(t&-5)-(t^4)+2*(~t&4)),n(X,20,2,t),P),d=75;else{if(d==52)throw b=71,E;d==3&&(k=X.length,G=-(k&4)-~(k&4)+(k&-5)+(k|-5)>>3,d=13)}}catch(z){if(b==71)throw z;b==5&&(E=z,d=52)}},Y=l(102,Z)):H=function(x){X.push(x)},D&&H(D&a),g=0,U=M.length;g<U;g++)H(M[g]);if("F")break}},R=function(a,Z,I){if(a==29||a==319)Z.j[a]?Z.j[a].concat(I):Z.j[a]=K(Z,56,I);else{for(1;Z.C9&&a!=181;-0!==0){return;if(null!=(null==false==null))break}a==128||a==458||a==75||a==95||a==471||a==47||a==108||a==102||a==276||a==191?Z.j[a]||(Z.j[a]=n(I,26,6,30,Z,a)):Z.j[a]=n(I,18,6,65,Z,a)}a==181&&(Z.Z=Dg(false,Z,32),Z.g=void 0)},NW=function(a,Z,I,M,D,Y,H,X,g,U,x,P){if((g=I[Z],g)==Hi)M.K=true,M.K9=25,M.S(I);else if(g==kD){P=I[1];try{D=M.h||M.S(I)}catch(k){JX(5,2048,M,k),D=M.h}H=M.D(),P(D),M.J+=M.D()-H}else if(g==sI)I[3]&&(M.R=true),I[a]&&(M.K=true),M.S(I);else if(g==K7)M.R=true,M.S(I);else if(g==ci){try{{Y=Z;while(Y<M.dC.length){try{x=M.dC[Y],x[Z][x[1]](x[2])}catch(k){}Y++}}}catch(k){}(0,(U=(M.dC=[],M.D()),I)[1])(function(k,t){M.Wn(k,true,t)},function(k){(GW(66,Z,(k=!M.C.length&&!M.T,[N9]),M),k)&&T(false,32,false,M,true)},function(k){return M.Iq(k)},function(k,t,G){return M.Vu(k,t,G)}),M.J+=M.D()-U}else{if(g==iG)return X=I[2],W(367,M,I[6]),W(34,M,X),M.S(I);g==N9?(M.S(I),M.q6=[],M.j=null,M.L9=[]):g==SQ&&p.document.readyState==="loading"&&(M.u=function(k,t){function G(b){{b=31;while(b!=55)b==31?b=t?55:27:b==27&&(t=true,p.document.removeEventListener("DOMContentLoaded",G,GA),p.removeEventListener("load",G,GA),k(),b=55)}}((t=false,p.document).addEventListener("DOMContentLoaded",G,GA),p).addEventListener("load",G,GA)})}},t0=function(a,Z,I,M,D,Y){return v2.call(this,44,8,a,Z,I,M,D,Y)},r=function(a,Z,I){if(I=a.j[Z],I===void 0)throw[zA,30,Z];if(I.value)return I.create();return(I.create(Z*2*Z+95*Z+41),I).prototype},Zc=function(a,Z){function I(){this.U0=this.L=this.n=0}return[function(M){(a.z_(M),Z).z_(M)},(Z=new (a=(I.prototype.lV=function(){return sA.call(this,19,89)},I.prototype.z_=function(M,D){return T.call(this,D,64,M)},new I),I),function(M){return Z=(M=[a.lV(),Z.lV(),a.L,Z.L],new I),M})]},TA=function(a,Z,I,M,D,Y,H,X,g,U,x){x=H=(Y=a.replace(/\\r\\n/g,"\\n"),0);{M=[];while(H<Y.length)X=Y.charCodeAt(H),X<128?M[x++]=X:(X<2048?M[x++]=(g=X>>6,(g|0)- -1+(g^192)+(~g|192)):((X&64512)==55296&&H+1<Y.length&&(Y.charCodeAt(H+1)&64512)==56320?(X=65536+((X&Z)<<10)+(D=Y.charCodeAt(++H),(D|0)-(D^Z)+(~D&Z)),M[x++]=X>>18|240,M[x++]=X>>12&63|128):M[x++]=X>>12|224,M[x++]=(I=X>>6&63,-~(I&128)-1+(I&-129)+(~I&128))),M[x++]=(U=X&63,-(U&128)-1-2*~(U|128)+(~U^128))),H++}return M},YU=function(a,Z,I,M,D,Y){return OA.call(this,20,a,Z,I,M,D,Y)},Wi=function(a,Z,I,M,D,Y){Y.M6.length>I?wT(a,[zA,36],Y,Z):(Y.M6.push(Y.j.slice()),Y.j[D]=void 0,W(D,Y,M))},Dg=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k,t,G,b,E){if((M=r(Z,29),M)>=Z.A)throw[zA,31];for(t=(H=Z.nd.length,G=I,M),g=0;G>0;)x=t>>3,b=Z.q6[x],X=t%8,E=8-(X|0),D=E<G?E:G,a&&(Y=Z,U=t,Y.g!=U>>6&&(Y.g=U>>6,k=c(181,Y),Y.kb=f7(14,2925,Y.g,Y.Z,[0,0,k[1],k[2]])),b^=Z.kb[x&H]),g|=(b>>8-(X|0)-(D|0)&(1<<D)-1)<<(G|0)-(D|0),G-=D,t+=D;return m(29,(P=g,Z),(M|0)+(I|0)),P},$B=function(a){return RF.call(this,84,6,a)},aq=function(a,Z,I,M,D){if(a.length==3){{D=0;while(D<3)Z[D]+=a[D],D++}I=0;{M=[13,8,13,12,16,5,3,10,15];while(I<9)Z[3](Z,I%3,M[I]),I++}}},IG=function(a,Z,I,M,D,Y,H,X){return n0.call(this,a,Z,64,I,M,D,Y,H,X)},lk=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,Z,I,M){{M=10;while(M!=29)if(M==10)M=a==Array.prototype||a==Object.prototype?2:55;else{if(M==55)return a[Z]=I.value,a;if(M==2)return a}}},l=function(a,Z,I){if((I=Z.j[a],I)===void 0)throw[zA,30,a];for(1;I.value;NaN){return I.create();if(15)break}I.create(a*2*a+95*a+41);while(true){return I.prototype;if(true)break}},MS=function(){if(!(false!=![])==!"")return VJ.call(this,20)},eQ=function(){return K0.call(this,78,12)},jW=function(a,Z,I){{I=36;while(I!=11)if(I==31)I=38;else if(I==38)I=a--?94:44;else{if(I==44)return Z;I==27?I=38:I==36?(Z=[],I=27):I==94&&(Z.push(Math.random()*255|0),I=31)}}},uk=function(a,Z,I,M,D,Y,H,X,g){return OA.call(this,3,a,Z,I,M,D,Y,H,X,g)},gT=function(){return VJ.call(this,32)},oF=EI(5,72,3,"Math",0,"object",this),p=(w(null,1,0,3,".","Symbol",function(a,Z,I,M,D,Y){{D=5;while(D!=29){if(D==14)return a;if(D==5)M=function(H,X){lk(this,(this.hy=H,"description"),{configurable:true,writable:true,value:X})},Y=function(H,X){for(X=51;X!=77;){if(X==2)throw new TypeError("Symbol is not a constructor");if(X==90)return new M(I+(H||"")+"_"+Z++,H);X==51&&(X=this instanceof Y?2:90)}},D=32;else if(D==32)D=a?14:94;else if(D==94)return M.prototype.toString=function(){return this.hy},I="jscomp_symbol_"+(Math.random()*1E9>>>0)+"_",Z=0,Y}}}),this||self),xD="closure_uid_"+(Math.random()*1E9>>>0),p0,bG=0,f0=function(a,Z,I,M,D,Y){D=33;{Y=98;while({})try{if(D==34)break;else if(D==70)Z=false,a=Object.defineProperty({},"passive",{get:function(){Z=true}}),D=22;else if(D==33)D=p.addEventListener&&Object.defineProperty?70:25;else if(D==22)Y=6,I=function(){},p.addEventListener("test",I,a),p.removeEventListener("test",I,a),D=5;else{if(D==25)return false;if(D==5)return Y=98,Z;D==84&&(Y=98,D=5)}}catch(H){if(Y==98)throw H;Y==6&&(M=H,D=84)}}}(),hX="closure_listenable_"+((((O((gT.prototype.i=(gT.prototype.b4=false,gT.prototype.dispose=function(a){for(a=39;a!=62;)a==44?(this.b4=true,this.i(),a=62):a==39&&(a=this.b4?62:44)},gT.prototype[Symbol.dispose]=((yJ.prototype.preventDefault=function(){this.defaultPrevented=true},yJ.prototype).stopPropagation=function(){this.Yb=true},function(){this.dispose()}),function(a){for(a=12;a!=40;)a==10?(this.f9.shift()(),a=81):a==81?a=56:a==56?a=this.f9.length?10:40:a==69?a=56:a==12&&(a=this.f9?69:40)}),16),2,wI,yJ),wI.prototype).init=function(a,Z,I,M,D,Y){{Y=47;while(Y!=14)Y==0?(this.relatedTarget=I,Y=45):Y==47?(M=this.type=a.type,D=a.changedTouches&&a.changedTouches.length?a.changedTouches[0]:null,this.target=a.target||a.srcElement,this.currentTarget=Z,I=a.relatedTarget,Y=49):Y==48?(this.button=a.button,this.keyCode=a.keyCode||0,this.key=a.key||"",this.charCode=a.charCode||(M=="keypress"?a.keyCode:0),this.ctrlKey=a.ctrlKey,this.altKey=a.altKey,this.shiftKey=a.shiftKey,this.metaKey=a.metaKey,this.pointerId=a.pointerId||0,this.pointerType=a.pointerType,this.state=a.state,this.timeStamp=a.timeStamp,this.jL=a,a.defaultPrevented&&wI.Y.preventDefault.call(this),Y=14):Y==49?Y=I?0:1:Y==26?(this.clientX=D.clientX!==void 0?D.clientX:D.pageX,this.clientY=D.clientY!==void 0?D.clientY:D.pageY,this.screenX=D.screenX||0,this.screenY=D.screenY||0,Y=48):Y==64?(I=a.fromElement,Y=0):Y==1?Y=M=="mouseover"?64:16:Y==25?(I=a.toElement,Y=0):Y==35?(this.offsetX=a.offsetX,this.offsetY=a.offsetY,this.clientX=a.clientX!==void 0?a.clientX:a.pageX,this.clientY=a.clientY!==void 0?a.clientY:a.pageY,this.screenX=a.screenX||0,this.screenY=a.screenY||0,Y=48):Y==45?Y=D?26:35:Y==16&&(Y=M=="mouseout"?25:0)}},wI).prototype.stopPropagation=function(){(wI.Y.stopPropagation.call(this),this.jL).stopPropagation?this.jL.stopPropagation():this.jL.cancelBubble=true},wI.prototype.preventDefault=function(a){(a=(wI.Y.preventDefault.call(this),this.jL),a).preventDefault?a.preventDefault():a.returnValue=false},Math.random()*1E6)|0),dT="constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf".split(" "),B2=0,QJ="closure_lm_"+(((c2.prototype.hasListener=function(a,Z,I,M,D){return UI(24,24,true,false,function(Y,H,X){for(X=81;X!=67;)if(X==8)X=31;else if(X==31)X=H<Y.length?95:69;else if(X==89)++H,X=31;else if(X==95)X=M&&Y[H].type!=I||D&&Y[H].capture!=Z?89:15;else{if(X==69)return false;if(X==81)H=0,X=8;else if(X==15)return true}},(I=(M=a!==void 0)?a.toString():"",D=Z!==void 0,this.v))},c2).prototype.remove=function(a,Z,I,M,D,Y,H,X){for(X=47;X!=67;)if(X==93)X=D>-1?86:77;else if(X==71)X=Y in this.v?17:10;else if(X==53)X=H.length==0?32:43;else if(X==32)delete this.v[Y],this.hE--,X=43;else if(X==47)Y=a.toString(),X=71;else if(X==86)O(33,true,H[D]),Array.prototype.splice.call(H,D,1),X=53;else{if(X==10||X==77)return false;if(X==43)return true;X==17&&(H=this.v[Y],D=YD(94,13,0,H,M,Z,I),X=93)}},c2.prototype.add=(c2.prototype.AE=function(a,Z,I,M,D,Y){return((Y=this.v[a.toString()],D=-1,Y)&&(D=YD(94,5,0,Y,M,Z,I)),D)>-1?Y[D]:null},function(a,Z,I,M,D,Y,H,X,g,U){{U=51;while(U!=86){if(U==58)return X;U==28?U=H?98:81:U==52?U=g>-1?85:90:U==90?(X=new Vy(!!M,Z,this.src,D,Y),X.X$=I,H.push(X),U=58):U==98?(g=YD(94,7,0,H,D,Z,M),U=52):U==85?(X=H[g],U=26):U==81?(H=this.v[Y]=[],this.hE++,U=98):U==26?U=I?58:84:U==51?(Y=a.toString(),H=this.v[Y],U=28):U==84&&(X.X$=false,U=58)}}}),Math).random()*1E6|0),jQ=0,ik={},AX="__closure_events_fn_"+(Math.random()*1E9>>>0);(((B=((O(18,2,me,gT),me.prototype)[hX]=true,me.prototype),B).cn=function(a){this.tE=a},B).addEventListener=function(a,Z,I,M){dI(26,true,false,M,a,this,I,Z)},B).removeEventListener=function(a,Z,I,M){VJ(41,"object",0,this,I,M,Z,a)};while([])if(B.dispatchEvent=function(a,Z,I,M,D,Y,H,X,g,U,x,P){for(P=40;P!=79;)if(P==53)I=true,P=4;else if(P==10)P=H?33:64;else if(P==52)P=U instanceof yJ?5:48;else if(P==50)U=new yJ(U,g),P=53;else if(P==94)D--,P=89;else if(P==88)P=U.Yb?10:27;else if(P==55)P=18;else if(P==98)Z=U.currentTarget=H[D],I=O(38,true,Z,false,x,U)&&I,P=26;else if(P==13)D=H.length-1,P=92;else if(P==89)P=!U.Yb&&D>=0?15:88;else if(P==18)P=!U.Yb&&D<H.length?98:64;else if(P==86)P=typeof U==="string"?50:52;else if(P==26)D++,P=18;else if(P==3)P=X?57:74;else if(P==48)M=U,U=new yJ(x,g),n7(U,M),P=53;else if(P==54)X=X.tE,P=71;else if(P==0)P=71;else{if(P==64)return I;P==71?P=X?25:74:P==92?P=89:P==74?(H=Y,U=a,g=this.N7,x=U.type||U,P=86):P==15?(Z=U.currentTarget=H[D],I=O(36,true,Z,true,x,U)&&I,P=94):P==33?(D=0,P=55):P==57?(Y=[],P=0):P==25?(Y.push(X),P=54):P==40?(X=this.tE,P=3):P==5?(U.target=U.target||g,P=53):P==27?(Z=U.currentTarget=g,I=O(37,true,Z,true,x,U)&&I,U.Yb||(I=O(39,true,Z,false,x,U)&&I),P=10):P==4&&(P=H?13:88)}},[])break;B.hasListener=((B.i=function(){this.tE=((me.Y.i.call(this),this.V)&&K0(78,54,0,true,this.V),null)},B).AE=function(a,Z,I,M){return this.V.AE(String(a),Z,I,M)},function(a,Z){return this.V.hasListener(a!==void 0?String(a):void 0,Z)});var TW;(((((B=("ARTICLE SECTION NAV ASIDE H1 H2 H3 H4 H5 H6 HEADER FOOTER ADDRESS P HR PRE BLOCKQUOTE OL UL LH LI DL DT DD FIGURE FIGCAPTION MAIN DIV EM STRONG SMALL S CITE Q DFN ABBR RUBY RB RT RTC RP DATA TIME CODE VAR SAMP KBD SUB SUP I B U MARK BDI BDO SPAN BR WBR NOBR INS DEL PICTURE PARAM TRACK MAP TABLE CAPTION COLGROUP COL TBODY THEAD TFOOT TR TD TH SELECT DATALIST OPTGROUP OPTION OUTPUT PROGRESS METER FIELDSET LEGEND DETAILS SUMMARY MENU DIALOG SLOT CANVAS FONT CENTER ACRONYM BASEFONT BIG DIR HGROUP STRIKE TT".split(" ").concat(["BUTTON","INPUT"]),eQ.prototype),B).H=function(a){return typeof a==="string"?this.N6.getElementById(a):a},B).getElementsByTagName=function(a,Z){while(true){return(Z||this.N6).getElementsByTagName(String(a));if({})break}},B).createElement=function(a,Z,I){return(Z=(I=this.N6,String)(a),I.contentType==="application/xhtml+xml"&&(Z=Z.toLowerCase()),I).createElement(Z)},B).createTextNode=function(a){return this.N6.createTextNode(String(a))},B).appendChild=function(a,Z){a.appendChild(Z)};while(6)if(B.append=function(a,Z){n0("string","object",9,0,"array",arguments,a,a.nodeType==9?a:a.ownerDocument||a.document)},!null)break;(((((O(20,2,zW,(OA(6,(B.removeNode=(B.canHaveChildren=function(a,Z){{Z=35;while(Z!=45){if(Z==46)return false;if(Z==61){switch(a.tagName){case "APPLET":case "AREA":case "BASE":case "BR":case "COL":case "COMMAND":case "EMBED":case "FRAME":case "HR":case "IMG":case "INPUT":case "IFRAME":case "ISINDEX":case "KEYGEN":case "LINK":case "NOFRAMES":case "NOSCRIPT":case "META":case "OBJECT":case "PARAM":case "SCRIPT":case "SOURCE":case "STYLE":case "TRACK":case "WBR":return false}return true}Z==35&&(Z=a.nodeType!=1?46:61)}}},B.contains=function(a,Z,I){{I=34;while(I!=70)if(I==34)I=a&&Z?1:83;else if(I==74)I=Z&&a!=Z?23:27;else if(I==80)I=74;else{if(I==47)return a==Z||a.contains(Z);if(I==49)return a==Z||!!(a.compareDocumentPosition(Z)&16);if(I==27)return Z==a;if(I==2)I=74;else if(I==99)I=typeof a.compareDocumentPosition!="undefined"?49:80;else if(I==23)Z=Z.parentNode,I=2;else if(I==1)I=a.contains&&Z.nodeType==1?47:99;else if(I==83)return false}}},RG),SW)),SW.prototype.OH="",SW.prototype.fd=0,me)),B=zW.prototype,B).Cd=SW.Zk(),B).H=function(){return this.U},B.getParent=function(){return this.vn},B).i=function(a){{a=69;while(a!=16)a==30?a=this.E0?4:62:a==69?(this.T_&&this.l4(),a=30):a==62?(UI(24,9,this,function(Z){Z.dispose()}),!this.r9&&this.U&&RG(this.U),this.i4=this.vn=this.eL=this.U=null,zW.Y.i.call(this),a=16):a==4&&(this.E0.dispose(),delete this.E0,a=62)}},B).cn=function(a,Z){{Z=6;while(Z!=25){if(Z==47)throw Error("Method not supported");Z==6?Z=this.vn&&this.vn!=a?47:13:Z==13&&(zW.Y.cn.call(this,a),Z=25)}}},B.l4=function(){(UI(24,8,this,function(a){a.T_&&a.l4()}),this.E0&&K0(78,53,0,true,this.E0),this).T_=false},B).removeChild=function(a,Z,I,M,D,Y,H,X,g,U,x,P,k){{k=95;while(k!=16)if(k==6)k=Z?81:38;else if(k==34)k=this.eL&&P?8:96;else if(k==81)a.l4(),a.U&&RG(a.U),k=38;else if(k==54)k=Y==null?89:93;else if(k==73)I=a,k=45;else if(k==52)k=P&&a?39:85;else if(k==38)Y=a,k=54;else{if(k==75)return a;if(k==93)Y.vn=null,zW.Y.cn.call(Y,null),k=85;else if(k==1)k=(M=a.EH)?26:80;else if(k==45)P=I,k=34;else{if(k==82)throw Error("Child is not in parent component");if(k==80)X=a,g=a.Cd,x=g.OH+":"+(g.fd++).toString(36),M=X.EH=x,k=26;else if(k==26)I=M,k=45;else if(k==95)k=a?66:85;else if(k==20)a=U,k=52;else if(k==66)k=typeof a==="string"?73:1;else if(k==96)U=null,k=20;else{if(k==89)throw Error("Unable to set parent component");k==39?(H=this.eL,P in H&&delete H[P],bk(1,8,1,a,this.i4),k=6):k==8?(D=this.eL,U=(D!==null&&P in D?D[P]:void 0)||null,k=20):k==85&&(k=a?75:82)}}}}};var Pv,Dc={button:"pressed",checkbox:"checked",menuitem:"selected",menuitemcheckbox:"checked",menuitemradio:"checked",radio:((B=(OA(5,m0),m0.prototype),B).Qr=function(a,Z,I,M,D,Y,H,X,g){for(X=55,H=89;;)try{if(X==51)break;else X==77?(H=81,M.blur(),X=98):X==38?X=a.X&32?53:19:X==93?X=I!=Z?76:51:X==55?X=UA(29,32,0,a)&&(M=a.oq())?82:51:X==98?(H=89,X=38):X==76?(Y=M,X=25):X==19?X=(I=M.hasAttribute("tabindex"))?83:93:X==56?(Y.tabIndex=0,X=51):X==96?(Y.tabIndex=-1,Y.removeAttribute("tabIndex"),X=51):X==25?X=Z?56:96:X==82?X=!Z&&a.X&32?77:19:X==53?(dI(48,0,4,a)&&a.setActive(false),dI(49,0,32,a)&&UA(18,false,32,a,32)&&a.O(32,false),X=19):X==30?(H=89,X=98):X==83&&(D=M.tabIndex,I=typeof D==="number"&&D>=0&&D<32768,X=93)}catch(U){if(H==89)throw U;H==81&&(g=U,X=30)}},B.O=function(a,Z,I,M,D,Y,H){{H=24;while(H!=75)H==20?H=this.Bn?30:61:H==24?(D=a.H(),H=57):H==57?H=D?20:75:H==30?((Y=this.Bn[Z])&&this.gC(a,Y,I),this.n9(D,Z,I),H=75):H==61&&(M=this.bV(),M.replace(/\\xa0|\\s/g," "),this.Bn={1:M+"-disabled",2:M+"-hover",4:M+"-active",8:M+"-selected",16:M+"-checked",32:M+"-focused",64:M+"-open"},H=30)}},B.n9=function(a,Z,I,M,D,Y,H,X){(X=((M=a.getAttribute((Y=(Pv||(Pv={1:"disabled",8:"selected",16:"checked",64:"expanded"}),Pv[Z]),"role"))||null)?(D=Dc[M]||Y,H=Y=="checked"||Y=="selected"?D:Y):H=Y,H))&&v2(44,6,false,"hidden",X,I,a)},B.gC=function(a,Z,I,M){(M=a.H?a.H():a)&&(I?oG:Iq)(M,[Z])},"checked"),tab:"selected",treeitem:"selected"},tX=((OA((O(19,((B.oq=function(a){return a.H()},B).bV=function(){return"goog-control"},2),MS,m0),9),MS),MS).prototype.bV=function(){return"goog-button"},{});if(typeof IG!==(((((((B=(O(17,2,IG,(MS.prototype.n9=function(a,Z,I){switch(Z){case 8:case 16:v2(44,7,false,"hidden","pressed",I,a);break;default:case 64:case 1:MS.Y.n9.call(this,a,Z,I)}},zW)),IG).prototype,B).GJ=true,B).i=function(a){{a=63;while(a!=9)a==63?(IG.Y.i.call(this),a=3):a==3?a=this.O0?20:14:a==20?(this.O0.dispose(),delete this.O0,a=14):a==14&&(delete this.o,this.N=null,a=9)}},B).ty=0,B).N=null,B.gC=function(a,Z,I){for(I=46;I!=42;)I==92?I=a&&this.N&&bk(1,9,1,a,this.N)?25:42:I==46?I=Z?60:92:I==60?I=a?48:42:I==99?(this.o.gC(this,a,false),I=42):I==48?(this.N?UA(15,this.N,0,a)||this.N.push(a):this.N=[a],this.o.gC(this,a,true),I=42):I==25?I=this.N.length==0?63:99:I==63&&(this.N=null,I=99)},B.oq=function(){return this.o.oq(this)},B.l4=function(){IG.Y.l4.call(this),this.O0&&this.O0.detach(),this.isVisible()&&this.isEnabled()&&this.o.Qr(this,false)},B).ZH=255,B).PB=39,B.X=0,B.isVisible=function(){return this.GJ},B.isEnabled=function(){return!(this.X&1)},B.isActive=function(){return!!(this.X&4)},B.setActive=function(a){UA(17,a,32,this,4)&&this.O(4,a)},B.getState=function(){return this.X},B.O=function(a,Z,I,M,D,Y,H){for(H=77;H!=25;)H==33?H=D?85:82:H==85?(this.isVisible()&&this.o.Qr(this,D),this.O(1,!D,true),H=25):H==9?H=Y&&typeof Y.isEnabled=="function"&&!Y.isEnabled()||!UA(19,!D,32,this,1)?25:33:H==70?(D=!Z,Y=this.getParent(),H=9):H==77?H=I||a!=1?91:70:H==41?(this.o.O(this,a,Z),this.X=Z?(M=this.X,-(M|0)+2*(M&a)+2*(M&~a)+(~M&a)):this.X&~a,H=25):H==91?H=UA(28,a,0,this)&&Z!=!!(this.X&a)?41:25:H==82&&(this.setActive(false),UA(16,false,32,this,2)&&this.O(2,false),H=85)},"function"))throw Error("Invalid component class "+IG);switch(!(typeof m0!=="function")){case !""==!false:!!null;break;case false!=0:throw Error("Invalid renderer class "+m0);break}var XE=dI(20,IG);JX(((O(15,2,A0,((OA(7,(O((JX(41,(tX[XE]=m0,function(){return new IG(null)}),"goog-control"),14),2,M9,MS),M9)),M9.prototype.Qr=function(){},M9.prototype.n9=function(){},M9).prototype.O=function(a,Z,I,M,D){for(D=2;D!=53;)D==87?(M.disabled=I,D=53):D==2?(M9.Y.O.call(this,a,Z,I),M=a.H(),D=49):D==49&&(D=M&&Z==1?87:53)},IG)),A0.prototype).i=function(){delete (A0.Y.i.call(this),this).Kd,delete this.yu},40),function(){return new A0(null)},"goog-button");var qW,GA={passive:true,capture:true},rI=p.requestIdleCallback?function(a){requestIdleCallback(function(){a()},{timeout:4})}:p.setImmediate?function(a){setImmediate(a)}:function(a){setTimeout(a,0)},C7=String.fromCharCode(105,110,116,101,103,67,104,101,99,107,66,121,112,97,115,115),iG=[],zA={},kD=[],sI=[],SQ=[],K7=[],N9=[],Hi=((Q.prototype.Ii=void 0,Q.prototype.WB=void 0,Q).prototype.Hn="toString",[]),ci=(Q.prototype.g9=false,[]);if(true!=((Bi,jW,$D,aq,function(){})(lG),![]))Zc;var YB=(B=Q.prototype,zA).constructor,Zp=void 0;(B=(B.cB=(B.D=(((B.X8=function(){return JX.call(this,25)},B.Wn=function(a,Z,I,M,D,Y){return K.call(this,a,73,Z,I,M,D,Y)},B).Jy=(B.oi=(B.HB=function(a,Z,I,M,D,Y,H){return n0.call(this,a,Z,24,I,M,D,Y,H)},function(a,Z,I,M,D,Y){return v2.call(this,44,13,a,Z,I,M,D,Y)}),function(){return kB.call(this,39,3)}),(B.Qu=function(a,Z,I,M,D,Y,H,X,g){return dI.call(this,25,a,Z,I,M,D,Y,H,X,g)},Q.prototype.P="create",window).performance)||{}).now?function(){return this.w9+window.performance.now()}:function(){if(0==![])return+new Date},0),Q).prototype,B.S=function(a,Z){return Z=(Zp=function(){if(true)return Z==a?41:79},a={},{}),function(I,M,D,Y,H,X,g,U,x,P,k,t,G,b,E,d,z,A,v,N,q,S,IF,e,FF,h,L0,f,y,xB,MW,aF,J,uG,C0,rT,aG,H2,kU,UP,L,Qy,u){while(![undefined]==Number())if(L=30,true)break;for(u=(H2=undefined,98),UP=false;;)try{if(L==96)break;else if(L==37)G++,L=50;else if(L==16)L0=e.value,L=95;else if(L==30)q=Z,Z=a,L=82;else if(L==83)V(128,this,C(2,N.length).concat(N),166),L=79;else if(L==72)L=H2!==undefined?41:49;else if(L==87)X[M++]=256+(Y&-256)+(~Y^255),Y>>=8,L=55;else if(L==22)P="*"+P,L=1;else{if(L==8)return aG;if(L==7)uG=I[1],L=42;else if(L==33)L=MW==Hi?89:99;else if(L==62)L=N.length>1E6?94:83;else if(L==94)N=N.slice(0,1E6),V(128,this,[],197),OI(255,this,128,[],36),L=83;else if(L==53)u=21,wT(17,rT,this,319),H2=96,L=41;else if(L==97)L=Y>255?87:55;else if(L==69)H2!==undefined?(L=H2,H2=undefined):L=96;else if(L==91)L=46;else if(L==55)X[M++]=Y,L=37;else if(L==66)d=0,P="",L=40;else if(L==38)L=50;else if(L==95)u=45,L0(),L=4;else if(L==36){if(k=(H=c(12,this),typeof Symbol!="undefined")&&Symbol.iterator&&H[Symbol.iterator])g=k.call(H);else if(typeof H.length=="number")g={next:sA(19,38,0,H)};else throw Error(String(H)+" is not an iterable or ArrayLike");L=(S=g,e=S.next(),91)}else if(L==59)L=MW==sI?23:32;else if(L==1)FF=P,c(75,this).length=aF.shift(),r(this,95).length=aF.shift(),c(276,this).length=aF.shift(),r(this,191)[0]=aF.shift(),r(this,128).length=aF.shift(),l(108,this).length=aF.shift(),l(47,this).length=aF.shift(),c(458,this).length=aF.shift(),aG=FF,H2=8,L=41;else if(L==68)L=MW==N9?36:41;else if(L==41)u=98,Z=q,L=69;else if(L==6)u=21,J0(24,this,22,10001),L=41;else if(L==99)L=MW==kD?3:59;else if(L==15)aG=yy(319,I[1],29,this,10001),H2=2,L=41;else if(L==18)this.q6=X,this.A=this.q6.length<<3,W(181,this,[0,0,0]),L=6;else if(L==46)L=e.done?44:16;else if(L==49)u=21,t=jW(2).concat(c(128,this)),t[1]=t[0]^60,t[3]=(y=t[1],E=xB[0],(y&~E)-2*(~y^E)-(~y&E)+2*(~y|E)),t[4]=(b=t[1],U=xB[1],(b|0)-(U|0)+2*(~b&U)),P=this.F8(t),L=61;else if(L==63)L=N.length>4?62:79;else if(L==61)L=P?22:66;else if(L==23)yy(319,I[1],29,this,I[2]),L=41;else if(L==78)Y=z.charCodeAt(G),L=97;else if(L==24)L=MW==K7?7:33;else if(L==50)L=G<z.length?78:18;else{if(L==2)return aG;if(L==3)aF=I[2],xB=C(2,(f=c(128,this).length,-2-2*~f-(f&-3)+(~f&2))),A=this.l,this.l=this,L=88;else if(L==89)I[1].push(r(this,75).length,l(95,this).length,c(276,this).length,c(191,this)[0],r(this,128).length,l(108,this).length,l(47,this).length,l(458,this).length),R(34,this,I[2]),this.j[255]&&yy(319,r(this,255),29,this,10001),L=41;else if(L==80)u=21,L=4;else if(L==79)u=21,this.l=A,L=72;else if(L==42)u=16,z=atob(uG),G=0,X=[],M=0,L=38;else if(L==40)L=93;else if(L==44)H.length=0,L=41;else if(L==14)C0=t[d][this.Hn](16),C0.length==1&&(C0="0"+C0),P+=C0,L=35;else if(L==88)u=77,IF=c(471,this),IF.length>0&&V(128,this,C(2,IF.length).concat(IF),48),OI(255,this,128,C(1,this.B+1>>1),87),V(128,this,C(1,this[kD].length)),J=this.mt?c(108,this):r(this,47),J.length>0&&V(95,this,C(2,J.length).concat(J),64),h=l(95,this),h.length>4&&V(128,this,C(2,h.length).concat(h),65),D=0,N=r(this,458),D-=(x=c(128,this).length,-3*~(x&5)+-2+~(x|5)+2*(x^5)),D+=(v=c(160,this),2*(v|0)- -2+~v+(~v|2047)),N.length>4&&(D-=(N.length|0)+3),D>0&&V(128,this,C(2,D).concat(jW(D)),53),L=63;else if(L==35)d++,L=93;else if(L==93)L=d<t.length?14:1;else if(L==32)L=MW==iG?15:68;else if(L==4)e=S.next(),L=46;else if(L==82)u=21,MW=I[0],L=24;else if(L==12)throw Qy;}}}catch(Zg){if(u==(Qy=Zg,98))throw Zg;u==45?(kU=Zg,L=80):u==21?(H2=12,L=41):u==77?(H2=12,L=79):u==16&&(rT=Zg,L=53)}}}(),B.Ay=0,B).Vu=function(){return sA.call(this,19,22)},B.Ri=0;var p7,eW=(B.F8=function(a,Z,I,M,D){return EA.call(this,3,a,Z,I,M,D)},B.Iq=(Q.prototype[ci]=[0,0,1,1,0,1,1],function(){return RF.call(this,84,3)}),/./),Hv=K7.pop.bind(Q.prototype[Hi]),Fm=((p7=UI(24,16,{get:Hv},(eW[Q.prototype.Hn]=Hv,Q.prototype.P)),Q).prototype.TJ=void 0,function(a,Z){return(Z=RF(84,25,"ks",null,"error"))&&a.eval(Z.createScript("1"))===1?function(I){while(true){return Z.createScript(I);if(5)break}}:function(I){return""+I}})(p);((qW=p.knitsail||(p.knitsail={}),qW.m)>40||(qW.m=41,qW.ks=YU,qW.a=uk),qW).eJI_=function(a,Z,I,M,D,Y,H,X,g){return[function(U){return bk(1,34,false,U,g)},(g=new Q(X,H,Z,D,Y,M,a),function(U){g.Iq(U)})]};}).call(this);'].join('\n')));}).call(this);</script><script nonce="YGJ95VOdbsybnZ1WkUNFOQ">(function(){var r='1';var ce=30;var sctm=false;var p='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\x3d\x3d';var g='knitsail';var eid='tTXxaPvNG_6Z0PEP4ruj8Ag';var ss_cgi=false;var sp='';var hashed_query='';var cbs='';var ussv='';var content_bindings=[];var challenge_version=0;var bgas=false;(function(){var t=typeof Object.defineProperties=="function"?Object.defineProperty:function(a,b,f){if(a==Array.prototype||a==Object.prototype)return a;a[b]=f.value;return a},u=function(a){a=["object"==typeof globalThis&&globalThis,a,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var b=0;b<a.length;++b){var f=a[b];if(f&&f.Math==Math)return f}throw Error("a");},w=u(this),x=function(a,b){if(b)a:{var f=w;a=a.split(".");for(var h=0;h<a.length-1;h++){var e=a[h];if(!(e in
+    f))break a;f=f[e]}a=a[a.length-1];h=f[a];b=b(h);b!=h&&b!=null&&t(f,a,{configurable:!0,writable:!0,value:b})}},aa=function(a){var b=0;return function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}}},y=function(a){var b=typeof Symbol!="undefined"&&Symbol.iterator&&a[Symbol.iterator];if(b)return b.call(a);if(typeof a.length=="number")return{next:aa(a)};throw Error("b`"+String(a));};x("Promise",function(a){function b(){this.i=null}function f(c){return c instanceof e?c:new e(function(d){d(c)})}if(a)return a;b.prototype.j=function(c){if(this.i==null){this.i=[];var d=this;this.l(function(){d.v()})}this.i.push(c)};var h=w.setTimeout;b.prototype.l=function(c){h(c,0)};b.prototype.v=function(){for(;this.i&&this.i.length;){var c=this.i;this.i=[];for(var d=0;d<c.length;++d){var k=c[d];c[d]=null;try{k()}catch(l){this.A(l)}}}this.i=null};b.prototype.A=function(c){this.l(function(){throw c;})};var e=function(c){this.j=0;this.l=void 0;this.i=[];this.D=!1;var d=this.A();try{c(d.resolve,d.reject)}catch(k){d.reject(k)}};e.prototype.A=function(){function c(l){return function(m){k||(k=!0,l.call(d,m))}}var d=this,k=!1;return{resolve:c(this.J),reject:c(this.v)}};e.prototype.J=function(c){if(c===this)this.v(new TypeError("A Promise cannot resolve to itself"));else if(c instanceof e)this.L(c);else{a:switch(typeof c){case "object":var d=c!=null;break a;case "function":d=!0;break a;default:d=!1}d?this.I(c):this.C(c)}};e.prototype.I=function(c){var d=void 0;try{d=c.then}catch(k){this.v(k);return}typeof d=="function"?this.M(d,c):this.C(c)};e.prototype.v=function(c){this.F(2,c)};e.prototype.C=function(c){this.F(1,c)};e.prototype.F=function(c,d){if(this.j!=0)throw Error("c`"+c+"`"+d+"`"+this.j);this.j=c;this.l=d;this.j===2&&this.K();this.G()};e.prototype.K=function(){var c=this;h(function(){if(c.H()){var d=w.console;typeof d!=="undefined"&&d.error(c.l)}},1)};e.prototype.H=function(){if(this.D)return!1;var c=w.CustomEvent,d=w.Event,k=w.dispatchEvent;if(typeof k==="undefined")return!0;typeof c==="function"?c=new c("unhandledrejection",{cancelable:!0}):typeof d==="function"?c=new d("unhandledrejection",{cancelable:!0}):(c=w.document.createEvent("CustomEvent"),c.initCustomEvent("unhandledrejection",!1,!0,c));c.promise=this;c.reason=this.l;return k(c)};e.prototype.G=function(){if(this.i!=null){for(var c=0;c<this.i.length;++c)n.j(this.i[c]);this.i=null}};var n=new b;e.prototype.L=function(c){var d=this.A();c.B(d.resolve,d.reject)};e.prototype.M=function(c,d){var k=this.A();try{c.call(d,k.resolve,k.reject)}catch(l){k.reject(l)}};e.prototype.then=function(c,d){function k(q,v){return typeof q=="function"?function(A){try{l(q(A))}catch(B){m(B)}}:v}var l,m,C=new e(function(q,v){l=q;m=v});this.B(k(c,l),k(d,m));return C};e.prototype.catch=function(c){return this.then(void 0,c)};e.prototype.B=function(c,d){function k(){switch(l.j){case 1:c(l.l);break;case 2:d(l.l);break;default:throw Error("d`"+l.j);}}var l=
+    this;this.i==null?n.j(k):this.i.push(k);this.D=!0};e.resolve=f;e.reject=function(c){return new e(function(d,k){k(c)})};e.race=function(c){return new e(function(d,k){for(var l=y(c),m=l.next();!m.done;m=l.next())f(m.value).B(d,k)})};e.all=function(c){var d=y(c),k=d.next();return k.done?f([]):new e(function(l,m){function C(A){return function(B){q[A]=B;v--;v==0&&l(q)}}var q=[],v=0;do q.push(void 0),v++,f(k.value).B(C(q.length-1),m),k=d.next();while(!k.done)})};return e});
+    var z=this||self;function D(){var a,b;return(a=window.performance)==null?void 0:(b=a.getEntriesByType)==null?void 0:b.call(a,"navigation")[0]};function E(){var a;return(a=D())==null?void 0:a.type}function F(){var a,b;return(a=window.performance)==null?void 0:(b=a.navigation)==null?void 0:b.type};function G(a,b){google.c.e("load",a,String(b))};var ba=window.location;function H(a){return(a=ba.search.match(new RegExp("[?&]"+a+"=(\\d+)")))?Number(a[1]):-1}
+    function I(){var a=google.timers.load,b=a.e,f=google.stvsc;f&&(b.ssr=1);if(f)f=f.isBF;else{var h;f=((h=window.google)==null?0:h.rdn)?E()==="back_forward":F()===2}f&&(b.bb=1);var e;(((e=window.google)==null?0:e.rdn)?E()==="reload":F()===1)&&(b.r=1);if(h=D())(e=h.type)&&(b.nt=e),e=h.deliveryType,e!=null&&(b.dt=e),e=h.transferSize,e!=null&&(b.ts=e),h=h.nextHopProtocol,h!=null&&(b.nhp=h);(h=window.navigation)&&(h=h.activation)&&(h=h.navigationType)&&(b.ant=h);b=a.m;if(!b||!b.prs){h=window._csc==="agsa"&&
+    window._cshid;b=H("qsubts");var n;((n=window.google)==null?0:n.rdn)?(n=E(),n=!n||n==="navigate"):n=!F();h=n&&!h?a.qsubts||b:0;e="r";h>0&&(n=a.fbts||H("fbts"),n>0&&(a.t.start=Math.max(h,n),e=a.fbts===n?"i":"u"));f=a.t;var c=f.start;n={};a.wsrt!==void 0&&(n.wsrt=a.wsrt);if(c)for(var d in f)if(d!=="start"){var k=f[d];n[d]=d==="sgl"?k:d==="prs"?c-k:Math.max(k-c,0)}h>0&&(n.gsasrt=a.t.start-h,d=H("qsd"),d>0&&G("qsd",d),G("ests",(a.qsubts===h?"i":"u")+e),a.qsubts&&a.qsubts!==b&&G("qd",a.qsubts-b));d=a.e;a="/gen_204?s="+google.sn+"&t=sg&atyp=csi&ei="+google.kEI+"&rt=";b="";for(m in n)a+=""+b+m+"."+n[m],b=",";for(var l in d)a+="&"+l+"="+d[l];var m="";z._cshid&&(m+="&cshid="+z._cshid);(l=window.google&&window.google.kOPI||null)&&(m+="&opi="+l);m=a+=m;typeof navigator.sendBeacon==="function"?navigator.sendBeacon(m,""):google.log("","",m)}};var J=function(){var a=location.href;this.i=this.j="";var b=a.indexOf("#");b>0&&(this.j=a.substring(b),a=a.substring(0,b));b=a.indexOf("?");b>0&&(this.i="&"+a.substring(b+1),a=a.substring(0,b));this.l=a},L=function(a,b,f){K(a,b);a.i=a.i+"&"+b+"="+f},K=function(a,b){a.i=a.i.replace(new RegExp("&"+b+"=([^&]+)","g"),"")};J.prototype.toString=function(){return""+this.l+(this.i?"?"+this.i.substring(1):"")+this.j};
+    var M=function(a){this.i=a};M.prototype.toString=function(){return this.i};var N=function(a){this.N=a};function O(a){return new N(function(b){return b.substr(0,a.length+1).toLowerCase()===a+":"})}var ca=[O("data"),O("http"),O("https"),O("mailto"),O("ftp"),new N(function(a){return/^[^:]*([/?#]|$)/.test(a)})],da=/^\s*(?!javascript:)(?:[\w+.-]+:|[^:/?#]*(?:[/?#]|$))/i;function ea(){var a=z[g];if(a){a=y((0,a.a)(p,function(){},!1)).next().value;var b=[P()];return a(b)}Q(Error("f"))}function fa(a,b){var f=z[g];if(f){b=f.a;var h=[P()];b(p,function(e){return void e(a,h)},!1,void 0,void 0,void 0,void 0,!0)}else b(Error("f"))}function P(){var a={};content_bindings.forEach(function(b){a[b.key]=b.value});return a}function R(a){var b=challenge_version,f=cbs;return b>0?"B."+b+"."+f+"."+a:a}
+    function S(a){var b=new Date;b.setSeconds(b.getSeconds()+(Number(ce)||300));var f="SG_SS="+a,h=document.cookie.length+f.length;r&&(h<4093&&!ss_cgi&&(document.cookie=f+("; expires="+b.toUTCString())),T(),ss_cgi||document.cookie.indexOf("SG_SS=")<0?U(a):V(W()))}
+    function T(){var a;a:{if(window.st&&(a=window.st(location.href)))break a;a=performance&&performance.timing&&performance.timing.navigationStart?performance.timing.navigationStart:void 0}if(a)try{var b;((b=window)==null?0:b.sessionStorage)&&window.sessionStorage.setItem(eid,String(a))}catch(f){}}function W(){var a=eid,b=new J;K(b,"sg_ss");L(b,"sei",a);return b.toString()}function U(a){var b=eid,f=new J;L(f,"sg_ss",encodeURIComponent(a));L(f,"sei",b);V(f.toString())}
+    function ha(a){if(window.prs){X("psrt");sctm&&I();var b=W();window.prs(b,a).catch(function(){U(a)})}else U(a)}function V(a){X("psrt");sctm&&I();window.prs?window.prs(a).catch(function(){Y(a)}):Y(a)}
+    function Y(a){if(window.pr)window.pr(a);else{a:{var b=b===void 0?ca:b;if(a instanceof M)b=a;else{for(var f=0;f<b.length;++f){var h=b[f];if(h instanceof N&&h.N(a)){b=new M(a);break a}}b=void 0}}a=location;if(b instanceof M)if(b instanceof M)b=b.i;else throw Error("e");else b=da.test(b)?b:void 0;b!==void 0&&a.replace(b)}}function Q(a){navigator.sendBeacon("/gen_204?cad=sg_b_e&e="+a,"")}
+    function ia(){X("bsst");if(bgas)fa(function(b){X("bset");S(R(b))},function(b){Q(b);X("bset")});else{var a=ea();X("bset");a&&S(R(a))}}function X(a){sctm&&google.tick("load",a)};navigator||(z.navigator={});typeof navigator.sendBeacon!=="function"&&(navigator.sendBeacon=function(a){(new Image).src=a});window.onerror=function(a,b,f,h,e){navigator.sendBeacon("/gen_204?emsg="+(e instanceof Error?e.message:a)+"&srcpg=sgs&jsr=1&jsel=3")};X("sst");var Z;window.sgs&&ussv?(X("ssst"),Z=window.sgs(sp).then(function(a){X("sset");r&&(T(),ha(a));return!0},function(){return!1})):Z=Promise.resolve(!1);Z.then(function(a){a||ia()}).catch(function(a){Q(a)});}).call(this);})();</script><script nonce="YGJ95VOdbsybnZ1WkUNFOQ">(function(){var cssId='yvlrue';var event_id='tTXxaPvNG_6Z0PEP4ruj8Ag';function sw(){document.getElementById(cssId).setAttribute('style','');navigator.sendBeacon(`/gen_204?cad=sg_trbl&ei=${event_id}`,'');}
+    setTimeout(sw,2000);})();</script><style>div{font-family:sans-serif;color:#545454;background-color:#fff}a{color:#1558d6;font-size:inherit;text-decoration:none}a:visited{color:#681da8}</style><div id="yvlrue" style="display:none">If you're having trouble accessing Google Search, please&nbsp;<a href="/search?q=grand+junction,+co+weather&amp;sca_esv=504682394de47591&amp;emsg=SG_REL&amp;sei=tTXxaPvNG_6Z0PEP4ruj8Ag">click here</a>, or send&nbsp;<a href="https://support.google.com/websearch">feedback</a>.</div></body></html>
+
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Cell In[49], line 3
+          1 city = input("Enter the Name of a City ->  ")
+          2 city = city+" weather"
+    ----> 3 result = getGoogleWeather(city)
+
+
+    Cell In[48], line 12, in getGoogleWeather(city)
+         10 print(f'{res=}')
+         11 print(res.text)
+    ---> 12 soup = BeautifulSoup(res.text, 'html.parser')
+         13 location_tag = soup.find_all('div')
+         14 print(f'{len(location_tag)}')
+
+
+    NameError: name 'BeautifulSoup' is not defined
+
+
+
+```python
+result
+```
+
+### Weather Forecast
+
+- openweathermap.org provides 5-day 3-hour forecast data for freemium account
+
+
+```python
+# get current weather using openweathermap.org API
+import requests
+
+def forecastWeather(city) -> json:
+    params = {
+        'appid': '',  # FIXME
+      'q': city,
+      'units': 'imperial' # uses US metrics
+    }
+
+    #url = httpsapi.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
+    url = 'https://api.openweathermap.org/data/2.5/forecast'
+
+    api_result = requests.get(url, params)
+
+    api_response = api_result.json()
+    return api_response
+```
+
+
+```python
+city = input('Enter name of a City: ')
+```
+
+
+```python
+json_response = forecastWeather(city)
+```
+
+
+```python
+json_response
+```
+
+
+
+
+    {'cod': '200',
+     'message': 0,
+     'cnt': 40,
+     'list': [{'dt': 1760648400,
+       'main': {'temp': 65.12,
+        'feels_like': 63.27,
+        'temp_min': 65.03,
+        'temp_max': 65.12,
+        'pressure': 1002,
+        'sea_level': 1002,
+        'grnd_level': 828,
+        'humidity': 41,
+        'temp_kf': 0.05},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 11.07, 'deg': 240, 'gust': 19.55},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-16 21:00:00'},
+      {'dt': 1760659200,
+       'main': {'temp': 59.32,
+        'feels_like': 56.14,
+        'temp_min': 56.39,
+        'temp_max': 59.32,
+        'pressure': 1002,
+        'sea_level': 1002,
+        'grnd_level': 828,
+        'humidity': 25,
+        'temp_kf': 1.63},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 1},
+       'wind': {'speed': 3.31, 'deg': 22, 'gust': 4.5},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-17 00:00:00'},
+      {'dt': 1760670000,
+       'main': {'temp': 56.93,
+        'feels_like': 53.08,
+        'temp_min': 56.93,
+        'temp_max': 56.93,
+        'pressure': 1006,
+        'sea_level': 1006,
+        'grnd_level': 830,
+        'humidity': 16,
+        'temp_kf': 0},
+       'weather': [{'id': 803,
+         'main': 'Clouds',
+         'description': 'broken clouds',
+         'icon': '04n'}],
+       'clouds': {'all': 61},
+       'wind': {'speed': 4.05, 'deg': 62, 'gust': 3.09},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-17 03:00:00'},
+      {'dt': 1760680800,
+       'main': {'temp': 51.89,
+        'feels_like': 47.77,
+        'temp_min': 51.89,
+        'temp_max': 51.89,
+        'pressure': 1009,
+        'sea_level': 1009,
+        'grnd_level': 832,
+        'humidity': 21,
+        'temp_kf': 0},
+       'weather': [{'id': 802,
+         'main': 'Clouds',
+         'description': 'scattered clouds',
+         'icon': '03n'}],
+       'clouds': {'all': 31},
+       'wind': {'speed': 8.52, 'deg': 154, 'gust': 12.55},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-17 06:00:00'},
+      {'dt': 1760691600,
+       'main': {'temp': 49.66,
+        'feels_like': 46.89,
+        'temp_min': 49.66,
+        'temp_max': 49.66,
+        'pressure': 1009,
+        'sea_level': 1009,
+        'grnd_level': 832,
+        'humidity': 25,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 6.78, 'deg': 173, 'gust': 10.4},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-17 09:00:00'},
+      {'dt': 1760702400,
+       'main': {'temp': 40.59,
+        'feels_like': 36.82,
+        'temp_min': 40.59,
+        'temp_max': 40.59,
+        'pressure': 1009,
+        'sea_level': 1009,
+        'grnd_level': 832,
+        'humidity': 27,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 5.46, 'deg': 195, 'gust': 8.16},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-17 12:00:00'},
+      {'dt': 1760713200,
+       'main': {'temp': 53.42,
+        'feels_like': 49.59,
+        'temp_min': 53.42,
+        'temp_max': 53.42,
+        'pressure': 1009,
+        'sea_level': 1009,
+        'grnd_level': 832,
+        'humidity': 24,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 4.94, 'deg': 219, 'gust': 6.33},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-17 15:00:00'},
+      {'dt': 1760724000,
+       'main': {'temp': 63.19,
+        'feels_like': 59.86,
+        'temp_min': 63.19,
+        'temp_max': 63.19,
+        'pressure': 1006,
+        'sea_level': 1006,
+        'grnd_level': 830,
+        'humidity': 14,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 3.18, 'deg': 132, 'gust': 2.28},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-17 18:00:00'},
+      {'dt': 1760734800,
+       'main': {'temp': 69.01,
+        'feels_like': 66.13,
+        'temp_min': 69.01,
+        'temp_max': 69.01,
+        'pressure': 1002,
+        'sea_level': 1002,
+        'grnd_level': 828,
+        'humidity': 11,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 3.78, 'deg': 312, 'gust': 9.57},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-17 21:00:00'},
+      {'dt': 1760745600,
+       'main': {'temp': 66.42,
+        'feels_like': 63.46,
+        'temp_min': 66.42,
+        'temp_max': 66.42,
+        'pressure': 1002,
+        'sea_level': 1002,
+        'grnd_level': 828,
+        'humidity': 15,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 9.8, 'deg': 301, 'gust': 12.86},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-18 00:00:00'},
+      {'dt': 1760756400,
+       'main': {'temp': 61.21,
+        'feels_like': 57.92,
+        'temp_min': 61.21,
+        'temp_max': 61.21,
+        'pressure': 1004,
+        'sea_level': 1004,
+        'grnd_level': 829,
+        'humidity': 19,
+        'temp_kf': 0},
+       'weather': [{'id': 802,
+         'main': 'Clouds',
+         'description': 'scattered clouds',
+         'icon': '03n'}],
+       'clouds': {'all': 38},
+       'wind': {'speed': 7.78, 'deg': 280, 'gust': 13.47},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-18 03:00:00'},
+      {'dt': 1760767200,
+       'main': {'temp': 57.7,
+        'feels_like': 54.25,
+        'temp_min': 57.7,
+        'temp_max': 57.7,
+        'pressure': 1005,
+        'sea_level': 1005,
+        'grnd_level': 829,
+        'humidity': 23,
+        'temp_kf': 0},
+       'weather': [{'id': 802,
+         'main': 'Clouds',
+         'description': 'scattered clouds',
+         'icon': '03n'}],
+       'clouds': {'all': 36},
+       'wind': {'speed': 3.96, 'deg': 237, 'gust': 7.49},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-18 06:00:00'},
+      {'dt': 1760778000,
+       'main': {'temp': 55.98,
+        'feels_like': 52.39,
+        'temp_min': 55.98,
+        'temp_max': 55.98,
+        'pressure': 1005,
+        'sea_level': 1005,
+        'grnd_level': 829,
+        'humidity': 24,
+        'temp_kf': 0},
+       'weather': [{'id': 802,
+         'main': 'Clouds',
+         'description': 'scattered clouds',
+         'icon': '03n'}],
+       'clouds': {'all': 30},
+       'wind': {'speed': 4.7, 'deg': 241, 'gust': 9.19},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-18 09:00:00'},
+      {'dt': 1760788800,
+       'main': {'temp': 53.01,
+        'feels_like': 49.19,
+        'temp_min': 53.01,
+        'temp_max': 53.01,
+        'pressure': 1007,
+        'sea_level': 1007,
+        'grnd_level': 830,
+        'humidity': 25,
+        'temp_kf': 0},
+       'weather': [{'id': 802,
+         'main': 'Clouds',
+         'description': 'scattered clouds',
+         'icon': '03n'}],
+       'clouds': {'all': 29},
+       'wind': {'speed': 3.56, 'deg': 219, 'gust': 3.87},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-18 12:00:00'},
+      {'dt': 1760799600,
+       'main': {'temp': 56.59,
+        'feels_like': 52.99,
+        'temp_min': 56.59,
+        'temp_max': 56.59,
+        'pressure': 1008,
+        'sea_level': 1008,
+        'grnd_level': 832,
+        'humidity': 22,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 2.8, 'deg': 278, 'gust': 11.03},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-18 15:00:00'},
+      {'dt': 1760810400,
+       'main': {'temp': 61.7,
+        'feels_like': 58.42,
+        'temp_min': 61.7,
+        'temp_max': 61.7,
+        'pressure': 1010,
+        'sea_level': 1010,
+        'grnd_level': 834,
+        'humidity': 18,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 5},
+       'wind': {'speed': 21.97, 'deg': 326, 'gust': 40.4},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-18 18:00:00'},
+      {'dt': 1760821200,
+       'main': {'temp': 55.76,
+        'feels_like': 52.54,
+        'temp_min': 55.76,
+        'temp_max': 55.76,
+        'pressure': 1014,
+        'sea_level': 1014,
+        'grnd_level': 836,
+        'humidity': 32,
+        'temp_kf': 0},
+       'weather': [{'id': 801,
+         'main': 'Clouds',
+         'description': 'few clouds',
+         'icon': '02d'}],
+       'clouds': {'all': 16},
+       'wind': {'speed': 17.47, 'deg': 36, 'gust': 18.95},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-18 21:00:00'},
+      {'dt': 1760832000,
+       'main': {'temp': 53.83,
+        'feels_like': 50.09,
+        'temp_min': 53.83,
+        'temp_max': 53.83,
+        'pressure': 1015,
+        'sea_level': 1015,
+        'grnd_level': 837,
+        'humidity': 25,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 8},
+       'wind': {'speed': 14.29, 'deg': 54, 'gust': 13.58},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-19 00:00:00'},
+      {'dt': 1760842800,
+       'main': {'temp': 49.23,
+        'feels_like': 46.2,
+        'temp_min': 49.23,
+        'temp_max': 49.23,
+        'pressure': 1019,
+        'sea_level': 1019,
+        'grnd_level': 840,
+        'humidity': 26,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 7.11, 'deg': 93, 'gust': 5.75},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-19 03:00:00'},
+      {'dt': 1760853600,
+       'main': {'temp': 47.1,
+        'feels_like': 42.51,
+        'temp_min': 47.1,
+        'temp_max': 47.1,
+        'pressure': 1020,
+        'sea_level': 1020,
+        'grnd_level': 840,
+        'humidity': 32,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 9.82, 'deg': 150, 'gust': 12.33},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-19 06:00:00'},
+      {'dt': 1760864400,
+       'main': {'temp': 45.9,
+        'feels_like': 43.74,
+        'temp_min': 45.9,
+        'temp_max': 45.9,
+        'pressure': 1018,
+        'sea_level': 1018,
+        'grnd_level': 838,
+        'humidity': 34,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 4.52, 'deg': 166, 'gust': 5.41},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-19 09:00:00'},
+      {'dt': 1760875200,
+       'main': {'temp': 46.65,
+        'feels_like': 46.65,
+        'temp_min': 46.65,
+        'temp_max': 46.65,
+        'pressure': 1016,
+        'sea_level': 1016,
+        'grnd_level': 837,
+        'humidity': 30,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 2.33, 'deg': 181, 'gust': 2.64},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-19 12:00:00'},
+      {'dt': 1760886000,
+       'main': {'temp': 51.17,
+        'feels_like': 47.12,
+        'temp_min': 51.17,
+        'temp_max': 51.17,
+        'pressure': 1016,
+        'sea_level': 1016,
+        'grnd_level': 837,
+        'humidity': 24,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 3.38, 'deg': 183, 'gust': 4.41},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-19 15:00:00'},
+      {'dt': 1760896800,
+       'main': {'temp': 66.43,
+        'feels_like': 63.34,
+        'temp_min': 66.43,
+        'temp_max': 66.43,
+        'pressure': 1011,
+        'sea_level': 1011,
+        'grnd_level': 835,
+        'humidity': 12,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 3.04, 'deg': 147, 'gust': 5.01},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-19 18:00:00'},
+      {'dt': 1760907600,
+       'main': {'temp': 75.7,
+        'feels_like': 73.4,
+        'temp_min': 75.7,
+        'temp_max': 75.7,
+        'pressure': 1006,
+        'sea_level': 1006,
+        'grnd_level': 832,
+        'humidity': 9,
+        'temp_kf': 0},
+       'weather': [{'id': 803,
+         'main': 'Clouds',
+         'description': 'broken clouds',
+         'icon': '04d'}],
+       'clouds': {'all': 56},
+       'wind': {'speed': 1.66, 'deg': 91, 'gust': 1.41},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-19 21:00:00'},
+      {'dt': 1760918400,
+       'main': {'temp': 71.15,
+        'feels_like': 68.52,
+        'temp_min': 71.15,
+        'temp_max': 71.15,
+        'pressure': 1005,
+        'sea_level': 1005,
+        'grnd_level': 831,
+        'humidity': 12,
+        'temp_kf': 0},
+       'weather': [{'id': 802,
+         'main': 'Clouds',
+         'description': 'scattered clouds',
+         'icon': '03d'}],
+       'clouds': {'all': 28},
+       'wind': {'speed': 4.74, 'deg': 134, 'gust': 4.74},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-20 00:00:00'},
+      {'dt': 1760929200,
+       'main': {'temp': 64.6,
+        'feels_like': 61.5,
+        'temp_min': 64.6,
+        'temp_max': 64.6,
+        'pressure': 1005,
+        'sea_level': 1005,
+        'grnd_level': 831,
+        'humidity': 16,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 4.09, 'deg': 231, 'gust': 4.85},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-20 03:00:00'},
+      {'dt': 1760940000,
+       'main': {'temp': 59.74,
+        'feels_like': 56.35,
+        'temp_min': 59.74,
+        'temp_max': 59.74,
+        'pressure': 1005,
+        'sea_level': 1005,
+        'grnd_level': 830,
+        'humidity': 20,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 2},
+       'wind': {'speed': 5.7, 'deg': 209, 'gust': 8.68},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-20 06:00:00'},
+      {'dt': 1760950800,
+       'main': {'temp': 56.8,
+        'feels_like': 53.22,
+        'temp_min': 56.8,
+        'temp_max': 56.8,
+        'pressure': 1005,
+        'sea_level': 1005,
+        'grnd_level': 829,
+        'humidity': 22,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 7},
+       'wind': {'speed': 5.99, 'deg': 206, 'gust': 11.32},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-20 09:00:00'},
+      {'dt': 1760961600,
+       'main': {'temp': 54.72,
+        'feels_like': 51.01,
+        'temp_min': 54.72,
+        'temp_max': 54.72,
+        'pressure': 1006,
+        'sea_level': 1006,
+        'grnd_level': 830,
+        'humidity': 24,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 9},
+       'wind': {'speed': 5.82, 'deg': 201, 'gust': 8.72},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-20 12:00:00'},
+      {'dt': 1760972400,
+       'main': {'temp': 57.9,
+        'feels_like': 54.37,
+        'temp_min': 57.9,
+        'temp_max': 57.9,
+        'pressure': 1007,
+        'sea_level': 1007,
+        'grnd_level': 831,
+        'humidity': 21,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 3.49, 'deg': 149, 'gust': 2.98},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-20 15:00:00'},
+      {'dt': 1760983200,
+       'main': {'temp': 70.12,
+        'feels_like': 67.5,
+        'temp_min': 70.12,
+        'temp_max': 70.12,
+        'pressure': 1008,
+        'sea_level': 1008,
+        'grnd_level': 833,
+        'humidity': 14,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 7.83, 'deg': 315, 'gust': 17.87},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-20 18:00:00'},
+      {'dt': 1760994000,
+       'main': {'temp': 67.5,
+        'feels_like': 64.8,
+        'temp_min': 67.5,
+        'temp_max': 67.5,
+        'pressure': 1009,
+        'sea_level': 1009,
+        'grnd_level': 834,
+        'humidity': 18,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 12.93, 'deg': 338, 'gust': 14.88},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-20 21:00:00'},
+      {'dt': 1761004800,
+       'main': {'temp': 64.36,
+        'feels_like': 61.48,
+        'temp_min': 64.36,
+        'temp_max': 64.36,
+        'pressure': 1011,
+        'sea_level': 1011,
+        'grnd_level': 835,
+        'humidity': 21,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 1},
+       'wind': {'speed': 7.99, 'deg': 2, 'gust': 12.03},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-21 00:00:00'},
+      {'dt': 1761015600,
+       'main': {'temp': 55.63,
+        'feels_like': 51.84,
+        'temp_min': 55.63,
+        'temp_max': 55.63,
+        'pressure': 1018,
+        'sea_level': 1018,
+        'grnd_level': 839,
+        'humidity': 20,
+        'temp_kf': 0},
+       'weather': [{'id': 801,
+         'main': 'Clouds',
+         'description': 'few clouds',
+         'icon': '02n'}],
+       'clouds': {'all': 15},
+       'wind': {'speed': 7.87, 'deg': 139, 'gust': 10.4},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-21 03:00:00'},
+      {'dt': 1761026400,
+       'main': {'temp': 51.06,
+        'feels_like': 46.85,
+        'temp_min': 51.06,
+        'temp_max': 51.06,
+        'pressure': 1021,
+        'sea_level': 1021,
+        'grnd_level': 841,
+        'humidity': 21,
+        'temp_kf': 0},
+       'weather': [{'id': 801,
+         'main': 'Clouds',
+         'description': 'few clouds',
+         'icon': '02n'}],
+       'clouds': {'all': 21},
+       'wind': {'speed': 11.32, 'deg': 151, 'gust': 16.75},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-21 06:00:00'},
+      {'dt': 1761037200,
+       'main': {'temp': 49.06,
+        'feels_like': 45.18,
+        'temp_min': 49.06,
+        'temp_max': 49.06,
+        'pressure': 1021,
+        'sea_level': 1021,
+        'grnd_level': 841,
+        'humidity': 22,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 9.15, 'deg': 153, 'gust': 18.54},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-21 09:00:00'},
+      {'dt': 1761048000,
+       'main': {'temp': 47.88,
+        'feels_like': 47.88,
+        'temp_min': 47.88,
+        'temp_max': 47.88,
+        'pressure': 1021,
+        'sea_level': 1021,
+        'grnd_level': 841,
+        'humidity': 27,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01n'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 0.34, 'deg': 344, 'gust': 2.37},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'n'},
+       'dt_txt': '2025-10-21 12:00:00'},
+      {'dt': 1761058800,
+       'main': {'temp': 49.87,
+        'feels_like': 49.87,
+        'temp_min': 49.87,
+        'temp_max': 49.87,
+        'pressure': 1022,
+        'sea_level': 1022,
+        'grnd_level': 842,
+        'humidity': 24,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 2.37, 'deg': 305, 'gust': 3.13},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-21 15:00:00'},
+      {'dt': 1761069600,
+       'main': {'temp': 58.98,
+        'feels_like': 55.47,
+        'temp_min': 58.98,
+        'temp_max': 58.98,
+        'pressure': 1019,
+        'sea_level': 1019,
+        'grnd_level': 841,
+        'humidity': 19,
+        'temp_kf': 0},
+       'weather': [{'id': 800,
+         'main': 'Clear',
+         'description': 'clear sky',
+         'icon': '01d'}],
+       'clouds': {'all': 0},
+       'wind': {'speed': 2.06, 'deg': 61, 'gust': 2.53},
+       'visibility': 10000,
+       'pop': 0,
+       'sys': {'pod': 'd'},
+       'dt_txt': '2025-10-21 18:00:00'}],
+     'city': {'id': 5419384,
+      'name': 'Denver',
+      'coord': {'lat': 39.7392, 'lon': -104.9847},
+      'country': 'US',
+      'population': 600158,
+      'timezone': -21600,
+      'sunrise': 1760620278,
+      'sunset': 1760660352}}
+
+
+
+
+```python
+from datetime import datetime
+
+print('Forecast Result for: ', json_response['city']['name'])
+for forecast in json_response['list']:
+    print('Day: ', datetime.fromtimestamp(forecast['dt']))
+    feelsLike = f"{forecast['main']['feels_like']} {chr(8457)}"
+    temp = f"{forecast['main']['temp']} {chr(8457)}"
+    print(f"Feels like: {feelsLike} Temperature: {temp}")
+```
+
+# Rich CLI Library
+
+- Textualize provides various libraries to make UI better - [https://www.textualize.io/](https://www.textualize.io/)
+- Rich is a Python library for rich text and beautiful formatting in the terminal
+- Rich can be used to make your Python CLI apps look better
+- [https://github.com/Textualize/rich](https://github.com/Textualize/rich)
+- See an application of Rich: [https://github.com/rambasnet/kattis-cli](https://github.com/rambasnet/kattis-cli)
+- Kattis-cli uses trogon to display TUI - https://github.com/Textualize/trogon
+
+## Exercise
+
+1. Find average temperate for Grand Junction in the 1st week of January 2000.
+2. Create a simple weather app using any API of your choice.
+3. Use Rich library to make your CLI app look better.
+
+
+```python
+
+```
