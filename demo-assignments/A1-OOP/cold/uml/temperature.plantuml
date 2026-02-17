@@ -10,14 +10,14 @@ class Temperature {
     + temp: int {get; set;}
     + unit: str {get; set;}
     .. Overloaded Methods ..
-    + __init__(side1: float, side2: float, side3: float): None
-    + __str__(): str
-    + __repr__(): str
-    + __lt__(other: Temperature): bool
-    + __gt__(other: Temperature): bool
-    + __eq__(other: object): bool
-    + __le__(other: Temperature): bool
-    + __ge__(other: Temperature): bool
+    - __init__(float, float, float): None
+    - __str__(): str
+    - __repr__(): str
+    - __lt__(Temperature): bool
+    - __gt__(Temperature): bool
+    - __eq__(Temperature): bool
+    - __le__(Temperature): bool
+    - __ge__(Temperature): bool
     .. Instance Methods ..
     + is_negative(): bool
 }

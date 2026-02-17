@@ -10,7 +10,7 @@ class Solution {
     - _temps: List[Temperature]
     + n: int {get; }
     .. Overloaded Methods ..
-    + __init__(): None
+    - __init__(): None
     .. Instance Methods ..
 	+ read_data(source: Any): None
     + find_answer(): int

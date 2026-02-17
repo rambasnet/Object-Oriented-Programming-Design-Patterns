@@ -99,5 +99,5 @@ class Solution():
         sol.solve(sys.stdin)
 
 
-if __name__ == "__main__":
-    Solution.main()  # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
+    Solution.main()
