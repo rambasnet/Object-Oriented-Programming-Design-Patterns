@@ -6,7 +6,7 @@ COVERAGE = python -m pytest
 DEMO = './demo-assignments'
 
 .PHONY: all
-all: check-style check-type run-test run-test-coverage clean
+all: check-style check-type run-test clean
 	@echo "All checks passed!"
 
 .PHONY: check-type
@@ -33,14 +33,6 @@ run-test:
 	$(TEST) $(TEST_ARGS) $(DEMO)/A1/cold/tests
 	$(TEST) $(TEST_ARGS) $(DEMO)/A1-OOP/cold/tests
 	$(TEST) $(TEST_ARGS) $(DEMO)/A2-ABC/egypt/tests
-
-.PHONY: run-test-coverage
-run-test-coverage:
-	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A0/hello $(DEMO)/A0/hello/tests
-	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A0-OOP/hello $(DEMO)/A0-OOP/hello/tests
-	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A1/cold $(DEMO)/A1/cold/tests
-	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A1-OOP/cold $(DEMO)/A1-OOP/cold/tests
-	$(COVERAGE) -v --cov-report=term-missing --cov=$(DEMO)/A2-ABC/egypt $(DEMO)/A2-ABC/egypt/tests
 
 .PHONY: clean
 clean:
