@@ -24,6 +24,7 @@ RUN useradd -m -s /bin/bash -N -u $UID $USER && \
   chmod g+w /etc/passwd 
 
 WORKDIR ${HOME}
+COPY plantuml.jar ./
 
 RUN pip install --upgrade pip
 
