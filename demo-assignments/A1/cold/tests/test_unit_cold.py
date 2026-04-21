@@ -27,7 +27,7 @@ class TestCold(unittest.TestCase):
     def test2_answer(self) -> None:
         """Test cold.py answer function"""
         self.assertEqual(
-            answer([0, 453445, -1, -100, -45454, -44445]), 4, 'borken')
+            answer([0, 453445, -1, -100, -45454, -44445]), 4, 'broken')
 
     def test3_answer(self) -> None:
         """ Test cold.py answer1 function"""
