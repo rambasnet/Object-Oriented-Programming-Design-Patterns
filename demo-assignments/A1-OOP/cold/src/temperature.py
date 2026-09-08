@@ -1,4 +1,5 @@
-""" Temperature class to represent a temperature"""
+""" Temperature class to represent a temperature.
+"""
 
 __author__ = "Ram Basnet"
 __date__ = "2023/1/1"
@@ -8,8 +9,7 @@ __maintainer__ = "Ram Basnet"
 
 
 class Temperature:
-    """
-    Represents a temperature
+    """ Represents a temperature
     """
 
     def __init__(self, temp: int, unit: str = 'F') -> None:
@@ -65,7 +65,7 @@ class Temperature:
         """ Returns the string representation.
 
         Returns:
-            str: string represention to print.
+            str: string representation for printing.
         """
         return f'{self._temp} {self.unit}'
 
@@ -89,18 +89,18 @@ class Temperature:
         return self._temp < other.temp
 
     def __gt__(self, other: 'Temperature') -> bool:
-        """ Overloading greater than comparision.
+        """ Overloading greater-than comparison.
 
         Args:
             other (Temperature): the other object to compare with
 
         Returns:
-            bool: True if this temperature is greater than the other.
+            bool: True if this temperature is greater than the other
         """
         return self._temp > other.temp
 
     def __eq__(self, other: object) -> bool:
-        """ Overloading equal comparision.
+        """ Overloading equal comparison.
 
         Args:
             other (Temperature): other object to compare with.
@@ -113,7 +113,7 @@ class Temperature:
         return self._temp == other.temp
 
     def __le__(self, other: 'Temperature') -> bool:
-        """ Overloadign less than or equal to comparison
+        """ Overloadign less-than or equal-to comparison
 
         Args:
             other (Temperature): Other object to compare with.
@@ -124,7 +124,7 @@ class Temperature:
         return self._temp <= other.temp
 
     def __ge__(self, other: 'Temperature') -> bool:
-        """ Overloading greater than or equal to comparision.
+        """ Overloading greater-than or equal to comparison.
 
         Args:
             other (Temperature): Other object to compare with.
