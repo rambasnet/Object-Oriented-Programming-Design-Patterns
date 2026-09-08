@@ -13,7 +13,7 @@ class Temperature:
     """
 
     def __init__(self, temp: int, unit: str = 'F') -> None:
-        """Constructor
+        """ Constructor
 
         Args:
             temp (int): temperature
@@ -25,7 +25,7 @@ class Temperature:
 
     @property
     def temp(self) -> int:
-        """Property to get temperature
+        """ Property to get temperature
 
         Returns:
             int: temperature
@@ -34,7 +34,7 @@ class Temperature:
 
     @temp.setter
     def temp(self, temp: int) -> None:
-        """Property to set temperature
+        """ Property to set temperature
 
         Args:
             temp (int): temperature
@@ -43,8 +43,7 @@ class Temperature:
 
     @property
     def unit(self) -> str:
-        """
-        Property to get/set unit of temperature
+        """ Property to get/set unit of temperature
         Returns:
             str: unit
         """
@@ -55,7 +54,7 @@ class Temperature:
         self._unit = unit
 
     def is_negative(self) -> bool:
-        """Checks if the _temp is negative
+        """ Checks if the _temp is negative
 
         Returns:
             bool: True if _temp is < 0; False otherwise
@@ -63,7 +62,7 @@ class Temperature:
         return self._temp < 0
 
     def __str__(self) -> str:
-        """Retuns the string representation.
+        """ Returns the string representation.
 
         Returns:
             str: string represention to print.
@@ -71,7 +70,7 @@ class Temperature:
         return f'{self._temp} {self.unit}'
 
     def __repr__(self) -> str:
-        """Returns string representation of object.
+        """ Overloading string representation of the object.
 
         Returns:
             str: string representation.
@@ -79,7 +78,7 @@ class Temperature:
         return f'{self._temp} {self.unit}'
 
     def __lt__(self, other: 'Temperature') -> bool:
-        """Less than comparison.
+        """ Overloading less than comparison.
 
         Args:
             other (Temperature): the other object to compare with
@@ -90,7 +89,7 @@ class Temperature:
         return self._temp < other.temp
 
     def __gt__(self, other: 'Temperature') -> bool:
-        """Greater than comparision.
+        """ Overloading greater than comparision.
 
         Args:
             other (Temperature): the other object to compare with
@@ -101,7 +100,7 @@ class Temperature:
         return self._temp > other.temp
 
     def __eq__(self, other: object) -> bool:
-        """Equal comparision.
+        """ Overloading equal comparision.
 
         Args:
             other (Temperature): other object to compare with.
@@ -114,7 +113,7 @@ class Temperature:
         return self._temp == other.temp
 
     def __le__(self, other: 'Temperature') -> bool:
-        """Less than or equal to comparison
+        """ Overloadign less than or equal to comparison
 
         Args:
             other (Temperature): Other object to compare with.
@@ -125,7 +124,7 @@ class Temperature:
         return self._temp <= other.temp
 
     def __ge__(self, other: 'Temperature') -> bool:
-        """Greater than or equal to comparision.
+        """ Overloading greater than or equal to comparision.
 
         Args:
             other (Temperature): Other object to compare with.

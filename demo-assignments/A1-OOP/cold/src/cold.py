@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 
 """
-Solving Kattis problem - cold using Singleton pattern
+Solving Kattis problem - cold using the Singleton pattern
 https://open.kattis.com/problems/cold
 """
 
@@ -21,12 +21,12 @@ from temperature import Temperature
 
 
 class Solution():
-    """ Solution class to solve the problem using Singleton pattern. """
+    """ Solution class to solve the problem using the Singleton pattern. """
 
     _instance: "Solution" | None = None
 
     def __new__(cls) -> "Solution":
-        """Creates a new instance of the class if not already created.
+        """ Creates a new instance of the class if not already created.
 
         Enforces Singleton pattern.
 
@@ -45,7 +45,7 @@ class Solution():
         self._temps: List[Temperature] = []  # list of temperatures
 
     def find_answer(self) -> int:
-        """Counts the number of temperatures below zero
+        """ Counts the number of temperatures below zero
 
         Returns:
             int: number of temperatures below zero
@@ -60,7 +60,7 @@ class Solution():
         """ Reads data from provided source.
 
         Args:
-            source (Any): stdin typically for kattis problem
+            source (Any): stdin, typically for Kattis problem
         """
         data = source.readlines()
         self._n = int(data[0])
@@ -93,7 +93,7 @@ class Solution():
 
     @staticmethod
     def main() -> None:
-        """Entry static method
+        """ Entry static method
         """
         sol = Solution()
         sol.solve(sys.stdin)
