@@ -5,7 +5,9 @@ Solving Kattis problem - cold using the Singleton pattern
 https://open.kattis.com/problems/cold
 """
 
-# for Python 3.7 - 3.9 compatibility for type hinting of class methods
+# for Python 3.7 - 3.13 compatibility for type hinting of class methods
+# and allows forward references to refer class within definition
+# als allows to use modern syntax like | with types
 from __future__ import annotations
 
 __author__ = "Ram Basnet"
