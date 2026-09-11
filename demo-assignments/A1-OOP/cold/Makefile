@@ -16,6 +16,10 @@ check-style:
 fix-style:
 	autopep8 --in-place --recursive --aggressive --aggressive .
 
+.PHONY: run-security-check
+run-security-check:
+	bandit -r src
+
 .PHONY: run-test
 run-test:
 ifeq ($(shell which pytest), ) # if pytest not found

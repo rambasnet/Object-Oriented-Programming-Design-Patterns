@@ -22,6 +22,10 @@ check-types:
 	mypy --disallow-untyped-defs --strict .
 	@echo "Static type check done."
 
+.PHONY: run-security-check
+run-security-check:
+	bandit -r src
+
 .PHONY: create-doc-folder
 create-doc-folder:
 	@mkdir -p $(DOCS) # creates all folder(s) if not exists

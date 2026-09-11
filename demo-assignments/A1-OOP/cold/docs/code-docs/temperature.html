@@ -73,55 +73,55 @@ temperature    </h1>
 
                         <label class="view-source-button" for="mod-temperature-view-source"><span>View Source</span></label>
 
-                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">  1</span></a><span class="sd">&quot;&quot;&quot; Temperature class to represent a temperature.</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="sd">&quot;&quot;&quot;</span>
+                        <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">  1</span></a><span class="sd">""" Temperature class to represent a temperature.</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos">  2</span></a><span class="sd">"""</span>
 </span><span id="L-3"><a href="#L-3"><span class="linenos">  3</span></a>
-</span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">&quot;Ram Basnet&quot;</span>
-</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="n">__date__</span> <span class="o">=</span> <span class="s2">&quot;2023/1/1&quot;</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="n">__license__</span> <span class="o">=</span> <span class="s2">&quot;MIT&quot;</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;0.1.0&quot;</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">&quot;Ram Basnet&quot;</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos">  4</span></a><span class="n">__author__</span> <span class="o">=</span> <span class="s2">"Ram Basnet"</span>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">  5</span></a><span class="n">__date__</span> <span class="o">=</span> <span class="s2">"2023/1/1"</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="n">__license__</span> <span class="o">=</span> <span class="s2">"MIT"</span>
+</span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="n">__version__</span> <span class="o">=</span> <span class="s2">"0.1.0"</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a><span class="n">__maintainer__</span> <span class="o">=</span> <span class="s2">"Ram Basnet"</span>
 </span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a>
 </span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Temperature</span><span class="p">:</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Represents a temperature</span>
-</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="w">    </span><span class="sd">""" Represents a temperature</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a><span class="sd">    """</span>
 </span><span id="L-14"><a href="#L-14"><span class="linenos"> 14</span></a>
-</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Constructor</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos"> 15</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos"> 16</span></a><span class="w">        </span><span class="sd">""" Constructor</span>
 </span><span id="L-17"><a href="#L-17"><span class="linenos"> 17</span></a>
 </span><span id="L-18"><a href="#L-18"><span class="linenos"> 18</span></a><span class="sd">        Args:</span>
 </span><span id="L-19"><a href="#L-19"><span class="linenos"> 19</span></a><span class="sd">            temp (int): temperature</span>
 </span><span id="L-20"><a href="#L-20"><span class="linenos"> 20</span></a><span class="sd">            unit (str, optional): temperature unit.</span>
-</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">                Defaults to &#39;F&#39; for Fahrenheit.</span>
-</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-21"><a href="#L-21"><span class="linenos"> 21</span></a><span class="sd">                Defaults to 'F' for Fahrenheit.</span>
+</span><span id="L-22"><a href="#L-22"><span class="linenos"> 22</span></a><span class="sd">        """</span>
 </span><span id="L-23"><a href="#L-23"><span class="linenos"> 23</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">temp</span>
 </span><span id="L-24"><a href="#L-24"><span class="linenos"> 24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">unit</span>
 </span><span id="L-25"><a href="#L-25"><span class="linenos"> 25</span></a>
 </span><span id="L-26"><a href="#L-26"><span class="linenos"> 26</span></a>    <span class="nd">@property</span>
 </span><span id="L-27"><a href="#L-27"><span class="linenos"> 27</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">temp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Property to get temperature</span>
+</span><span id="L-28"><a href="#L-28"><span class="linenos"> 28</span></a><span class="w">        </span><span class="sd">""" Property to get temperature</span>
 </span><span id="L-29"><a href="#L-29"><span class="linenos"> 29</span></a>
 </span><span id="L-30"><a href="#L-30"><span class="linenos"> 30</span></a><span class="sd">        Returns:</span>
 </span><span id="L-31"><a href="#L-31"><span class="linenos"> 31</span></a><span class="sd">            int: temperature</span>
-</span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-32"><a href="#L-32"><span class="linenos"> 32</span></a><span class="sd">        """</span>
 </span><span id="L-33"><a href="#L-33"><span class="linenos"> 33</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span>
 </span><span id="L-34"><a href="#L-34"><span class="linenos"> 34</span></a>
 </span><span id="L-35"><a href="#L-35"><span class="linenos"> 35</span></a>    <span class="nd">@temp</span><span class="o">.</span><span class="n">setter</span>
 </span><span id="L-36"><a href="#L-36"><span class="linenos"> 36</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Property to set temperature</span>
+</span><span id="L-37"><a href="#L-37"><span class="linenos"> 37</span></a><span class="w">        </span><span class="sd">""" Property to set temperature</span>
 </span><span id="L-38"><a href="#L-38"><span class="linenos"> 38</span></a>
 </span><span id="L-39"><a href="#L-39"><span class="linenos"> 39</span></a><span class="sd">        Args:</span>
 </span><span id="L-40"><a href="#L-40"><span class="linenos"> 40</span></a><span class="sd">            temp (int): temperature</span>
-</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-41"><a href="#L-41"><span class="linenos"> 41</span></a><span class="sd">        """</span>
 </span><span id="L-42"><a href="#L-42"><span class="linenos"> 42</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">=</span> <span class="n">temp</span>
 </span><span id="L-43"><a href="#L-43"><span class="linenos"> 43</span></a>
 </span><span id="L-44"><a href="#L-44"><span class="linenos"> 44</span></a>    <span class="nd">@property</span>
 </span><span id="L-45"><a href="#L-45"><span class="linenos"> 45</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">unit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Property to get/set unit of temperature</span>
+</span><span id="L-46"><a href="#L-46"><span class="linenos"> 46</span></a><span class="w">        </span><span class="sd">""" Property to get/set unit of temperature</span>
 </span><span id="L-47"><a href="#L-47"><span class="linenos"> 47</span></a><span class="sd">        Returns:</span>
 </span><span id="L-48"><a href="#L-48"><span class="linenos"> 48</span></a><span class="sd">            str: unit</span>
-</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-49"><a href="#L-49"><span class="linenos"> 49</span></a><span class="sd">        """</span>
 </span><span id="L-50"><a href="#L-50"><span class="linenos"> 50</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span>
 </span><span id="L-51"><a href="#L-51"><span class="linenos"> 51</span></a>
 </span><span id="L-52"><a href="#L-52"><span class="linenos"> 52</span></a>    <span class="nd">@unit</span><span class="o">.</span><span class="n">setter</span>
@@ -129,84 +129,84 @@ temperature    </h1>
 </span><span id="L-54"><a href="#L-54"><span class="linenos"> 54</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span> <span class="o">=</span> <span class="n">unit</span>
 </span><span id="L-55"><a href="#L-55"><span class="linenos"> 55</span></a>
 </span><span id="L-56"><a href="#L-56"><span class="linenos"> 56</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Checks if the _temp is negative</span>
+</span><span id="L-57"><a href="#L-57"><span class="linenos"> 57</span></a><span class="w">        </span><span class="sd">""" Checks if the _temp is negative</span>
 </span><span id="L-58"><a href="#L-58"><span class="linenos"> 58</span></a>
 </span><span id="L-59"><a href="#L-59"><span class="linenos"> 59</span></a><span class="sd">        Returns:</span>
 </span><span id="L-60"><a href="#L-60"><span class="linenos"> 60</span></a><span class="sd">            bool: True if _temp is &lt; 0; False otherwise</span>
-</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-61"><a href="#L-61"><span class="linenos"> 61</span></a><span class="sd">        """</span>
 </span><span id="L-62"><a href="#L-62"><span class="linenos"> 62</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&lt;</span> <span class="mi">0</span>
 </span><span id="L-63"><a href="#L-63"><span class="linenos"> 63</span></a>
 </span><span id="L-64"><a href="#L-64"><span class="linenos"> 64</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Returns the string representation.</span>
+</span><span id="L-65"><a href="#L-65"><span class="linenos"> 65</span></a><span class="w">        </span><span class="sd">""" Returns the string representation.</span>
 </span><span id="L-66"><a href="#L-66"><span class="linenos"> 66</span></a>
 </span><span id="L-67"><a href="#L-67"><span class="linenos"> 67</span></a><span class="sd">        Returns:</span>
 </span><span id="L-68"><a href="#L-68"><span class="linenos"> 68</span></a><span class="sd">            str: string representation for printing.</span>
-</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">&#39;</span>
+</span><span id="L-69"><a href="#L-69"><span class="linenos"> 69</span></a><span class="sd">        """</span>
+</span><span id="L-70"><a href="#L-70"><span class="linenos"> 70</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">'</span>
 </span><span id="L-71"><a href="#L-71"><span class="linenos"> 71</span></a>
 </span><span id="L-72"><a href="#L-72"><span class="linenos"> 72</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading string representation of the object.</span>
+</span><span id="L-73"><a href="#L-73"><span class="linenos"> 73</span></a><span class="w">        </span><span class="sd">""" Overloading string representation of the object.</span>
 </span><span id="L-74"><a href="#L-74"><span class="linenos"> 74</span></a>
 </span><span id="L-75"><a href="#L-75"><span class="linenos"> 75</span></a><span class="sd">        Returns:</span>
 </span><span id="L-76"><a href="#L-76"><span class="linenos"> 76</span></a><span class="sd">            str: string representation.</span>
-</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">&#39;</span>
+</span><span id="L-77"><a href="#L-77"><span class="linenos"> 77</span></a><span class="sd">        """</span>
+</span><span id="L-78"><a href="#L-78"><span class="linenos"> 78</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">'</span>
 </span><span id="L-79"><a href="#L-79"><span class="linenos"> 79</span></a>
-</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading less than comparison.</span>
+</span><span id="L-80"><a href="#L-80"><span class="linenos"> 80</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Temperature'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-81"><a href="#L-81"><span class="linenos"> 81</span></a><span class="w">        </span><span class="sd">""" Overloading less than comparison.</span>
 </span><span id="L-82"><a href="#L-82"><span class="linenos"> 82</span></a>
 </span><span id="L-83"><a href="#L-83"><span class="linenos"> 83</span></a><span class="sd">        Args:</span>
 </span><span id="L-84"><a href="#L-84"><span class="linenos"> 84</span></a><span class="sd">            other (Temperature): the other object to compare with</span>
 </span><span id="L-85"><a href="#L-85"><span class="linenos"> 85</span></a>
 </span><span id="L-86"><a href="#L-86"><span class="linenos"> 86</span></a><span class="sd">        Returns:</span>
 </span><span id="L-87"><a href="#L-87"><span class="linenos"> 87</span></a><span class="sd">            bool: True if this temperature is less than the other.</span>
-</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-88"><a href="#L-88"><span class="linenos"> 88</span></a><span class="sd">        """</span>
 </span><span id="L-89"><a href="#L-89"><span class="linenos"> 89</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span><span id="L-90"><a href="#L-90"><span class="linenos"> 90</span></a>
-</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading greater-than comparison.</span>
+</span><span id="L-91"><a href="#L-91"><span class="linenos"> 91</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Temperature'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-92"><a href="#L-92"><span class="linenos"> 92</span></a><span class="w">        </span><span class="sd">""" Overloading greater-than comparison.</span>
 </span><span id="L-93"><a href="#L-93"><span class="linenos"> 93</span></a>
 </span><span id="L-94"><a href="#L-94"><span class="linenos"> 94</span></a><span class="sd">        Args:</span>
 </span><span id="L-95"><a href="#L-95"><span class="linenos"> 95</span></a><span class="sd">            other (Temperature): the other object to compare with</span>
 </span><span id="L-96"><a href="#L-96"><span class="linenos"> 96</span></a>
 </span><span id="L-97"><a href="#L-97"><span class="linenos"> 97</span></a><span class="sd">        Returns:</span>
 </span><span id="L-98"><a href="#L-98"><span class="linenos"> 98</span></a><span class="sd">            bool: True if this temperature is greater than the other</span>
-</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-99"><a href="#L-99"><span class="linenos"> 99</span></a><span class="sd">        """</span>
 </span><span id="L-100"><a href="#L-100"><span class="linenos">100</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span><span id="L-101"><a href="#L-101"><span class="linenos">101</span></a>
 </span><span id="L-102"><a href="#L-102"><span class="linenos">102</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading equal comparison.</span>
+</span><span id="L-103"><a href="#L-103"><span class="linenos">103</span></a><span class="w">        </span><span class="sd">""" Overloading equal comparison.</span>
 </span><span id="L-104"><a href="#L-104"><span class="linenos">104</span></a>
 </span><span id="L-105"><a href="#L-105"><span class="linenos">105</span></a><span class="sd">        Args:</span>
 </span><span id="L-106"><a href="#L-106"><span class="linenos">106</span></a><span class="sd">            other (Temperature): other object to compare with.</span>
 </span><span id="L-107"><a href="#L-107"><span class="linenos">107</span></a>
 </span><span id="L-108"><a href="#L-108"><span class="linenos">108</span></a><span class="sd">        Returns:</span>
 </span><span id="L-109"><a href="#L-109"><span class="linenos">109</span></a><span class="sd">            bool: True if this object is equal to the other</span>
-</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-110"><a href="#L-110"><span class="linenos">110</span></a><span class="sd">        """</span>
 </span><span id="L-111"><a href="#L-111"><span class="linenos">111</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Temperature</span><span class="p">):</span>
 </span><span id="L-112"><a href="#L-112"><span class="linenos">112</span></a>            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </span><span id="L-113"><a href="#L-113"><span class="linenos">113</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span><span id="L-114"><a href="#L-114"><span class="linenos">114</span></a>
-</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloadign less-than or equal-to comparison</span>
+</span><span id="L-115"><a href="#L-115"><span class="linenos">115</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Temperature'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-116"><a href="#L-116"><span class="linenos">116</span></a><span class="w">        </span><span class="sd">""" Overloadign less-than or equal-to comparison</span>
 </span><span id="L-117"><a href="#L-117"><span class="linenos">117</span></a>
 </span><span id="L-118"><a href="#L-118"><span class="linenos">118</span></a><span class="sd">        Args:</span>
 </span><span id="L-119"><a href="#L-119"><span class="linenos">119</span></a><span class="sd">            other (Temperature): Other object to compare with.</span>
 </span><span id="L-120"><a href="#L-120"><span class="linenos">120</span></a>
 </span><span id="L-121"><a href="#L-121"><span class="linenos">121</span></a><span class="sd">        Returns:</span>
 </span><span id="L-122"><a href="#L-122"><span class="linenos">122</span></a><span class="sd">            bool: True if this temp is less than or equal to the other.</span>
-</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-123"><a href="#L-123"><span class="linenos">123</span></a><span class="sd">        """</span>
 </span><span id="L-124"><a href="#L-124"><span class="linenos">124</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&lt;=</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span><span id="L-125"><a href="#L-125"><span class="linenos">125</span></a>
-</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading greater-than or equal to comparison.</span>
+</span><span id="L-126"><a href="#L-126"><span class="linenos">126</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Temperature'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="L-127"><a href="#L-127"><span class="linenos">127</span></a><span class="w">        </span><span class="sd">""" Overloading greater-than or equal to comparison.</span>
 </span><span id="L-128"><a href="#L-128"><span class="linenos">128</span></a>
 </span><span id="L-129"><a href="#L-129"><span class="linenos">129</span></a><span class="sd">        Args:</span>
 </span><span id="L-130"><a href="#L-130"><span class="linenos">130</span></a><span class="sd">            other (Temperature): Other object to compare with.</span>
 </span><span id="L-131"><a href="#L-131"><span class="linenos">131</span></a>
 </span><span id="L-132"><a href="#L-132"><span class="linenos">132</span></a><span class="sd">        Returns:</span>
 </span><span id="L-133"><a href="#L-133"><span class="linenos">133</span></a><span class="sd">            bool: True if this object is greater than the other.</span>
-</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="L-134"><a href="#L-134"><span class="linenos">134</span></a><span class="sd">        """</span>
 </span><span id="L-135"><a href="#L-135"><span class="linenos">135</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&gt;=</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span></pre></div>
 
@@ -224,44 +224,44 @@ temperature    </h1>
     </div>
     <a class="headerlink" href="#Temperature"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Temperature-12"><a href="#Temperature-12"><span class="linenos"> 12</span></a><span class="k">class</span><span class="w"> </span><span class="nc">Temperature</span><span class="p">:</span>
-</span><span id="Temperature-13"><a href="#Temperature-13"><span class="linenos"> 13</span></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; Represents a temperature</span>
-</span><span id="Temperature-14"><a href="#Temperature-14"><span class="linenos"> 14</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="Temperature-13"><a href="#Temperature-13"><span class="linenos"> 13</span></a><span class="w">    </span><span class="sd">""" Represents a temperature</span>
+</span><span id="Temperature-14"><a href="#Temperature-14"><span class="linenos"> 14</span></a><span class="sd">    """</span>
 </span><span id="Temperature-15"><a href="#Temperature-15"><span class="linenos"> 15</span></a>
-</span><span id="Temperature-16"><a href="#Temperature-16"><span class="linenos"> 16</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Temperature-17"><a href="#Temperature-17"><span class="linenos"> 17</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Constructor</span>
+</span><span id="Temperature-16"><a href="#Temperature-16"><span class="linenos"> 16</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Temperature-17"><a href="#Temperature-17"><span class="linenos"> 17</span></a><span class="w">        </span><span class="sd">""" Constructor</span>
 </span><span id="Temperature-18"><a href="#Temperature-18"><span class="linenos"> 18</span></a>
 </span><span id="Temperature-19"><a href="#Temperature-19"><span class="linenos"> 19</span></a><span class="sd">        Args:</span>
 </span><span id="Temperature-20"><a href="#Temperature-20"><span class="linenos"> 20</span></a><span class="sd">            temp (int): temperature</span>
 </span><span id="Temperature-21"><a href="#Temperature-21"><span class="linenos"> 21</span></a><span class="sd">            unit (str, optional): temperature unit.</span>
-</span><span id="Temperature-22"><a href="#Temperature-22"><span class="linenos"> 22</span></a><span class="sd">                Defaults to &#39;F&#39; for Fahrenheit.</span>
-</span><span id="Temperature-23"><a href="#Temperature-23"><span class="linenos"> 23</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-22"><a href="#Temperature-22"><span class="linenos"> 22</span></a><span class="sd">                Defaults to 'F' for Fahrenheit.</span>
+</span><span id="Temperature-23"><a href="#Temperature-23"><span class="linenos"> 23</span></a><span class="sd">        """</span>
 </span><span id="Temperature-24"><a href="#Temperature-24"><span class="linenos"> 24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">temp</span>
 </span><span id="Temperature-25"><a href="#Temperature-25"><span class="linenos"> 25</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">unit</span>
 </span><span id="Temperature-26"><a href="#Temperature-26"><span class="linenos"> 26</span></a>
 </span><span id="Temperature-27"><a href="#Temperature-27"><span class="linenos"> 27</span></a>    <span class="nd">@property</span>
 </span><span id="Temperature-28"><a href="#Temperature-28"><span class="linenos"> 28</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">temp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="Temperature-29"><a href="#Temperature-29"><span class="linenos"> 29</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Property to get temperature</span>
+</span><span id="Temperature-29"><a href="#Temperature-29"><span class="linenos"> 29</span></a><span class="w">        </span><span class="sd">""" Property to get temperature</span>
 </span><span id="Temperature-30"><a href="#Temperature-30"><span class="linenos"> 30</span></a>
 </span><span id="Temperature-31"><a href="#Temperature-31"><span class="linenos"> 31</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-32"><a href="#Temperature-32"><span class="linenos"> 32</span></a><span class="sd">            int: temperature</span>
-</span><span id="Temperature-33"><a href="#Temperature-33"><span class="linenos"> 33</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-33"><a href="#Temperature-33"><span class="linenos"> 33</span></a><span class="sd">        """</span>
 </span><span id="Temperature-34"><a href="#Temperature-34"><span class="linenos"> 34</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span>
 </span><span id="Temperature-35"><a href="#Temperature-35"><span class="linenos"> 35</span></a>
 </span><span id="Temperature-36"><a href="#Temperature-36"><span class="linenos"> 36</span></a>    <span class="nd">@temp</span><span class="o">.</span><span class="n">setter</span>
 </span><span id="Temperature-37"><a href="#Temperature-37"><span class="linenos"> 37</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">temp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Temperature-38"><a href="#Temperature-38"><span class="linenos"> 38</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Property to set temperature</span>
+</span><span id="Temperature-38"><a href="#Temperature-38"><span class="linenos"> 38</span></a><span class="w">        </span><span class="sd">""" Property to set temperature</span>
 </span><span id="Temperature-39"><a href="#Temperature-39"><span class="linenos"> 39</span></a>
 </span><span id="Temperature-40"><a href="#Temperature-40"><span class="linenos"> 40</span></a><span class="sd">        Args:</span>
 </span><span id="Temperature-41"><a href="#Temperature-41"><span class="linenos"> 41</span></a><span class="sd">            temp (int): temperature</span>
-</span><span id="Temperature-42"><a href="#Temperature-42"><span class="linenos"> 42</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-42"><a href="#Temperature-42"><span class="linenos"> 42</span></a><span class="sd">        """</span>
 </span><span id="Temperature-43"><a href="#Temperature-43"><span class="linenos"> 43</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">=</span> <span class="n">temp</span>
 </span><span id="Temperature-44"><a href="#Temperature-44"><span class="linenos"> 44</span></a>
 </span><span id="Temperature-45"><a href="#Temperature-45"><span class="linenos"> 45</span></a>    <span class="nd">@property</span>
 </span><span id="Temperature-46"><a href="#Temperature-46"><span class="linenos"> 46</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">unit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="Temperature-47"><a href="#Temperature-47"><span class="linenos"> 47</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Property to get/set unit of temperature</span>
+</span><span id="Temperature-47"><a href="#Temperature-47"><span class="linenos"> 47</span></a><span class="w">        </span><span class="sd">""" Property to get/set unit of temperature</span>
 </span><span id="Temperature-48"><a href="#Temperature-48"><span class="linenos"> 48</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-49"><a href="#Temperature-49"><span class="linenos"> 49</span></a><span class="sd">            str: unit</span>
-</span><span id="Temperature-50"><a href="#Temperature-50"><span class="linenos"> 50</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-50"><a href="#Temperature-50"><span class="linenos"> 50</span></a><span class="sd">        """</span>
 </span><span id="Temperature-51"><a href="#Temperature-51"><span class="linenos"> 51</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span>
 </span><span id="Temperature-52"><a href="#Temperature-52"><span class="linenos"> 52</span></a>
 </span><span id="Temperature-53"><a href="#Temperature-53"><span class="linenos"> 53</span></a>    <span class="nd">@unit</span><span class="o">.</span><span class="n">setter</span>
@@ -269,84 +269,84 @@ temperature    </h1>
 </span><span id="Temperature-55"><a href="#Temperature-55"><span class="linenos"> 55</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span> <span class="o">=</span> <span class="n">unit</span>
 </span><span id="Temperature-56"><a href="#Temperature-56"><span class="linenos"> 56</span></a>
 </span><span id="Temperature-57"><a href="#Temperature-57"><span class="linenos"> 57</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="Temperature-58"><a href="#Temperature-58"><span class="linenos"> 58</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Checks if the _temp is negative</span>
+</span><span id="Temperature-58"><a href="#Temperature-58"><span class="linenos"> 58</span></a><span class="w">        </span><span class="sd">""" Checks if the _temp is negative</span>
 </span><span id="Temperature-59"><a href="#Temperature-59"><span class="linenos"> 59</span></a>
 </span><span id="Temperature-60"><a href="#Temperature-60"><span class="linenos"> 60</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-61"><a href="#Temperature-61"><span class="linenos"> 61</span></a><span class="sd">            bool: True if _temp is &lt; 0; False otherwise</span>
-</span><span id="Temperature-62"><a href="#Temperature-62"><span class="linenos"> 62</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-62"><a href="#Temperature-62"><span class="linenos"> 62</span></a><span class="sd">        """</span>
 </span><span id="Temperature-63"><a href="#Temperature-63"><span class="linenos"> 63</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&lt;</span> <span class="mi">0</span>
 </span><span id="Temperature-64"><a href="#Temperature-64"><span class="linenos"> 64</span></a>
 </span><span id="Temperature-65"><a href="#Temperature-65"><span class="linenos"> 65</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="Temperature-66"><a href="#Temperature-66"><span class="linenos"> 66</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Returns the string representation.</span>
+</span><span id="Temperature-66"><a href="#Temperature-66"><span class="linenos"> 66</span></a><span class="w">        </span><span class="sd">""" Returns the string representation.</span>
 </span><span id="Temperature-67"><a href="#Temperature-67"><span class="linenos"> 67</span></a>
 </span><span id="Temperature-68"><a href="#Temperature-68"><span class="linenos"> 68</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-69"><a href="#Temperature-69"><span class="linenos"> 69</span></a><span class="sd">            str: string representation for printing.</span>
-</span><span id="Temperature-70"><a href="#Temperature-70"><span class="linenos"> 70</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Temperature-71"><a href="#Temperature-71"><span class="linenos"> 71</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">&#39;</span>
+</span><span id="Temperature-70"><a href="#Temperature-70"><span class="linenos"> 70</span></a><span class="sd">        """</span>
+</span><span id="Temperature-71"><a href="#Temperature-71"><span class="linenos"> 71</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">'</span>
 </span><span id="Temperature-72"><a href="#Temperature-72"><span class="linenos"> 72</span></a>
 </span><span id="Temperature-73"><a href="#Temperature-73"><span class="linenos"> 73</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="Temperature-74"><a href="#Temperature-74"><span class="linenos"> 74</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading string representation of the object.</span>
+</span><span id="Temperature-74"><a href="#Temperature-74"><span class="linenos"> 74</span></a><span class="w">        </span><span class="sd">""" Overloading string representation of the object.</span>
 </span><span id="Temperature-75"><a href="#Temperature-75"><span class="linenos"> 75</span></a>
 </span><span id="Temperature-76"><a href="#Temperature-76"><span class="linenos"> 76</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-77"><a href="#Temperature-77"><span class="linenos"> 77</span></a><span class="sd">            str: string representation.</span>
-</span><span id="Temperature-78"><a href="#Temperature-78"><span class="linenos"> 78</span></a><span class="sd">        &quot;&quot;&quot;</span>
-</span><span id="Temperature-79"><a href="#Temperature-79"><span class="linenos"> 79</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">&#39;</span>
+</span><span id="Temperature-78"><a href="#Temperature-78"><span class="linenos"> 78</span></a><span class="sd">        """</span>
+</span><span id="Temperature-79"><a href="#Temperature-79"><span class="linenos"> 79</span></a>        <span class="k">return</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="si">}</span><span class="s1">'</span>
 </span><span id="Temperature-80"><a href="#Temperature-80"><span class="linenos"> 80</span></a>
-</span><span id="Temperature-81"><a href="#Temperature-81"><span class="linenos"> 81</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="Temperature-82"><a href="#Temperature-82"><span class="linenos"> 82</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading less than comparison.</span>
+</span><span id="Temperature-81"><a href="#Temperature-81"><span class="linenos"> 81</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Temperature'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Temperature-82"><a href="#Temperature-82"><span class="linenos"> 82</span></a><span class="w">        </span><span class="sd">""" Overloading less than comparison.</span>
 </span><span id="Temperature-83"><a href="#Temperature-83"><span class="linenos"> 83</span></a>
 </span><span id="Temperature-84"><a href="#Temperature-84"><span class="linenos"> 84</span></a><span class="sd">        Args:</span>
 </span><span id="Temperature-85"><a href="#Temperature-85"><span class="linenos"> 85</span></a><span class="sd">            other (Temperature): the other object to compare with</span>
 </span><span id="Temperature-86"><a href="#Temperature-86"><span class="linenos"> 86</span></a>
 </span><span id="Temperature-87"><a href="#Temperature-87"><span class="linenos"> 87</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-88"><a href="#Temperature-88"><span class="linenos"> 88</span></a><span class="sd">            bool: True if this temperature is less than the other.</span>
-</span><span id="Temperature-89"><a href="#Temperature-89"><span class="linenos"> 89</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-89"><a href="#Temperature-89"><span class="linenos"> 89</span></a><span class="sd">        """</span>
 </span><span id="Temperature-90"><a href="#Temperature-90"><span class="linenos"> 90</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&lt;</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span><span id="Temperature-91"><a href="#Temperature-91"><span class="linenos"> 91</span></a>
-</span><span id="Temperature-92"><a href="#Temperature-92"><span class="linenos"> 92</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="Temperature-93"><a href="#Temperature-93"><span class="linenos"> 93</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading greater-than comparison.</span>
+</span><span id="Temperature-92"><a href="#Temperature-92"><span class="linenos"> 92</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Temperature'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Temperature-93"><a href="#Temperature-93"><span class="linenos"> 93</span></a><span class="w">        </span><span class="sd">""" Overloading greater-than comparison.</span>
 </span><span id="Temperature-94"><a href="#Temperature-94"><span class="linenos"> 94</span></a>
 </span><span id="Temperature-95"><a href="#Temperature-95"><span class="linenos"> 95</span></a><span class="sd">        Args:</span>
 </span><span id="Temperature-96"><a href="#Temperature-96"><span class="linenos"> 96</span></a><span class="sd">            other (Temperature): the other object to compare with</span>
 </span><span id="Temperature-97"><a href="#Temperature-97"><span class="linenos"> 97</span></a>
 </span><span id="Temperature-98"><a href="#Temperature-98"><span class="linenos"> 98</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-99"><a href="#Temperature-99"><span class="linenos"> 99</span></a><span class="sd">            bool: True if this temperature is greater than the other</span>
-</span><span id="Temperature-100"><a href="#Temperature-100"><span class="linenos">100</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-100"><a href="#Temperature-100"><span class="linenos">100</span></a><span class="sd">        """</span>
 </span><span id="Temperature-101"><a href="#Temperature-101"><span class="linenos">101</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&gt;</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span><span id="Temperature-102"><a href="#Temperature-102"><span class="linenos">102</span></a>
 </span><span id="Temperature-103"><a href="#Temperature-103"><span class="linenos">103</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="Temperature-104"><a href="#Temperature-104"><span class="linenos">104</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading equal comparison.</span>
+</span><span id="Temperature-104"><a href="#Temperature-104"><span class="linenos">104</span></a><span class="w">        </span><span class="sd">""" Overloading equal comparison.</span>
 </span><span id="Temperature-105"><a href="#Temperature-105"><span class="linenos">105</span></a>
 </span><span id="Temperature-106"><a href="#Temperature-106"><span class="linenos">106</span></a><span class="sd">        Args:</span>
 </span><span id="Temperature-107"><a href="#Temperature-107"><span class="linenos">107</span></a><span class="sd">            other (Temperature): other object to compare with.</span>
 </span><span id="Temperature-108"><a href="#Temperature-108"><span class="linenos">108</span></a>
 </span><span id="Temperature-109"><a href="#Temperature-109"><span class="linenos">109</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-110"><a href="#Temperature-110"><span class="linenos">110</span></a><span class="sd">            bool: True if this object is equal to the other</span>
-</span><span id="Temperature-111"><a href="#Temperature-111"><span class="linenos">111</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-111"><a href="#Temperature-111"><span class="linenos">111</span></a><span class="sd">        """</span>
 </span><span id="Temperature-112"><a href="#Temperature-112"><span class="linenos">112</span></a>        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Temperature</span><span class="p">):</span>
 </span><span id="Temperature-113"><a href="#Temperature-113"><span class="linenos">113</span></a>            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 </span><span id="Temperature-114"><a href="#Temperature-114"><span class="linenos">114</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span><span id="Temperature-115"><a href="#Temperature-115"><span class="linenos">115</span></a>
-</span><span id="Temperature-116"><a href="#Temperature-116"><span class="linenos">116</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="Temperature-117"><a href="#Temperature-117"><span class="linenos">117</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloadign less-than or equal-to comparison</span>
+</span><span id="Temperature-116"><a href="#Temperature-116"><span class="linenos">116</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Temperature'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Temperature-117"><a href="#Temperature-117"><span class="linenos">117</span></a><span class="w">        </span><span class="sd">""" Overloadign less-than or equal-to comparison</span>
 </span><span id="Temperature-118"><a href="#Temperature-118"><span class="linenos">118</span></a>
 </span><span id="Temperature-119"><a href="#Temperature-119"><span class="linenos">119</span></a><span class="sd">        Args:</span>
 </span><span id="Temperature-120"><a href="#Temperature-120"><span class="linenos">120</span></a><span class="sd">            other (Temperature): Other object to compare with.</span>
 </span><span id="Temperature-121"><a href="#Temperature-121"><span class="linenos">121</span></a>
 </span><span id="Temperature-122"><a href="#Temperature-122"><span class="linenos">122</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-123"><a href="#Temperature-123"><span class="linenos">123</span></a><span class="sd">            bool: True if this temp is less than or equal to the other.</span>
-</span><span id="Temperature-124"><a href="#Temperature-124"><span class="linenos">124</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-124"><a href="#Temperature-124"><span class="linenos">124</span></a><span class="sd">        """</span>
 </span><span id="Temperature-125"><a href="#Temperature-125"><span class="linenos">125</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&lt;=</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span><span id="Temperature-126"><a href="#Temperature-126"><span class="linenos">126</span></a>
-</span><span id="Temperature-127"><a href="#Temperature-127"><span class="linenos">127</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">&#39;Temperature&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="Temperature-128"><a href="#Temperature-128"><span class="linenos">128</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Overloading greater-than or equal to comparison.</span>
+</span><span id="Temperature-127"><a href="#Temperature-127"><span class="linenos">127</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Temperature'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="Temperature-128"><a href="#Temperature-128"><span class="linenos">128</span></a><span class="w">        </span><span class="sd">""" Overloading greater-than or equal to comparison.</span>
 </span><span id="Temperature-129"><a href="#Temperature-129"><span class="linenos">129</span></a>
 </span><span id="Temperature-130"><a href="#Temperature-130"><span class="linenos">130</span></a><span class="sd">        Args:</span>
 </span><span id="Temperature-131"><a href="#Temperature-131"><span class="linenos">131</span></a><span class="sd">            other (Temperature): Other object to compare with.</span>
 </span><span id="Temperature-132"><a href="#Temperature-132"><span class="linenos">132</span></a>
 </span><span id="Temperature-133"><a href="#Temperature-133"><span class="linenos">133</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature-134"><a href="#Temperature-134"><span class="linenos">134</span></a><span class="sd">            bool: True if this object is greater than the other.</span>
-</span><span id="Temperature-135"><a href="#Temperature-135"><span class="linenos">135</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature-135"><a href="#Temperature-135"><span class="linenos">135</span></a><span class="sd">        """</span>
 </span><span id="Temperature-136"><a href="#Temperature-136"><span class="linenos">136</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&gt;=</span> <span class="n">other</span><span class="o">.</span><span class="n">temp</span>
 </span></pre></div>
 
@@ -359,20 +359,20 @@ temperature    </h1>
                                         <input id="Temperature.__init__-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
 <div class="attr function">
             
-        <span class="name">Temperature</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">temp</span><span class="p">:</span> <span class="nb">int</span>, </span><span class="param"><span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;F&#39;</span></span>)</span>
+        <span class="name">Temperature</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">temp</span><span class="p">:</span> <span class="nb">int</span>, </span><span class="param"><span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'F'</span></span>)</span>
 
                 <label class="view-source-button" for="Temperature.__init__-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#Temperature.__init__"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="Temperature.__init__-16"><a href="#Temperature.__init__-16"><span class="linenos">16</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;F&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="Temperature.__init__-17"><a href="#Temperature.__init__-17"><span class="linenos">17</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Constructor</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="Temperature.__init__-16"><a href="#Temperature.__init__-16"><span class="linenos">16</span></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">temp</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'F'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="Temperature.__init__-17"><a href="#Temperature.__init__-17"><span class="linenos">17</span></a><span class="w">        </span><span class="sd">""" Constructor</span>
 </span><span id="Temperature.__init__-18"><a href="#Temperature.__init__-18"><span class="linenos">18</span></a>
 </span><span id="Temperature.__init__-19"><a href="#Temperature.__init__-19"><span class="linenos">19</span></a><span class="sd">        Args:</span>
 </span><span id="Temperature.__init__-20"><a href="#Temperature.__init__-20"><span class="linenos">20</span></a><span class="sd">            temp (int): temperature</span>
 </span><span id="Temperature.__init__-21"><a href="#Temperature.__init__-21"><span class="linenos">21</span></a><span class="sd">            unit (str, optional): temperature unit.</span>
-</span><span id="Temperature.__init__-22"><a href="#Temperature.__init__-22"><span class="linenos">22</span></a><span class="sd">                Defaults to &#39;F&#39; for Fahrenheit.</span>
-</span><span id="Temperature.__init__-23"><a href="#Temperature.__init__-23"><span class="linenos">23</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature.__init__-22"><a href="#Temperature.__init__-22"><span class="linenos">22</span></a><span class="sd">                Defaults to 'F' for Fahrenheit.</span>
+</span><span id="Temperature.__init__-23"><a href="#Temperature.__init__-23"><span class="linenos">23</span></a><span class="sd">        """</span>
 </span><span id="Temperature.__init__-24"><a href="#Temperature.__init__-24"><span class="linenos">24</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">temp</span>
 </span><span id="Temperature.__init__-25"><a href="#Temperature.__init__-25"><span class="linenos">25</span></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">unit</span>
 </span></pre></div>
@@ -399,11 +399,11 @@ temperature    </h1>
     <a class="headerlink" href="#Temperature.temp"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Temperature.temp-27"><a href="#Temperature.temp-27"><span class="linenos">27</span></a>    <span class="nd">@property</span>
 </span><span id="Temperature.temp-28"><a href="#Temperature.temp-28"><span class="linenos">28</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">temp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
-</span><span id="Temperature.temp-29"><a href="#Temperature.temp-29"><span class="linenos">29</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Property to get temperature</span>
+</span><span id="Temperature.temp-29"><a href="#Temperature.temp-29"><span class="linenos">29</span></a><span class="w">        </span><span class="sd">""" Property to get temperature</span>
 </span><span id="Temperature.temp-30"><a href="#Temperature.temp-30"><span class="linenos">30</span></a>
 </span><span id="Temperature.temp-31"><a href="#Temperature.temp-31"><span class="linenos">31</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature.temp-32"><a href="#Temperature.temp-32"><span class="linenos">32</span></a><span class="sd">            int: temperature</span>
-</span><span id="Temperature.temp-33"><a href="#Temperature.temp-33"><span class="linenos">33</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature.temp-33"><a href="#Temperature.temp-33"><span class="linenos">33</span></a><span class="sd">        """</span>
 </span><span id="Temperature.temp-34"><a href="#Temperature.temp-34"><span class="linenos">34</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span>
 </span></pre></div>
 
@@ -427,10 +427,10 @@ temperature    </h1>
     <a class="headerlink" href="#Temperature.unit"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Temperature.unit-45"><a href="#Temperature.unit-45"><span class="linenos">45</span></a>    <span class="nd">@property</span>
 </span><span id="Temperature.unit-46"><a href="#Temperature.unit-46"><span class="linenos">46</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">unit</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="Temperature.unit-47"><a href="#Temperature.unit-47"><span class="linenos">47</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Property to get/set unit of temperature</span>
+</span><span id="Temperature.unit-47"><a href="#Temperature.unit-47"><span class="linenos">47</span></a><span class="w">        </span><span class="sd">""" Property to get/set unit of temperature</span>
 </span><span id="Temperature.unit-48"><a href="#Temperature.unit-48"><span class="linenos">48</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature.unit-49"><a href="#Temperature.unit-49"><span class="linenos">49</span></a><span class="sd">            str: unit</span>
-</span><span id="Temperature.unit-50"><a href="#Temperature.unit-50"><span class="linenos">50</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature.unit-50"><a href="#Temperature.unit-50"><span class="linenos">50</span></a><span class="sd">        """</span>
 </span><span id="Temperature.unit-51"><a href="#Temperature.unit-51"><span class="linenos">51</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unit</span>
 </span></pre></div>
 
@@ -454,11 +454,11 @@ Returns:
     </div>
     <a class="headerlink" href="#Temperature.is_negative"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="Temperature.is_negative-57"><a href="#Temperature.is_negative-57"><span class="linenos">57</span></a>    <span class="k">def</span><span class="w"> </span><span class="nf">is_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-</span><span id="Temperature.is_negative-58"><a href="#Temperature.is_negative-58"><span class="linenos">58</span></a><span class="w">        </span><span class="sd">&quot;&quot;&quot; Checks if the _temp is negative</span>
+</span><span id="Temperature.is_negative-58"><a href="#Temperature.is_negative-58"><span class="linenos">58</span></a><span class="w">        </span><span class="sd">""" Checks if the _temp is negative</span>
 </span><span id="Temperature.is_negative-59"><a href="#Temperature.is_negative-59"><span class="linenos">59</span></a>
 </span><span id="Temperature.is_negative-60"><a href="#Temperature.is_negative-60"><span class="linenos">60</span></a><span class="sd">        Returns:</span>
 </span><span id="Temperature.is_negative-61"><a href="#Temperature.is_negative-61"><span class="linenos">61</span></a><span class="sd">            bool: True if _temp is &lt; 0; False otherwise</span>
-</span><span id="Temperature.is_negative-62"><a href="#Temperature.is_negative-62"><span class="linenos">62</span></a><span class="sd">        &quot;&quot;&quot;</span>
+</span><span id="Temperature.is_negative-62"><a href="#Temperature.is_negative-62"><span class="linenos">62</span></a><span class="sd">        """</span>
 </span><span id="Temperature.is_negative-63"><a href="#Temperature.is_negative-63"><span class="linenos">63</span></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_temp</span> <span class="o">&lt;</span> <span class="mi">0</span>
 </span></pre></div>
 

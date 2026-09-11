@@ -25,6 +25,15 @@ check-style:
 	$(STYLE_CHECK) $(DEMO)/A1-OOP/cold
 	$(STYLE_CHECK) $(DEMO)/A2-ABC/egypt
 
+.PHONY: run-security-check
+run-security-check:
+	bandit -r $(DEMO)/A0/hello/src
+	bandit -r $(DEMO)/A0-OOP/hello/src
+	bandit -r $(DEMO)/A1/cold/src/src
+	bandit -r $(DEMO)/A1-OOP/cold/src
+	bandit -r $(DEMO)/A2-ABC/egypt/src
+
+
 # discover and run all tests
 .PHONY: run-test
 run-test:
