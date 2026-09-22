@@ -1,6 +1,7 @@
 # Object Oriented Programming & Design Patterns
 
-![Test](https://github.com/rambasnet/Python-Object-Oriented-Programming/actions/workflows/ci-test.yml/badge.svg)
+![CI-CD Python](https://github.com/rambasnet/Python-Object-Oriented-Programming/actions/workflows/ci-test.yml/badge.svg)
+![CI-CD Python Bandit](https://github.com/rambasnet/Python-Object-Oriented-Programming/actions/workflows/bandit.yml/badge.svg)
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rambasnet/Python-Object-Oriented-Programming/HEAD)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rambasnet/Python-Object-Oriented-Programming)
 ![Python](https://img.shields.io/badge/Python-3.14-blue)
