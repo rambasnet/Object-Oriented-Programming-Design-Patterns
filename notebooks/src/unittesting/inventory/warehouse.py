@@ -28,11 +28,11 @@ class Warehouse:
         Raises:
             Exception: if quantity is greater than stock[item_name]
         """
-        # subtract quantity from stock[item_name]
+        # subtract quantity from current level
         if quantity <= self.stock[item_name]:
             self.stock[item_name] -= quantity
         else:
-            # raise an exception if quantity is greater than stock[item_name]
+            # raise an exception if quantity requested is greater than current stock level
             raise Exception(f'Oversold {item_name}')
 
     def stock_count(self, item_name: str) -> int:

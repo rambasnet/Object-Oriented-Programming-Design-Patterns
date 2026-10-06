@@ -10,7 +10,7 @@ import unittest
 from order import Order
 from warehouse import Warehouse
 from hypothesis import given
-from hypothesis import settings
+from hypothesis import settings, Phase
 import hypothesis.strategies as st
 
 
@@ -25,29 +25,28 @@ class TestOrder(unittest.TestCase):
 
     @given(
         item=st.sampled_from(['shoes', 'hats']),
-        quantity=st.integers(min_value=1, max_value=10)
+        quant_request=st.integers(min_value=1, max_value=10)
     )
-    @settings(max_examples=100, derandomize=True)
+    @settings(max_examples=100, derandomize=True)  # ,
+    # phases = [Phase.generate], database = None)
     def test_stock_level_plus_quantity_equals_initial_stock_level(
             self,
             item: str,
-            quantity: int) -> None:
+            quant_request: int) -> None:
         """Test that the stock level plus the quantity
             equals the initial stock level
-
-        Args:
-            item (str): _description_
-            quantity (int): _description_
         """
 
-        initial_stock_level = self.wh.stock_count(item)
-        print(f'{item=} = {initial_stock_level=}')
-        status, item, quantity = Order.create_order(self.wh, item, quantity)
-        print(f'{quantity=}')
+        stock_level = self.wh.stock_count(item)
+        print(f'{item=}: {stock_level=} quant_reuest={quant_request}')
+        status, item, quantity = Order.create_order(
+            self.wh, item, quant_request)
+        print(f'{status=} {item=} {quantity=}')
+        new_stock = self.wh.stock_count(item)
         if status == 'ok':
             self.assertEqual(
-                self.wh.stock_count(item) + quantity,
-                initial_stock_level)
+                new_stock + quantity,
+                stock_level)
 
 
 if __name__ == '__main__':

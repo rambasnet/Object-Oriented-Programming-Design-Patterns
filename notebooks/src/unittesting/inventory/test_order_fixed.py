@@ -26,7 +26,7 @@ class TestOrder(unittest.TestCase):
         equals the initial stock level.
         """
         initial_stock_level = self.wh.stock_count(item)
-        print(f'{item=} = {initial_stock_level=}')
+        print(f'{item=}: {initial_stock_level=}')
         status, item, quantity = Order.create_order_fixed(
             self.wh, item, quantity)
         if status == 'ok':
