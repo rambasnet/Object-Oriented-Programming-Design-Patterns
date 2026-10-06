@@ -20,7 +20,6 @@ class TestOrder(unittest.TestCase):
     def setUp(self) -> None:
         """ Create a warehouse with some initial stock
         """
-
         self.wh = Warehouse({'shoes': 10, 'hats': 5, 'umbrellas': 0})
 
     @given(
@@ -47,7 +46,3 @@ class TestOrder(unittest.TestCase):
             self.assertEqual(
                 new_stock + quantity,
                 stock_level)
-
-
-if __name__ == '__main__':
-    unittest.main()
